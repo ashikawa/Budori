@@ -1,0 +1,17 @@
+<div class="contents">
+	<h3 class="title">Zend Form</h3>
+	
+	{$form}
+	
+	
+	<form action="/{$controller}/" method="post" class="inline">
+		{hidden param=$smarty.post}
+		<input type="submit" value="back" />
+	</form>
+	
+	<form action="/{$controller}/end" method="post" class="inline">
+		{hidden param=$smarty.post}
+		<input type="submit" value="submit" />
+	</form>
+
+</div>

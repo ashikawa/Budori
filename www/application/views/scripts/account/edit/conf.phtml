@@ -1,0 +1,30 @@
+<div class="contents">
+	<h3 class="title">アカウント編集</h3>
+	
+	以下の内容でよろしいですか？<br>
+	
+	<table>
+		<tr>
+			<th>name:</th>
+			<td>{$filtered.name}</td>
+		</tr>
+		<tr>
+			<th>mixi id:</th>
+			<td>{$filtered.mixi_id}</td>
+		</tr>
+		<tr>
+			<th>pass:</th>
+			<td>{$filtered.pass1}</td>
+		</tr>
+	</table>
+	
+	<form action="/{$controller}/" method="post">
+{hidden param=$filtered}
+		<input type="submit" value="戻る"　/>
+	</form>
+	
+	<form action="/{$controller}/end" method="post">
+{hidden param=$filtered token=$transaction}
+		<input type="submit" value="登録"　/>
+	</form>
+</div>

@@ -1,0 +1,29 @@
+<div class="contents">
+	
+	<h3 class="title">thickbox</h3>
+	
+	<a href="/picture/">画像はこっち</a>
+	<br />
+	
+	<a href="/api_tb/submenu/" title="submenu normal" class="thickbox">
+		サブメニュー1
+	</a><br />
+	
+	<a href="/api_tb/submenu/" title="submenu norma2" class="thickbox">
+		サブメニュー2
+	</a><br />
+	
+	iFrame(?TB_iframe=true) でコールバック関数の投げ込みは難しいので考えない。<br />
+	名前空間とかの関係で、callback 関数をどっかのオブジェクトに bind したい。<br />
+	どのボタンがウインドウを開いたのか識別する方法は？<br />
+</div>
+
+{literal}
+<script type="text/javascript">
+function tbCallback(obj){
+	alert(obj.id);
+	tb_remove();
+	return false;
+}
+</script>
+{/literal}

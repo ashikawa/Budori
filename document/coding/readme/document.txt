@@ -1,0 +1,80 @@
+可能な限りメソッドの中にコメントを書かないで　Documenterコメントを使う。
+
+	public function hogehgoe(){
+		//ここからAの処理
+	}
+ではなくて、
+	/**
+	 * 処理Aを行うメソッド
+	 */
+	public function hogehgoe(){
+	}
+
+
+docのファイルブロックはクラスブロックがあれば不要かと思われる。
+これは、ZendFWのコーディング規約で1ファイルに1クラスとしているから。
+
+
+-- Documentor 内で使えるタグ
+
+<b>		-- emphasize/bold text
+<code>	-- Use this to surround php code, some converters will highlight it
+<br>	-- hard line break, may be ignored by some converters
+<i>		-- italicize/mark as important
+<kbd>	-- denote keyboard input/screen display
+<li>	-- list item
+<ol>	-- ordered list
+<p>		-- If used to enclose all paragraphs, otherwise it will be considered text
+<pre>	-- Preserve line breaks and spacing, and assume all tags are text (like XML's CDATA)
+<samp>	-- denote sample or examples (non-php)
+<ul>	-- unordered list
+<var>	-- denote a variable name
+
+
+
+-- Documentor タグ
+http://manual.phpdoc.org/HTMLSmartyConverter/PHP/li_phpDocumentor.html
+http://manual.phpdoc.org/HTMLSmartyConverter/HandS/li_phpDocumentor.html
+
+@abstract		書かなくてもdocに出るので不要
+@access			同上
+@author			複数人プロジェクトの時は必須とする
+@category		不要とする
+@copyright		会社の方針で決める
+@deprecated		非推奨とするクラス、メソッド。　次期バージョンで廃止、等。
+@example		
+@final			書かなくてもdocに出るので不要
+@filesource		
+@global			グローバル変数は基本的に使用禁止。
+@ignore		
+@internal	
+@license	
+@link		
+@method			マジックメソッド __call() 保管用。書いてもPDTが保管してくれなかったので無視
+@name		
+@package	
+@param			メソッド引数。　可能な限り詳細に
+@property		マジックメソッド　__set() __get()用。　これも保管してくれなかった。
+@return			必ず書くこと。　| null も忘れずに。
+@see			必要に応じて。外部ライブラリ等を使っている場合は必ず書く
+@since			
+@static			
+@staticvar		
+@subpackage		
+@throws			
+@todo			コーダーが必要に応じて。
+@tutorial 		
+@uses 			一応、必須とるす。
+@var 			保管のため、必ず書くこと。
+@version 
+
+-- inlineタグ
+
+inline {@example} 
+inline {@id} 
+inline {@internal}} 
+inline {@inheritdoc} 
+inline {@link} 
+inline {@source} 
+inline {@toc} 
+inline {@tutorial}

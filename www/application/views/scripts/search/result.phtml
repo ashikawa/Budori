@@ -1,0 +1,22 @@
+<div class="contents">
+	<h3 class="title">検索結果</h3>
+	※ページのタイトル取るの忘れたが、H3タグ入れてるからまぁ、良し。<br />
+	あと、DBに式インデックス。
+	
+	<form action="/{$controller}/{$action}">
+		<input type="text" name="q" value="{$q}" /><br />
+		<input type="submit" />
+	</form>
+</div>
+
+{if $record|count}
+<div class="contents">
+{foreach from=$record item='_result' name='loop1'}
+	<a href="{$_result->url}">
+		<b>{$_result->title}</b><br />
+	</a>
+	{$_result->body|mb_truncate:20}<br />
+	
+{/foreach}
+</div>
+{/if}

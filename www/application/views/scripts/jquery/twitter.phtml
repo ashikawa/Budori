@@ -1,0 +1,39 @@
+<div class="contents">
+	<h3 class="title">twitter</h3>
+	
+	<div id="response">
+	
+	</div>	
+</div><!--/.contents -->
+
+{literal}
+<script type="text/javascript">
+$(function(){
+	$.bAjax({
+		'url':'http://search.twitter.com/search.json',
+		'dataType':'jsonp',
+		'data':{
+			'q':'from:m_s_modified',
+			'rpp':50
+		},
+		'success': function(ob){
+			var tl = $(ob.results).eq(8)[0];
+			
+			console.log( tl );
+			console.log( tl['text'] );
+			
+			var match = tl['text'].match(/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/);
+			console.log( match );
+			console.log( match[0] );
+			
+			var req = new XMLHttpRequest();
+			req.open ('GET', match[0], true);
+			var res = req.send();
+			
+			console.log(res);
+			// $("#response").html(obj);
+		}
+	});
+});
+</script>
+{/literal}

@@ -1,0 +1,81 @@
+以下の項目は一つのコントローラー内では可能な限り統一する
+ 1) Layotスクリプト
+ 2) 認証レベル ( preDispatch()内で行う )
+
+また、 入力->確認->登録 の流れは一つのコントローラーに独立させる
+
+
+抽象コントローラに不必要な機能を持たせない
+ Zend_Controller_Action_Helper と Zend_Controller_Plugin を使う。
+
+
+
+コントローラー内の処理の分担 （ ファイル内のメソッドもこの順番に書くように ）
+
+	init()
+		初期化。 コンストラクタの代替。
+		コントローラーのメンバ変数の設定。
+		コントローラーヘルパー、プラグインの設置。
+		レイアウトの設定。
+		
+	preDispatch()
+		事前処理。　ルーティング、アクセス制御。
+		ビューヘルパーの設定。
+		
+		
+		!!!!　アクセス制御(_foward() はinit()で行うと誤作動。(別のcontrolelrに行かない、同一コントローラでactionのみ適用))
+		なので、init()内での_foward()は禁止、とする。
+		
+		
+		
+	xxxAction()
+		メイン処理。
+		_foward()、_redirect() には　return をつける。
+		そうでない場合は　ActionStackを使う。
+		
+	postDispatch()
+		事後処理。　ルーティング、View の設定。 Layoutの設定。
+		
+	other()
+		複数の Action で共通の処理。
+		共通ではないが、可読性のために分離した処理。
+		protect (or private)で宣言する。
+
+
+※同じコントローラーで foward しても
+	init()
+	predispatch()
+	action1()		//return foward('action2')
+	postdispatch()
+	
+	init()
+	predispatch()
+	action2()
+	postdispatch()
+
+の順で処理される。(ヘルパー、プラグインは別資料)
+当然、コントローラのインスタンスも2つできる。
+データを渡したい時は、 static なメンバを宣言するか
+	return foward('action2', null, null, $param);
+
+で渡す。
+
+
+
+
+
+パラメーターの初期値はコントローラーの最初にまとめる
+※コントローラ内で必要な変数の一覧になる
+	$params = array_merge(
+		array(
+			'hoge'	=> null,
+		),$this->_getAllParams());
+
+
+テンプレートへのアサインはコントローラの最後にまとめる
+※テンプレート内で必要な変数の一覧になる
+	$assign = array(
+		'hoge'	=> $hoge
+	);
+	$this->view->assign($assign);
+

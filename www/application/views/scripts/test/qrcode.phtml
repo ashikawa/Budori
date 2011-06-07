@@ -1,0 +1,19 @@
+{assign var="str" value=$str|default:""}
+<div class="contents">
+
+	<h3 class="title">qrcode</h3>
+	
+	<form action="/{$controller}/{$action}">
+		<textarea name="str" rows="5" cols="50">{$str}</textarea><br />
+		<input type="submit" />
+	</form>
+
+</div>
+
+{if $str}
+<div class="contents">
+	<img src="/media/qrcode?str={$str|urlencode}&amp;size=5" />
+	<img src="/media/qrcode?str={$str|urlencode}&amp;size=4" />
+	<img src="/media/qrcode?str={$str|urlencode}" />
+</div>
+{/if}

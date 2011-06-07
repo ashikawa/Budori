@@ -1,0 +1,66 @@
+<div class="contents">
+	
+	<h3 class="title">escape</h3>
+	
+	エスケープされるか確認。<br />
+	
+	
+	'hoge'	=> '&lt;b&gt;hoge&lt;/b&gt;',<br />
+	'moge'	=> array('&lt;i&gt;mo&lt;/i&gt;','&lt;i&gt;ge&lt;/i&gt;'),<br />
+	'hage'	=> new ArrayObject( array('&lt;i&gt;ha&lt;/i&gt;','&lt;i&gt;ge&lt;/i&gt;') ),<br />
+	
+	
+	<br />
+	
+	{literal}
+	{$hoge}<br />
+	{$hoge|printf}<br />
+	{/literal}
+	
+	{$hoge}<br />
+	{$hoge|printf}<br />
+	はエスケープされる。<br />
+	<br />
+	
+	
+	<br />
+	
+	{literal}
+	{foreach from=$moge item="result"}<br />
+	&nbsp;&nbsp;{$result}<br />
+	{/foreach}<br />
+	{/literal}
+	{foreach from=$moge item="result"}
+		{$result}<br />
+	{/foreach}
+	では、引数の$mogeがエスケープされたあとに、$resultがエスケープされるため、<br />
+	結果的に二回エスケープされる。<br />
+	foreachの方に　|smarty:nodefaults　をつける。<br />
+	
+	<br />
+	
+	
+	{literal}
+	{foreach from=$hage item='result'}<br />
+	&nbsp;&nbsp;{$result}<br />
+	{/foreach}<br />
+	{/literal}
+	{foreach from=$hage item='result'}
+		{$result}<br />
+	{/foreach}
+	オブジェクトはエスケープされない。<br />
+	{literal}{$result}だけがエスケープされる。{/literal}<br />
+	<br />
+	
+	エスケープは、文字列と<b><i>一次元</i></b>配列までは自動。<br />
+	それ以外はエスケープされない。<br />
+	参照: Smarty->_run_mod_handler()<br />
+	
+	<br />
+	
+	Smarty 関数は、入力値がエスケープされるために、関数内でのエスケープは一切行っていない。<br />
+	Zend_View_Heplerは__toString()関数内でエスケープがされている。<br />
+	
+	<s>あと、二次元以上の配列はSmartyのバグで使えない。</s><br />
+	(独自のエスケープ関数を使って解消。)<br />
+</div>

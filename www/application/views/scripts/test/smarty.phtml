@@ -1,0 +1,93 @@
+<div class="contents">
+	
+	<h3 class="title">smarty plugins</h3>
+
+	<form action="{url hoge='moge'}" method="post">
+		{html_select_date_ex
+			field_order='YMD'
+			start_year='+5'
+			end_year='-5'
+			month_format='%m'
+			day_value_format='%02d'
+			day_separator='日'
+			year_separator='年'
+			month_separator='月'
+			year_selected=$Date_Year|default:null
+			month_selected=$Date_Year|default:null
+			day_selected=$Date_Year|default:null}<br />	
+		<br />	
+		{html_select_time_ex
+			hour_separator='時'
+			minutes_separator='分'
+			seconds_separator='秒'
+			hour_selected=$Time_Hour|default:null
+			minutes_seleted=$Time_Minute|default:null
+			seconds_selected=$Time_Second|default:null}<br />
+		<br />	
+		{html_radios
+			options=$example
+			name='radio'
+			selected=$radio|default:null}<br />
+		<br />	
+		<select name="options">
+			<option value="-1">選択して下さい</option>
+			{html_options
+				options=$example
+				selected=$options|default:null}
+		</select><br />
+		<br />	
+		{html_checkboxes
+			options=$example
+			name='check'
+			selected=$check|default:null}<br />
+		<br />
+		<input type="text" name="text" value="{$text|default:""}" /><br />
+		{$text|default:null}<br />
+		<br />
+		
+		<textarea name="textarea" rows="5">{$textarea|default:""}</textarea><br />
+		{$textarea|default:""|nl2br}<br />
+		<br />
+		{$textarea|default:""|mb_truncate:5}<br />
+		<br />
+		
+		<input type="submit" />
+	</form>
+	
+	
+	<br />
+	オブジェクト定数へのアクセス。<br />
+	<br />
+	
+	{zend_action action='date' controller='inc'} <br />
+	<br />
+	{$url|link nofilter}<br />
+	<br />
+	{$mail|link nofilter}<br />
+	<br />
+	{$date|date_format_jp:'%Y/%m/%d(%a) %H:%M:%S'}<br />
+	<br />
+	<br />
+	-------------------sample------------------------
+	
+	<table>
+{foreach from=$record|@array_chunk:3 item='result1'}
+		<tr>
+{foreach from=$result1|@array_pad:3:false item='result'}
+{if $result}
+			<td>{$result}</td>
+{else}
+			<td>--</td>
+{/if}
+{/foreach}
+		</tr>
+{/foreach}
+	</table>
+	
+{section loop=8 name="section1"}
+	{$smarty.section.section1.index}<br />
+{/section}
+
+{math|number_format equation="10*500*x" x=10}
+
+<!--//end div#content--></div>

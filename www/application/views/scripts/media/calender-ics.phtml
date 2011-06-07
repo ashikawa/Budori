@@ -1,0 +1,77 @@
+{*
+to see http://www.asahi-net.or.jp/~CI5M-NMR/iCal/ref.html
+自分で何か作るときは、DB定義に最初から盛り込もう。 
+日付は
+ISO 8601 Data Elements and Interchange Formate -- Information Interchange -- Representation of Dates and Times
+らしいが、DBの型はどうする?
+->たぶん、日付型+フィルタ(フラグ?)な感じかと。
+
+あと、VTODOなるものがある
+*}
+BEGIN:VCALENDAR
+{* HEADER *}
+PRODID:-//s.a develop//my calendar 0.1
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+{* //HEADER*}
+{* VTIME ZONE 日本はこのままで *}
+BEGIN:VTIMEZONE
+TZID:Asia/Tokyo
+BEGIN:STANDARD
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+TZNAME:JST
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+{* //VTIME ZONE *}
+{* foreach events*}
+{* VEVENT 1 *}
+BEGIN:VEVENT
+{*　[YYYYMMDD](T[HHMMSS])(Z)　末尾にZが付くとUTC時間、無いとローカル時間 *}
+DTSTART:20100107T073000Z
+DTEND:20100107T083000Z
+DTSTAMP:20100106T075006Z
+{* オブジェクトの作成日　一応必須 *}
+CATEGORIES:
+UID:5hho5fljbrb2g96t6siblgk628@google.com
+{* [HASH]@[DOMAIN] (推奨。) *}
+CREATED:20100106T073954Z
+{* RFCに載ってない Google独自か? *}
+DESCRIPTION:test\ntest\nhogehoge\n()'"}:\;\n
+{*本文　改行とセミコロンだけエスケープか? *}
+{* 1行 75 octet 以内。行頭に空白を入れない。2行以上続ける場合に、2行目以降の行頭に空白を入れる。 *}
+LAST-MODIFIED:20100106T074014Z
+{* これもきっとGoogle独自 *}
+LOCATION:
+SEQUENCE:0
+{* 情報が更新されるとカウントアップ *}
+STATUS:CONFIRMED
+{* google 独自 *}
+SUMMARY:test
+{* タイトル *}
+TRANSP:OPAQUE
+END:VEVENT
+{* //VEVENT 1 *}
+{* VEVENT 2 こっちは期間指定*}
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20100108
+DTEND;VALUE=DATE:20100109
+RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;WKST=MO
+{* 繰り返しイベントのルール この辺は配列で*}
+DTSTAMP:20100106T075006Z
+CATEGORIES:
+UID:1b31e1vngqu29a8d7t99ptaqb0@google.com
+CREATED:00001231T000000Z
+DESCRIPTION:moge\nhoge
+LAST-MODIFIED:20100106T074957Z
+LOCATION:placehoge
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:test2
+TRANSP:OPAQUE
+END:VEVENT
+{* //VEVENT 2 *}
+{* // foreach events *}
+END:VCALENDAR

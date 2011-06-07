@@ -1,0 +1,16 @@
+<div class="contents">
+
+	<h3 class="title">ログイン</h3>
+
+	<br />
+	
+	{messages value=$message|default:null}
+	<form action="/{$controller}/login" method="post">
+		id<br />
+		<input type="text" name="id" value="{$id|default:''}"/> <br />
+		password<br />
+		<input type="password" name="password" /> <br />
+		<input type="hidden" name="r" value="{$r|default:''}" /> <br />
+		<input type="submit" /> <br />
+	</form>
+</div>

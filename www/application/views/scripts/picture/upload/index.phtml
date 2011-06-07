@@ -1,0 +1,11 @@
+<div class="contents">
+	<h3 class="title">upload</h3>
+	
+	{messages value=$message}
+	
+	<form action="/{$controller}/conf" method="post" enctype="multipart/form-data">
+		<input name="pict1" type="file" /><br />
+		{hidden token=$transaction}
+		<input type="submit" /><br />
+	</form>
+</div>

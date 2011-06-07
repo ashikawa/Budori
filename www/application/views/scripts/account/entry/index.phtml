@@ -1,0 +1,139 @@
+<div class="contents">
+	<h3 class="title">アカウント作成</h3>
+
+	<form action="/{$controller}/conf" method="post">
+		<fieldset>
+<!-- 
+			<legend>アカウント作成</legend>
+ -->
+			<dt class="label">
+				<label for="name">name</label>
+			</dt>
+			<dd class="input">
+				<input type="text" id="name" name="name" value="{$name|default:''}" /> <br />
+				{messages value=$messages.name|default:null id="validName"}
+			</dd>
+			
+			<dt class="label">
+				<label for="id">id</label>
+			</dt>
+			<dd class="input">
+				<input type="text" id="id" name="id" value="{$id|default:''}" /> <br />
+				{messages value=$messages.id|default:null id="validId"}	
+			</dd>
+			
+			<dt class="label">
+				<label for="pass1">pass</label>
+			</dt>
+			<dd class="input">
+				<input type="password" id="pass1" name="pass1" value="{$pass1|default:''}" /><br />
+				{messages value=$messages.pass1|default:null id="validPass"}
+			</dd>
+			<dt class="label">
+				<label for="pass2">conf</label>
+			</dt>
+			<dd class="input">
+				<input type="password" id="pass2" name="pass2" value="{$pass2|default:''}" />
+				{messages value=$messages.equals|default:null id="validEquals"}
+			</dd>
+		</fieldset>
+
+		<input id="submit" type="submit" /> <br />
+	</form>
+
+
+{literal}
+	<script type="text/javascript" src="/js/jquery.budori.js"></script>
+	<script type="text/javascript">
+	return ;
+	;(function($) {
+		$.fn.extend({
+			sclValidation: function( options ){
+				$(this).bind('change keyup',options.rule);
+			}
+		});
+	})(jQuery);
+	
+	$(document).ready(function(){
+		$('#submit').enable(false);
+		
+		$('#name').bind('change',function(){
+			if(!$(this).val().match(/^.{1,255}$/)){
+				$('#validName').html('<li>Nameを入力してください。</li>');
+				$('#submit').enable(false);
+			}else{
+				$('#validName').html('');
+				$('#submit').enable(true);
+			}
+		});
+		
+		$('#id').bind('change',function(){
+		
+			var str = $.trim($(this).val());
+			
+			// \w は [a-zA-Z0-9] と等価
+			if(str.match(/^[\w]{5,255}$/)){
+				$.bAjax({
+					'url': "/api/valid-id",
+					'data': {'val': str },
+					'success': function(obj){
+						if(obj['status']){
+							$('#validId').html('');
+							$('#submit').enable(true);
+						}else{
+							$('#validId').html('<li>このIDは使用されています。</li>');
+							$('#submit').enable(false);
+						}
+					}
+				});
+			}else{
+				$('#validId').html('<li>IDは5文字以上の英数字で入力して下さい。</li>');
+				$('#submit').enable(false);
+			}
+		});
+		
+		$('#pass1').bind('change',function(){
+		
+			if(!$(this).val().match(/^[\w]{5,255}$/)){
+				$('#validPass').html('<li>Passは5文字以上の英数字で入力して下さい。</li>');
+				$('#submit').enable(false);
+			}else{
+				$('#validPass').html('');
+				$('#submit').enable(true);
+			}
+		});
+		
+		$('#pass2').bind('change',function(){
+		
+			if($(this).val() != $('#pass1').val() ){
+				$('#validEquals').html('<li>確認用パスワードが違います。</li>');
+				$('#submit').enable(false);
+			}else{
+				$('#validEquals').html('');
+				$('#submit').enable(true);
+			}
+		});
+		
+	});
+	</script>
+{/literal}
+</div>
+
+<div class="contents">
+	memo<br />
+	<br />
+	idにAjaxバリデーション(重複チェック)付き。<br />
+	細かい動作はとりあえず置いておく。<br />
+	将来的には、FormをjQueryオブジェクト化するような感じだろうか? <br />
+	Zend_Validateクラスのjs移植っぽいコードを書かないとダメなんだけど面倒。<br />
+	<br />
+	※フォームの要素と要素の相対位置が変わるのはデザイン的に不快。<br />
+	CSSで固定すること。<br />
+	<br />
+	入力中にエラーが出続けるのは不快なので、判定のイベントは「change」だけで良い。<br />
+	「バリデーション成功」の状態もわかるようにする。<br />
+	<br />
+	<br />
+	自動生成されたjsonオブジェクト<br />
+	{$json}<br />
+</div>

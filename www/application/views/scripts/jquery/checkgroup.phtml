@@ -1,0 +1,36 @@
+<div class="contents">
+
+<h3 class="title">check group</h3>
+
+	全選択、全解除ボタン。<br />
+	[shift]を押しながらで範囲選択。<br />
+	<br />
+	<input id="switch" type="button" value="toggle"/><br />
+	
+	-----------<br />
+	
+	<form id="form1" action="">
+{section start=0 loop=10 name='section1'}
+	{assign var='_id' value=$smarty.section.section1.index}
+		<input type="checkbox" name="item['{$_id}']" id="item{$_id}" class="field" />
+			<label for="item{$_id}" class="field">check{$_id}</label><br />
+{/section}
+		<br />
+		
+		<input type="submit" /><br />
+	
+	</form>
+
+</div>
+
+{literal}
+<script type="text/javascript">
+	$(document).ready(function (){
+		var target = $('#form1 > input[type=checkbox]');
+		$('#switch').toggle(
+			function(){ target.attr('checked',true); },
+			function(){ target.attr('checked',false); }
+		);
+	});
+</script>
+{/literal}

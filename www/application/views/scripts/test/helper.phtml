@@ -1,0 +1,11 @@
+<div class="contents">
+	test helper
+	
+	{php}
+		$view = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->view;
+		
+		$helper = new Zend_View_Helper_FormFile();
+		$helper->setView($view);
+		echo $helper->FormFile('hoge');
+	{/php}
+</div>

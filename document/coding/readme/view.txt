@@ -1,0 +1,49 @@
+本来のディレクトリの構想は
+views
+	-	layout
+	-	scripts
+	-	helper
+だが、Smarty　でディレクトリの指定が煩雑になるために
+helper ファイルは　script/inc に置く事にした。
+
+
+規約
+	テンプレートの一つのファイル内でタグがきちんと閉じられているべき。
+	JavaScript は、各テンプレートの下部に書く。
+	拡張子が必要な場合はハイフンに置き換える　test.xml →　test-xml.phtml
+	ファイル数が多い場合はディレクトリを掘り、「 /profile/edit/index 」のように分割
+	(　この場合、コントローラーは「Profile_EditController - Profile/EditController.php」のようになる　)
+	フォームを作成する場合、要素のname属性とvalue属性の変数名は一致させること。
+		ex) <input type="text" name="hoge1" value="{$hoge1}" />
+
+		代替案) <input type="text" name="hoge1" value="{$params.hoge1}" />
+
+
+Zend_View_Helper で使う物は Smarty Plugin　を設置して呼び出す。
+その際には必ず smarty_helper_loader を使うこと。
+
+
+ファイルは、依存関係がわかるような、ディレクトリ構造で設置する。
+iMenu.tpl、　iResult.tpl ...　等のようなプレフィックスは不要で、
+inc/menu.tpl inc/result.tpl　のように一つのフォルダにまとめる。
+
+
+アクション名と対応するファイル名を使用して、view->render()　は極力使わないようにする。
+renderScriptは論外。
+
+
+Smarty の プラグイン中のエスケープをどうするか課題。
+Zend_View っぽく Budori_Smarty->escape() のようにすると、後方互換が無くなる。
+基本的に、プラグインにパラメータで渡した変数は、二次配列までエスケープされる。
+問題は、それ以上の配列とオブジェクト。
+考え保留中。
+
+
+
+
+テンプレート変数は clearVars() でリセットしたい時があるので、定数的な物は config (smarty.ini)にまとめておく。
+
+
+zend_action で呼び出したコントローラの中に
+$this->appendHeadLink('/style/inchoge.css');
+とか書いたら汎用性高いかもしんない。

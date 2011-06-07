@@ -1,0 +1,10 @@
+<div class="contents">
+	
+	<h3 class="title">エラーが発生しました。</h3>
+</div>
+
+{if 'display_errors'|ini_get && !$exception|is_null}
+<div class="contents">
+	{include file='error/inc/exception.phtml' exception=$exception}
+</div>
+{/if}

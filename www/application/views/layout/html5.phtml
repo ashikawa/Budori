@@ -1,0 +1,95 @@
+<!doctype html><!-- simplified doctype works for all previous versions of HTML as well -->
+<html lang="ja" class="no-js">
+<head>
+	<meta charset="utf-8">
+	<title>title</title>
+	<meta name="description" content="Easy HTML5 Template">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<!-- apple touch icon 57x57 -->
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<!-- Main style sheet. Change version number in query string to force styles refresh -->
+	<link rel="stylesheet" href="css/screen.css?v=1.0">
+</head>
+<body class="portal">
+	
+    <header id="headerSection">
+ 		
+        <hgroup>
+			<h1>main title</h1>
+			<h2>sub title</h2>
+        </hgroup>
+ 		
+		<nav>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Services</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+	</header><!-- /#headerSection -->
+	
+	<div id="main">
+		
+		<section class="section1">
+			<header>
+				<h1>page sub title</h1>
+			</header>
+			
+			<p>Some content...</p>
+			
+			<!-- The h2 below is a sub heading relative to the h1 in this section, not for the whole document -->
+			<h2>Demonstrating EM and STRONG</h2>
+			
+			<!-- "strong" is used for SEO and contextual hierarchy -->
+			<p><strong>This text will have more importance (SEO-wise and contextually)</strong></p>
+			
+			<!-- "b" is used for stylistic offset of text that's NOT important contextually -->
+			<p><b>This text has visual importance but has no contextual or SEO importance</b></p>
+			
+			<!-- "em" is used for colloquial-style emphasis -->
+			<p>This is a <em>very</em> colloquial expression.</p>
+			
+			<!-- There can be multiple footers on each page -->
+			<!-- Secondary headers and footers don't necesarily need ids; they can be targeted via context (i.e. ".hs1 footer") -->
+			<footer>
+				<!-- incite a riot: http://24ways.org/2009/incite-a-riot -->
+				<p>Author: <cite>Louis Lazaris</cite></p>
+			</footer>
+			
+		</section><!-- .hs1 -->
+		
+		<!-- This is another section; doesn't have header/footer because it's not required -->
+		<section class="hs2">
+			<h1>This is another section</h1>
+			<p>This is some dummy content</p>
+		</section><!-- .hs2 -->
+		
+	</div><!-- #main -->
+	
+	<aside id="sidebar">
+		<p>Sidebar content</p>
+	</aside>
+ 	
+	<footer id="f1">
+		<p>copyright &copy; year</p>
+	</footer><!-- #f1 -->
+	
+<!-- Remote jQuery with local fallback; taken from HTML5 Boilerplate http://html5boilerplate.com -->
+<!-- jQuery version might not be the latest; check jquery.com -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.4.4.min.js"%3E%3C/script%3E'))</script>
+ 
+<script>
+var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+(function(d, t) {
+	var g = d.createElement(t),
+		s = d.getElementsByTagName(t)[0];
+	g.async = true;
+	g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	s.parentNode.insertBefore(g, s);
+})(document, 'script');
+</script>
+</body>
+</html>

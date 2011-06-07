@@ -1,0 +1,20 @@
+
+ロギングは、基本的に Controller、Helper、Plugin だけで行う。
+(モデルからはメッセージ返すとか例外飛ばすとかして下さい。)
+
+--- priorities ---
+EMERG     // Emergency: system is unusable
+ALERT     // Alert: action must be taken immediately
+CRIT      // Critical: critical conditions
+ERR       // Error: error conditions
+WARN      // Warning: warning conditions
+NOTICE    // Notice: normal but significant condition
+INFO      // Informational: informational messages
+DEBUG     // Debug: debug messages
+
+使用するのは WARN と INFO だけで十分です。
+
+WARN	ユーザーの誤操作等
+INFO	コーダーが必要な情報
+
+深刻なエラーは例外を飛ばして、ErrorControllerが処理。(error_logに書き出し)

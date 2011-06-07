@@ -1,0 +1,20 @@
+<div class="contents">
+
+	<h3 class="title">mail</h3>
+	メール送信テスト
+	
+	<form method="post">
+		
+		body<br />
+		{include assign='_charset' file='test/inc/charset.phtml'}
+		<textarea name="body" class="resizeable" rows="10">{$body|default:$_charset}</textarea><br />
+		
+		<input type="submit" />
+	</form>
+
+</div>
+
+<div class="contents">
+ ※Operaで謎の実態参照。<br />
+ 全角記号もエスケープされている状態は正しいのか?<br />
+</div>

@@ -1,0 +1,27 @@
+<div class="contents">
+	
+	<h3 class="title">アカウント作成</h3>
+	以下の内容でよろしいですか？<br>
+	
+	<dl class="table">
+		<dt>name:</dt>
+		<dd>{$filtered.name}</dd>
+		
+		<dt>id:</dt>
+		<dd>{$filtered.id}</dd>
+		
+		<dt>pass:</dt>
+		<dd>{$filtered.pass1}</dd>
+		
+	</dl>
+	
+	<form action="/{$controller}/" method="post">
+		{hidden param=$filtered}
+		<input type="submit" value="戻る" />
+	</form>
+	
+	<form action="/{$controller}/end" method="post">
+		{hidden param=$filtered token=$transaction}
+		<input type="submit" value="登録" />
+	</form>
+</div>

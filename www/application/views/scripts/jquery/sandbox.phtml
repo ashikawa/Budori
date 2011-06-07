@@ -1,0 +1,106 @@
+<div class="contents">
+	<h3 class="title">sand box</h3>
+	
+	<div class="select">
+		<ul id="options">
+		</ul>
+		<input type="hidden" name="s1" />
+	</div>
+
+	<div id="hoge" class="moge">
+		hoge
+	</div>
+	
+	
+	<ul id="lists">
+		<li id="1">1</li>
+		<li id="2">2</li>
+		<li id="3">3</li>
+		<li id="4">4</li>
+	</ul>
+<!--//end div#contents--></div>
+
+{literal}
+<script type="text/javascript">
+	$(document).ready(function (){
+		
+		//$("#2").before($("#3"));
+		$("#3").after($("#2"));
+		
+		
+		$("#hoge").bind('call',function(){
+			console.log('呼び出し違っても　同じオブジェクトで反応');
+		});
+		$("#hoge").trigger('call');
+		$(".moge").trigger('call');
+		
+		
+		
+		var list = [
+			{key:'color1', value:'red',		img:'/img/colors/red.gif'},
+			{key:'color2', value:'green',	img:'/img/colors/green.gif'},
+			{key:'color3', value:'blue',	img:'/img/colors/blue.gif'},
+			{key:'color4', value:'white',	img:'/img/colors/white.gif'},
+			{key:'color5', value:'black',	img:'/img/colors/black.gif'}
+		];
+		$('ul#options').empty();
+		
+		$.each(list, function(i,m){
+			$('ul#options').append('<li rel="'+i+'" style="background-image:url('+m.img+');background-repeat:no-repeat;padding:0 0 0 17px;">'+m.value+'</li>');
+		});
+		
+		$('ul#options > li').bind('click',function(){
+			$('ul#options > li').removeClass('selected');
+			$(this).addClass('selected');
+			var i = $(this).attr('rel');
+			$('input[name=s1]').val(list[i].key);
+		});
+		
+		console.log($.getUrlVars());
+		
+		
+		
+		function makeString( items )
+		{
+			var op = function(head, arr){
+				
+				var ret = [];
+				if( head.length != 0 ){
+					for(var i=0; i<arr.length; i++){
+						for(var j=0; j<head.length; j++){
+							ret.push( arr[i] + head[j] );
+						}
+					}
+					return ret;
+				}
+				return arr;
+			}
+			return $.accumlate(op,[''],items.reverse());
+		}
+		
+		var items = [
+			['A1','A2','A3'],
+			['B1','B2'],
+			[],
+			['D1','D2','D3']
+		];
+		
+		console.log(makeString( [].concat(items) ));
+		console.log($.makeProduct( [].concat(items) ));
+		
+		
+		
+		var nums = [1,2,3,4,5,6,7,8,9,10];
+		console.log($.sigma(nums));
+		
+		
+		
+		
+		//新規DOM要素の作成
+		var newItem = $('<li>').html('hoge')
+						.addClass('moge');
+		
+		$('#lists').append(newItem);
+	});
+</script>
+{/literal}

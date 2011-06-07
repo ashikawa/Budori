@@ -1,0 +1,51 @@
+<div class="contents">
+
+<h3 class="title">zip</h3>
+
+zip code (東京都のみ)<br />
+<input type="text" id="zip" style="width: 200px;" /><br />
+<div id="ziptarget" class="contents" style="display: none;">
+	<a id="close">close</a>
+	<ul id="body"></ul>
+</div>
+<input type="text" id="address" style="width: 200px;" /><br />
+
+<!--//end div#jquery--></div>
+
+{literal}
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	$('#close').click(function(){
+		$('#ziptarget').hide("first");
+	});
+	
+	$('#ziptarget').bind('success',function(e,obj){
+		
+		var target = $(this).children("ul");
+		
+		for(var i in obj){
+			target.append('<li>' + obj[i] + '</li>');
+		}
+		
+		target.children("li").bind('click',function(){
+			$('#address').val($(this).html());
+			$('#ziptarget').hide("first");
+		});
+		
+		$(this).show('first');
+	});
+	
+	$('#zip').bind('change',function(){
+		$.bAjax({
+			'url': "/api/zip",
+			'data': {'code':$(this).val()},
+			'success': function(obj){
+				$('#ziptarget').trigger('success',obj);
+			}
+		});
+	});
+});
+</script>
+{/literal}

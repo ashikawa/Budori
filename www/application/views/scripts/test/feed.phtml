@@ -1,0 +1,14 @@
+<div class="contents">
+
+	<h3 class="title">feed</h3>
+	
+	<a href="{$feed->link}">{$feed->title}</a><br />
+	<hr />
+{foreach from=$feed item='item' name='loop1'}
+	<div class="feeditem contents">
+		{$item->description}
+	</div>
+{/foreach}
+	{$feed->copyright}<br />
+
+</div>

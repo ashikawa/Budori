@@ -1,0 +1,6 @@
+{assign var="id" value=$id|default:false}
+<ul class="errors"{if $id} id="{$id}"{/if}>
+{foreach from=$value item='string' name='loop1' nofilter}
+	<li>{$string}</li>
+{/foreach}
+</ul>

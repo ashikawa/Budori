@@ -1,0 +1,14 @@
+<div id="bench" class="contents">
+<h3 class="title">bench</h3>
+
+<table>
+{foreach from=$bench->getProfiling() item="result" name="bench"}
+<tr>
+	<th>{$result.name}</th>
+	<td>{$result.diff}</td>
+	<td align="right">{$result.diff*100/$total|number_format:'2'}%</td>
+<tr>
+{/foreach}
+</table>
+
+</div>

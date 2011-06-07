@@ -1,0 +1,3 @@
+
+/script/image.sh をcronに登録して、古い画像を定期的に削除する。(root権限で)
+/etc/logrotate.d/circle にapplication.logの設定をする。

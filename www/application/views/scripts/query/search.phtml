@@ -1,0 +1,13 @@
+<div class="contents">
+	<h3 class="title">search</h3>
+
+	{paginator class=$paginator script='helper/paginator_top.phtml'}
+	<dl class="table">
+{foreach from=$paginator item='_item' name='loop1'}
+		<dt>{$_item->code}</dt>
+		<dd>{$_item->pref} {$_item->city} {$_item->town}</dd>
+{/foreach}
+	</dl>
+	{paginator class=$paginator}
+
+</div>

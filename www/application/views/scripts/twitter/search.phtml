@@ -1,0 +1,14 @@
+<div class="contents">
+	
+	<h3 class="title">twitter search</h3>
+
+{*$result|var_dump*}
+
+{foreach from=$result item="_tweet"}
+<div>
+	<img alt="{$_tweet.from_user}" src="{$_tweet.profile_image_url}" style="float: left;"/>
+	<a href="http://twitter.com/#!/{$_tweet.from_user}">@{$_tweet.from_user}</a>
+	<p>{$_tweet}{*$_tweet.text nofilter*}</p>
+</div>
+{/foreach}
+</div>

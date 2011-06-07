@@ -1,0 +1,25 @@
+<div class="contents">
+	<h3 class="title">calendear</h3>
+
+	to see<br />
+	<a href="http://rewish.org/javascript/jquery_calendar">
+		http://rewish.org/javascript/jquery_calendar
+	</a><br />
+	<br />
+	<div id='calendar'></div>
+	
+<!--//end div#contents--></div>
+
+{literal}
+<script type="text/javascript" src="/js/jquery.calendar.js"></script>
+<script type="text/javascript">
+	$(document).ready(function (){
+		$('#calendar').calendar(
+			{
+				'hideOther':true,
+				'events':{'2009-12-24':{'title':'クリスマスイブ','url':'http://google.com'}}
+			}
+		);
+	});
+</script>
+{/literal}

@@ -1,0 +1,27 @@
+<div class="contents">
+
+	拡張子を変更した場合の request headerの確認<br />
+	ルーティング設定済みなので、拡張子を変更してもアクセス可<br />
+	<br />
+{*
+	<dl class="table">
+		<dt>accept</dt>
+		<dd>{$accept}</dd>
+	</dl>
+*}
+
+	<dl class="table">
+		<dt>拡張子</dt>
+		<dd>{$ext|default:'empty'}</dd>
+	</dl>
+	
+	<br />
+	
+	<dl class="table">
+{foreach from=$headers key='_key' item='_value' name='loop1'}
+		<dt>{$_key}</dt>
+		<dd>{$_value}</dd>
+{/foreach}
+	</dl>
+
+</div>

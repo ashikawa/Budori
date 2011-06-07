@@ -1,0 +1,24 @@
+<div class="paginater">
+{if $previous}
+	<span class="head"><a href="{url _p=$first}">first</a></span>
+	<span class="prev"><a href="{url _p=$previous}">&lt;</a></span>
+{else}
+	<span class="head">first</span>
+	<span class="prev">&lt;</span>
+{/if}
+{section start=$firstPageInRange loop=$lastPageInRange+1 name='range'}
+{assign var='_page' value=$smarty.section.range.index}
+{if $_page == $current}
+	<span class="link"><b>{$_page}</b></span>
+{else}
+	<span class="link"><a href="{url _p=$_page}">{$_page}</a></span>
+{/if}
+{/section}
+{if $next}
+	<span class="next"><a href="{url _p=$next}">&gt;</a></span>
+	<span class="tail"><a href="{url _p=$last}">last</a></span>
+{else}
+	<span class="next">&gt;</span>
+	<span class="tail">last</span>
+{/if}
+</div>

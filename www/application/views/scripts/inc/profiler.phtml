@@ -1,0 +1,23 @@
+<div id="profiler" class="contents">
+<h3 class="title">profiler</h3>
+
+{foreach from=$profile item="result" name="loop1"}
+<dl class="table">
+	<dt>query</dt>
+	<dd>{$result->getQuery()}</dd>
+{assign var="_params" value=$result->getQueryParams()}
+{if $_params}
+	<dt>params</dt>
+	<dd>
+Array({foreach from=$_params key="key" item="value" name="loop2"}
+'{$key}'&nbsp;=&gt;&nbsp;'{$value}',&nbsp;
+{/foreach})
+	</dd>
+{/if}
+	<dt>time</dt>
+	<dd>{$result->getElapsedSecs()} (msec)</dd>
+</dl>
+<br />
+{/foreach}
+
+</div>

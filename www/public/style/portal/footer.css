@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+#footer {
+	padding: 10px 0 10px 0;
+	font-size:90%;
+}
+
+#footer ul#fNavi{
+	padding: 5px;
+	text-align: center;
+}
+
+#footer ul#fNavi li{
+	display: inline;
+	margin: 0 0 0 5px;
+	padding: 0 5px;
+	border-right: 1px solid #989898;
+}
+
+#footer ul#fNavi li.line{
+	padding-left: 10px;
+	border-left: 1px solid #989898;
+}
+
+#footer ul#fNavi li a {
+	color:#989898;
+}
+
+#footer p.copyright {
+	text-align: center;
+	font-size:90%;
+}

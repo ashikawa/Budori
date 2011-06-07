@@ -1,0 +1,21 @@
+<div class="contents">
+
+<h3 class="title">autocomplete</h3>
+
+mobile domain autocomplete<br />
+<input type="text" id="autocomplete" style="width: 200px;" /><br />
+	
+</div>
+
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+var domains = {$domains|@js_encode};
+{literal}
+$(document).ready(function(){
+	$("#autocomplete").autocomplete(domains,{
+		'highlight':function(value, term){
+				return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "i"), "<strong>$1</strong>");
+			}});
+});
+{/literal}
+</script>

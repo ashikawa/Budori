@@ -1,0 +1,41 @@
+<div class="contents">
+	<h3 class="title">apply</h3>
+	
+<!--//end div#contents--></div>
+
+{literal}
+<script type="text/javascript">
+	
+	$(document).ready(function (){
+		
+		function Super()
+		{
+			this.arg1 = 1;
+			
+			this.run = function()
+			{
+				console.log(this.arg1);
+			}
+		}
+		
+		var class1 = new Super();
+		class1.run();
+		
+		
+		function Child()
+		{
+			Super.apply(this, arguments);
+			this.arg1 = 100;
+			console.log('created!');
+		}
+		
+		var class2 = new Child();
+		class2.run();
+		
+		var moge = new Child();
+		
+		console.log('moge.run');
+		moge.run();
+	});
+</script>
+{/literal}

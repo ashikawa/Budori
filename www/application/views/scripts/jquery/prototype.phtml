@@ -1,0 +1,40 @@
+<div class="contents">
+	<h3 class="title">prototype</h3>
+	
+<!--//end div#contents--></div>
+
+{literal}
+<script type="text/javascript">
+	$(document).ready(function (){
+	
+		function SimpleConstructor() {}
+		
+		var obj = new SimpleConstructor();
+		
+		function PropSetConstructor() {
+			this.prop1 = 10;
+			this.prop2 = 20;
+		}
+		
+		var obj1 = new PropSetConstructor();
+		console.log(obj1.prop1);    // 10 と表示される。
+		
+		
+		var obj2 = new PropSetConstructor();
+		console.log(obj2.prop1);    // 10 と表示される。
+		
+		
+		console.log('---------------------------');
+		
+		
+		
+		function PrototypeTestConstructor() {}
+		
+		// prototype オブジェクトに prop1 というプロパティを設定。
+		PrototypeTestConstructor.prototype.prop1 = 30;
+		
+		var obj = new PrototypeTestConstructor();
+		console.log(obj.prop1);    // 30 と表示される。
+	});
+</script>
+{/literal}

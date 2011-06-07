@@ -1,0 +1,29 @@
+<div class="contents">
+	
+	<h3 class="title">google news</h3>
+
+	表示パターンは2種類しか選べないらしい。<br />
+	<div id="news">
+		<!-- target area -->
+	</div>
+</div>
+{literal}
+<!-- Google News Element Code -->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+google.load("elements", "1", {packages : ["newsshow"]});
+google.setOnLoadCallback(function() {
+	var options = {
+			"queryList" : [{
+				"title" : "world news",
+				"topic" : "w"
+			}],
+		    "format" : "300x250"
+		}
+	var content = document.getElementById('news');
+	var newsShow = new google.elements.NewsShow(content,options);
+	}
+);
+</script>
+{/literal}

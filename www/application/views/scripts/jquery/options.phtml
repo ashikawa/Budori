@@ -1,0 +1,60 @@
+<div class="contents">
+
+<h3 class="title">options</h3>
+
+Ajaxで3つ連動option。<br />
+一応、無限に増やせる。<br />
+optionだけではなく、別のイベントも bind できる作り。<br />
+<br />
+
+<div class="options">
+	<select id="left">
+		<option>loading...</option>
+	</select>
+	<select id="center">
+		<option>loading...</option>
+	</select>
+	<select id="right">
+		<option>loading...</option>
+	</select>
+</div>
+<!--//end div#jquery--></div>
+
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$('select').bind('beforeSend',function(){
+		$(this).setOption({'0':'Loading...'});
+	}).bind('success', function(e, obj){
+		$(this).setOption($.extend({'0':'----'},obj )).enable( (obj != null) );
+	});
+	 
+	$('#center').bind('change success',function(){
+		$.bAjax({
+			'url': "/api/sample",
+			'data': {'key':$(this).val()},
+			'success': function(obj){
+				$('#right').trigger('success',obj);
+			}
+		});
+	});
+	
+	$('#left').bind('change success',function(){
+		$.bAjax({
+			'url': "/api/sample",
+			'data': {'key': $(this).val()},
+			'success': function(obj){
+				$('#center').trigger('success',obj);
+			}
+		});
+	});
+	$.bAjax({
+		'url':'/api/sample',
+		'success' : function(obj){
+			$('#left').trigger('success',obj);
+		}
+	});
+	
+});
+</script>
+{/literal}

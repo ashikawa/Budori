@@ -1,0 +1,21 @@
+
+<div class="mecab contents">
+	
+	<h3 class="title">mecab</h3>
+	
+	<form action="/{$controller}/{$action}" method="POST">
+		<textarea name="string" class="resizeable">{$string}</textarea>
+		<input type="submit" />
+	</form>
+</div>
+
+{if !empty($node|smarty:nodefaults)}
+<div class="contents">
+	<dl class="table">
+{foreach from=$node item='item' name='loop1'}
+		<dt>{$item->getSurface()}</dt>
+		<dd>{$item->getFeature()}</dd>
+{/foreach}
+	</dl>
+<!--//end div#youtube--></div>
+{/if}

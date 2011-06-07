@@ -1,0 +1,38 @@
+○考える事。
+
+携帯サイト、iPhoneの対応サイトを考える。
+	プロジェクトの分岐 or モジュラディレクトリの使用
+	model, library　の共通化。
+	
+	library はディレクトリをプロジェクト外に移動して、application.ini でインクルード。
+	
+	model の扱いはプロジェクト毎に共通化?
+		Account とかは library に入れてもいいかもしれない。
+		そもそも、　model と library/Neri の区別が微妙についていないのが問題。
+
+
+
+ パスワードのハッシュ化
+	Member(_Profile), Account, Auth
+	に共通のハッシュ関数を設定する方法を考える。
+	
+	Account と Profile テーブルの分離?
+	
+	overwrite
+	Zend_Db_Table_Row::_insert() / _update()
+	
+	Member -> Member_Profile -> Table_Member -> Table_Row
+	Account -> Table_Member -> Table_Row
+	Auth -> dbSelect -> ....?
+
+実際のプロジェクトで使用する際にやっておく事
+		
+1. doc にcateogryを全部書く。
+	その他。
+
+	
+	
+	
+	
+その他	
+<link rel="apple-touch-icon" href="http://ja.wikipedia.org/apple-touch-icon.png" />

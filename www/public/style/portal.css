@@ -1,0 +1,78 @@
+@charset "UTF-8";
+@import "portal/sidebar.css";
+@import "portal/footer.css";
+
+<!-- 共通パーツ -->
+
+span.timestamp{
+  font-size: 70%;
+  font-weight: normal;
+  letter-spacing: 0;
+}
+
+div.contents{
+	margin: 5px 0 5px 0;
+	padding: 10px;
+	border: 1px solid #B9B8B4;
+	
+	-webkit-box-shadow: 1px 1px 3px #B9B8B4;
+	-moz-box-shadow: 1px 1px 3px #B9B8B4;
+	box-shadow: 1px 1px 3px #B9B8B4;
+}
+
+div.grippie {
+	background:#EEEEEE url('/img/grippie.png') no-repeat scroll center 2px;
+	border-color:#DDDDDD;
+	border-style:solid;
+	border-width:0pt 1px 1px;
+	cursor:s-resize;
+	height:9px;
+	overflow:hidden;
+}
+
+div.logbox{
+	border: solid 1px #808080;
+	background-color: #F0FFFF;
+	width: 400px;
+	height: 120px;
+	padding: 0.5em;
+	overflow: auto;
+}
+
+ul.errors li{
+  color: #FF5555;
+}
+
+dl.table {
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background-color: #F0FFFF;
+}
+
+dl.table dt {
+	margin: 0;
+	padding: 0.2em 0;
+	border-top: 1px solid #ccc;
+	float: left;
+	display: inline;
+	width: 10em;
+	text-indent: 10px;
+}
+
+dl.table dd {
+	margin-left:10em;
+	padding: 0.2em 10px;
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+	background-color: #FFFFFF; 
+}
+
+.must{
+	color: #FF0000;
+}
+
+.inline
+{
+	display: inline;
+}

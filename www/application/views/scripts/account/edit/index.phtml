@@ -1,0 +1,23 @@
+<div class="contents">
+	<h3 class="title">アカウント編集</h3>
+	
+	<form action="/{$controller}/conf" method="post">
+		name:<br />
+		<input type="text" name="name" value="{$name}"/> <br />
+		{messages value=$messages.name}
+		
+		mixi:<br />
+		<input type="text" name="mixi_id" value="{$mixi_id}"/> <br />
+		{messages value=$messages.mixi_id}
+		
+		pass:<br />
+		<input type="password" name="pass1" value="{$pass1}" /><br />
+		{messages value=$messages.equals}
+		
+		conf<br />
+		<input type="password" name="pass2" value="{$pass2}" /><br />
+		{messages value=$messages.pass1}
+		
+		<input type="submit" /> <br />
+	</form>
+</div>

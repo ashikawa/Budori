@@ -1,0 +1,79 @@
+{xml version="1.0" encoding=#CHARSET#}
+{doctype}
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+{format indent="\t" stripline=true}
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset={#CHARSET#}" />
+	<meta http-equiv="Content-Language" content="ja" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta name="author" content="{#AUTHER#}" />
+	<meta name="robots" content="index,follow" />
+	{head_meta}
+	<link href="mailto:{#MAILTO#}" rev="made" />
+	<link href="http://{$smarty.server.SERVER_NAME|default:""}" rel="start" />
+	<link href="/style/reset.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="/style/layout.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="/style/common.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="/style/portal.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="/style/thickbox.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="/favicon.ico" rel="shortcut icon" />
+	{head_link}
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.budori.js"></script>
+	<script type="text/javascript" src="/js/jquery.textarearesizer.js"></script>
+	<script type="text/javascript" src="/js/jquery.thickbox.js"></script>
+	<script type="text/javascript" src="/js/jquery.field.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
+	<title>{head_title}</title>
+{/format}
+</head>
+<body class="{$controller|strtr:"_":"-"}">
+<div id="wrapper">
+	
+	<div id="header">
+		
+		<h1><a href="/">{#TITLE#}</a></h1>
+		
+		{#SUB_TITLE#}<br />
+		
+	</div>
+	
+	<div id="pankuzu">
+		{pankuzu}
+	</div>
+	
+	{include file='inc/nomore.phtml'}
+	
+	<div id="middle">
+		<div id="main">
+			{zend_layout}
+		</div>
+		
+		<div id="sidebar">
+			{zend_action action='member' controller='inc_side'}
+			{zend_action action='search' controller='inc_side'}
+			{zend_action action='menu' controller='inc_side'}
+			{zend_action action='version' controller='inc_side'}
+			{zend_action action='twitter' controller='inc_side'}
+		</div>
+	</div>
+	
+	<div id="footer">
+		{zend_layout call='profile'}
+		{zend_layout call='bench'}
+
+		<ul id="fNavi">
+			<li class="line"><a href="/docs/index.html">docs</a></li>
+			<li><a href="/info/phpinfo">phpinfo</a></li>
+			<li><a href="/info/gdinfo">gdinfo</a></li>
+			<li><a href="/info/hoge">hoge</a></li>
+		</ul>
+		<p class="copyright">{#COPYRIGHT#}</p>
+	<!--//end div#footer--></div>
+</div>
+
+</body>
+</html>

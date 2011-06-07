@@ -1,0 +1,33 @@
+<div class="contents">
+	<h3 class="title">data</h3>
+	
+	jQuery.data();　の挙動確認<br />
+	
+	<ul>
+		<li>item1</li>
+		<li>item2</li>
+	</ul>
+	
+	<div id='ans'>ans</div>
+	
+<!--//end div#contents--></div>
+
+{literal}
+<script type="text/javascript">
+	$(document).ready(function (){
+		
+		// 指定が違っても同じDOMオブジェクトを指す、という確認。
+		$('li:first').click(
+			function(){
+				$(this).data('test',1);
+			}
+		);
+		
+		$('ul > li:first').click(
+			function(){
+				$('#ans').text($(this).data('test'));
+			}
+		);
+	});
+</script>
+{/literal}

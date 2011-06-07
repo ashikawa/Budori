@@ -1,0 +1,92 @@
+<div class="contents">
+
+<h3 class="title">tile</h3>
+
+@todo 作業中
+<div id="tile"></div>
+
+
+<!--//end div#contents--></div>
+
+{literal}
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/jquery.bThumbnail.js"></script>
+<script type="text/javascript">
+;(function(jQuery) {
+	jQuery.fn.extend({
+		bTile: function(options){
+			op = jQuery.extend(
+				jQuery.fn.bTile.defaults,
+				options);
+			
+			
+			jQuery(this).css({
+				'position':'relative',
+				'width':op.width + 'px',
+				'height':op.height + 'px',
+				'border':'1px solid #99cccc',
+				'overflow':'hidden'
+			});
+			
+			var pWidth	= op.width / op.cols;
+			var pHeight	= op.height / op.rows;
+			
+			for(var i=0; i<op.cols; i++){
+				
+				for(var j=0; j<op.rows; j++){
+					
+					var parts = jQuery('<div />')
+								.addClass('bTile-parts')
+								.css({
+									'position':'absolute',
+									'top':j*pHeight,
+									'left':i*pWidth,
+									'width':pWidth,
+									'height':pHeight
+								});
+					
+					var img = jQuery('<img />').attr('src',op.img)
+									.css({
+										'position':'absolute',
+										'top':j * -1 * pHeight,
+										'left':i * -1 * pWidth,
+										'clip':'rect('+(j*pHeight)+'px '+((i+1)*pWidth)+'px '
+														+((j+1)*pHeight)+'px '+(i*pWidth)+'px)'
+									});
+					
+					parts.append(img);
+					
+					jQuery(this).append(parts);
+				}
+			}
+			
+			$('div:last-child', this).remove();
+			
+			return this;
+		}
+	});
+	
+	jQuery.fn.bTile.defaults = {};
+})(jQuery);
+
+
+$(document).ready(function(){
+	$('#tile').bTile({
+		'width':300,
+		'height':300,
+		'rows':5,
+		'cols':5,
+		'img':'/img/tile.jpg'
+	});
+	$('div.bTile-parts').draggable({
+		'opacity': 0.5,			//ドラッグ時の不透明度
+		'cursor':'move',		//カーソル形状
+		'containment':'parent',	//移動範囲制限
+		'snap': true 
+	}).bind('dragstop',function(){
+		console.log($(this).position());
+	});
+	
+});
+</script>
+{/literal}

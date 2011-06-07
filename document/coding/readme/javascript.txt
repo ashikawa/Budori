@@ -1,0 +1,6 @@
+
+プラグイン作成の基礎は
+http://www.ibm.com/developerworks/jp/web/library/wa-aj-jquery6/index.html
+を参照。
+
+処理は、ビュースクリプトの下側に書く。(? 検討中)

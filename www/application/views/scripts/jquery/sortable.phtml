@@ -1,0 +1,78 @@
+<div class="contents">
+	
+	<h3 class="title">sottable</h3>
+	@to see {"http://docs.jquery.com/UI/API/1.8/Sortable"|link}
+	
+	<br />
+	<br />
+	要素入れ替え、ドラッグドロップ etc...<br />
+	DOMの稼動領域 (Grip部とかも) はレイアウト統一した方がいい気がする。<br />
+	<br />
+	
+	<ul class="sortable">
+		<li id="i1">
+			<span class="handle">Item 1 apple</span>
+			<span class="controller">
+				<span class="up">↑</span>
+				<span class="down">↓</span>
+			</span>
+		</li>
+		<li id="i2">
+			<span class="handle">Item 2 orange</span>
+			<span class="controller">
+				<span class="up">↑</span>
+				<span class="down">↓</span>
+			</span>
+		</li>
+		<li id="i3">
+			<span class="handle">Item 3 cherry</span>
+			<span class="controller">
+				<span class="up">↑</span>
+				<span class="down">↓</span>
+			</span>
+		</li>
+		<li id="i4">
+			<span class="handle">Item 4 banana</span>
+			<span class="controller">
+				<span class="up">↑</span>
+				<span class="down">↓</span>
+			</span>
+		<li id="i5">
+			<span class="handle">Item 5 lemon</span>
+			<span class="controller">
+				<span class="up">↑</span>
+				<span class="down">↓</span>
+			</span>
+		</li>
+	</ul>
+</div>
+
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+	
+	var options = {
+		handle:'span.handle',
+		start: function(event,ui){
+		},
+		stop: function(event,ui){
+			var data = [];
+			$(this).children("li").each(function(i,v){
+				data.push($(v).html());
+			});
+			//console.log(data);
+		}
+	};
+	$(".sortable").sortable( options );
+	$(".sortable span.controller span.up").bind('click',function(event,args){
+		li = $(this).parent().parent();
+		li.insertBefore(li.prev());
+	});
+	$(".sortable span.controller span.down").bind('click',function(event,args){
+		li = $(this).parent().parent();
+		li.insertAfter(li.next());
+	});
+});
+{/literal}
+</script>

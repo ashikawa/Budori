@@ -1,0 +1,40 @@
+<div class="contents amazon">
+	<h3 class="title">amazon api</h3>
+	
+	<a href="http://docs.amazonwebservices.com/AWSEcommerceService/2005-10-05/ApiReference/ItemLookupOperation.html">
+		amazon
+	</a>
+	
+	<form action="/{$controller}/{$action}">
+		<input name="query" type="text" value="{$query|default:''}" /><br />
+		<input type="submit" />
+	</form>
+</div>
+
+{if !empty($record)}
+<div class="contents result">
+	<dl class="table">
+{foreach from=$record item='result' name='loop1'}
+		<dt>
+			<img src="{$result->SmallImage->Url}" /> <br />
+		</dt>
+		<dd>
+			<ul>
+				<li>title: <a href="{$result->DetailPageURL}">{$result->Title}</a></li>
+				<li>auterh: {$result->Auther}</li>
+				<li>Manufacturer: {$result->Manufacturer}</li>
+<!-- 
+				<li>
+					Tracks:
+					<ul> 
+{foreach from=$result->Tracks item=track name='tracks'}
+						<li>{$track}</li>
+{/foreach}
+					</ul>
+ -->
+			</ul>
+		</dd>
+{/foreach}
+	</dl>
+<!--//end div#result--></div>
+{/if}

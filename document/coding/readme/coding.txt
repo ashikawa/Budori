@@ -1,0 +1,98 @@
+必読
+http://framework.zend.com/manual/ja/coding-standard.php-file-formatting.html
+http://framework.zend.com/manual/ja/coding-standard.naming-conventions.html
+http://framework.zend.com/manual/ja/coding-standard.coding-style.html
+
+タブは使っても良い気がします。
+
+get、setで始まるメソッドはアクセサ以外に使わないようにする
+アクセサ以外なら
+	getElementById($id);
+ではなく、　
+	searchElement($id)
+や
+	findElement($id)
+等。( 結果が一つなら find 、複数はsearch ? )
+
+5文型を意識すると楽。
+ex)
+	$S->V();
+	$S->V($C);		or $S->VC();
+	$S->V($O);
+	$S->V($O, $O);
+	$S->V($O, $C);
+
+
+データに近いクラスは CRUD( create、 read(find ?)、 update、  delete(remove ?) ) をでメソッド名をある程度統一。
+
+
+1.9.0から、抽象クラスとインターフェースの命名規則が変わったが、しばらくは旧来のままで良いとする。
+
+
+関数は(Smartyプラグイン以外)作らない。
+
+Util
+クラス名に'Util'が含まれているクラスはインスタンス生成不可、メソッドが全て static　とする。
+
+可能な限り、無名関数や  eval, extract, create_function は使わないように。(コード追うのが面倒になるから。grep殺し)
+
+
+クラスのメソッド、関数は引数は2つまで、名前には動詞(英語)を含める。
+	$model->api($hoge, $moge, $hage, $fuge ...... );
+
+メソッドの引数で、添え字に意味のある連想配列は受け取らないようにする
+	$input = array( 'hoge' => ..., 'moge' => .... );
+	$model->method($input);
+
+引数の最大は、通常3個まで。
+
+
+※設定を外部化したいクラスのコンストラクタはこの限りではない....(?)。
+	new Hoge( $config );
+
+代わりにメンバ使うとか
+	$model->setHoge($hoge)
+			->setMoge($moge)
+			->method();
+
+メンバの操作(set)はとりあえず
+	return $this;
+をしておく。
+
+
+
+
+Model と Lib の線引きをどうするか。
+別プロジェクトで使用可能		-> Budori ライブラリ。
+Budori ライブラリの具象化 	-> Neri ライブラリ。
+固有のロジック				-> Model。
+
+
+5.3の無名関数、名前空間は仕様不可
+	無名関数	: クラス内で callback が必要なら、array_filter($input, array($this,'methodname'))
+	名前空間	: ZendFW 方式でやっている限り不要。
+
+
+
+
+
+定数は'_'から始めない。
+(　php5.3のparse_ini_file()関数で展開されないため。 http://d.hatena.ne.jp/Kenji_s/20091203/1259805303)
+ディレクトリ指定時に、最後に '/' を含めない。(?)
+
+※(起動ファイル以外の)PHPプログラムから定数は参照しない。
+参照は config ファイル経由。
+DEFINE -> config file -> bootstrap -> static var 
+
+
+SQLの記述では、ユーザーからの入力のような物は、名前つき変数。
+ある程度固定の物は、quoteして書く。
+
+
+
+
+Zend_Chache の chacheid 命名規則も考える。
+
+
+
+

@@ -1,0 +1,107 @@
+<div class="contents">
+	
+	<h3 class="title">map</h3>
+	
+    <div id="map_canvas" style="width:700px;height:500px"></div>
+
+</div>
+
+<!-- Google News Element Code -->
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key={$googleApiKey}"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+<!--
+{literal}
+
+function nltobr(text){
+	return text.replace(/\r\n/g, '<br />').replace(/(\n|\r)/g, '<br />');
+}
+
+function initialize( target ) {
+	if ( !GBrowserIsCompatible() ) {
+		throw "init error";
+	}
+	
+	var map = new google.maps.Map(document.getElementById(target));
+	var latitude  = 35.68392174283298;
+	var longitude = 139.7745569851917;
+	
+	var cl = google.loader.ClientLocation;
+	
+	if(cl !== null){
+		latitude  = cl.latitude;
+		longitude = cl.longitude;
+	}
+	
+	map.setCenter(new google.maps.LatLng( latitude,longitude ), 12);
+	map.addControl(new GLargeMapControl());
+	//map.addControl(new GMapTypeControl());
+	
+	
+	var polyOptions = {
+		strokeColor: "#FF0000",
+		strokeOpacity: 1.0,
+		strokeWeight: 2
+	};
+	
+	var poly = new google.maps.Polyline(polyOptions);
+	console.log(poly);
+//	poly.setMap(map);
+//	var path = poly.getPath();
+	
+	function createMarker(latlng, options) {
+		var marker = new GMarker(latlng);
+		
+		GEvent.addListener(marker,"click", function() {
+			var myHtml =  '<a href="http://twitter.com/#!/' + options.from_user + '" target="_blank">'
+						+	 '<img src="' + options.profile_image_url + '" align="left" style="margin:5px;" />'
+						+ '</a>'
+						+ '<b><a href="http://twitter.com/#!/' + options.from_user + '" target="_blank">'
+						+	 options.from_user
+						+ '</a></b><br />'
+						+ nltobr( options['text'] );
+			
+			map.openInfoWindowHtml(latlng, myHtml);
+		});
+		
+		return marker;
+	}
+	
+	function setMaker(){
+    	
+		var bounds		= map.getBounds();
+		var southWest	= bounds.getSouthWest();
+		var northEast	= bounds.getNorthEast();
+		
+		$.bAjax({
+			'url':'http://search.twitter.com/search.json',
+			'dataType':'jsonp',
+			'data':{
+					'q':'from:s_ashikawa',
+					'rpp':50
+				},
+			'success': function(obj){
+				$.each(obj.results, function(i, v){
+					if(!v.geo) return true;	// continue
+					var geo = v.geo.coordinates;
+					
+					var latlng = new GLatLng(geo[0],geo[1]);
+					map.addOverlay( createMarker(latlng, v) );
+					
+//					path.push(latlng);
+				});
+			}
+		});
+	}
+	
+	//GEvent.bind(map, "moveend", this, setMaker());
+	
+	setMaker();
+}
+$( function (){
+	initialize("map_canvas");
+} );
+{/literal}
+-->
+</script>
+  

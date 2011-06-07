@@ -1,0 +1,59 @@
+{xml version="1.0" encoding=#CHARSET#}
+{doctype}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+{format indent="\t" stripline=true}
+	<meta http-equiv="Content-Type" content="application/xhtml+xml;charset={#CHARSET#}" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="robots" content="index,follow" />
+	{head_meta}
+	<link href="/favicon.ico" rel="shortcut icon" />
+	<title>{head_title}</title>
+{literal}
+	<style type="text/css">
+	<![CDATA[
+		a:link {color:#3366ff;}
+		a:active {color:#3366ff;}
+		a:visited {color:#3366ff;}
+		a:hover {color:#3366ff;}
+	]]>
+	</style>
+{/literal}
+{/format}
+</head>
+<body class="{$controller|strtr:"_":"-"}">
+
+	<a name="top" id="top"></a>
+
+	<div id="wrapper" style="font-size:x-small;">
+		<div id="header" style="background-color: #F0FFFF;">
+			<h1 style="margin: 0;padding: 0;"><span style="font-size:x-small;font-weight:normal">
+				<a href="/">{#TITLE#}</a>
+			</span></h1>
+			
+			{#SUB_TITLE#}<br />
+			ヘッダー。
+		</div>
+		
+		<div id="pankuzu">
+			{pankuzu}
+		</div>
+		
+		<div id="menu">
+			{zend_action controller="inc" action="member"}
+		</div>
+		
+		<div id="main">
+{zend_layout}
+		</div>
+		
+		<div id="footer" style="background-color: #F0FFFF;">
+			{#COPYRIGHT#}<br />
+			フッター。
+		</div>
+		
+	</div>
+</body>
+</html>

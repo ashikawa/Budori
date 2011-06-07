@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+table.noborder,
+table.noborder tr,
+table.noborder tr td{
+	border: none;
+	float: inherit;
+}
+
+/**
+ * ----- js round -----
+ * 長さの単位はemで指定。　親要素の文字サイズの相対なので
+ * 画像もアニメーションに合わせて縮小される。
+ */
+ul.roundabout-holder {
+	background-color:#eee;
+	list-style: none;
+	width: 30em;
+	height: 20em;
+	margin: 1em auto;
+}
+li.roundabout-moveable-item {
+	height: 10em;
+	width: 10em;
+	cursor: pointer;
+}
+li.roundabout-moveable-item img {
+	height: 10em;
+	width: 10em;
+}
+li.roundabout-in-focus {
+	cursor: auto;
+}

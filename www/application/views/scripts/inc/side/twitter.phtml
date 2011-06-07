@@ -1,0 +1,30 @@
+<div class="contents">
+	
+	<div id="twitter-ticker">
+	    <div id="top-bar">
+		    <a href="http://twitter.com/{$users}" target="_blank">
+		    	<img src="{$profileImage}" />
+	    	</a>
+		    <a href="http://twitter.com/{$users}" target="_blank">
+				@{$users}
+			</a>
+			<p class="ajax-version">ajax twitter ver1.0</p><br />
+		</div>
+		
+		<div id="tweet-container">
+			<img src="/img/bigrotation2.gif" />
+		</div>
+	</div>
+	
+<script type="text/javascript" src="/js/jquery.bTwitter.js"></script>
+<script type="text/javascript">
+
+var tweetUsers = ['{$users}'];
+
+{literal}
+$(document).ready(function(){
+	$('#tweet-container').bTwitter({'users':tweetUsers});
+});
+{/literal}
+</script>
+</div>

@@ -1,0 +1,108 @@
+<div class="contents">
+
+	<h3 class="title">画像一覧</h3>
+
+	DBに登録されている画像を全て出力。<br />
+	キャッシュが無ければDBから画像を読み込む。<br />
+	キャッシュはcronで定期的に消す。<br />
+	<br />
+
+	<a href="/picture_upload">upload</a><br />
+	<a href="/{$controller}/thumbnails">thumbnails</a><br />
+	
+	↓サムネイルの作成はJavaScript<br />
+	ランダムで変わる。<br />
+	<br />
+
+	<table class="noborder">
+{foreach from=$rowset|@array_chunk:3 item='result1'}
+		<tr>
+{foreach from=$result1|@array_pad:3:false item='_result'}
+{if $_result}
+			<td>
+{url assign="_src" name="media_image" owner=$_result->owner key=$_result->key ext=$_result->ext}
+				<a href="{$_src}" title="pict" class="thickbox" rel="gallery">
+					<img class="thumbnail" src="{$_src}" style="display:none" />
+				</a>
+			</td>
+{else}
+			<td>&nbsp;</td>
+{/if}
+{/foreach}
+		</tr>
+{/foreach}
+	</table>
+	
+	<br />
+	<br />
+	
+	デザイン調整中。<br />
+	<ul class="round">
+{foreach from=$rowset item='_result'}
+{url assign='_src' name="media_image" owner=$_result->owner key=$_result->key ext=$_result->ext}
+		<li><a href="{$_src}"><img src="{$_src}" /></a></li>
+{/foreach}
+	</ul>
+</div>
+
+{literal}
+<script type="text/javascript" src="/js/jquery.bThumbnail.js"></script>
+<script type="text/javascript" src="/js/jquery.roundabout-1.0.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("img.thumbnail").bind('postRender',function(){
+			$(this).show();
+		}).bThumbnail({
+			'width':100,
+			'height':100,
+			'position': jQuery.fn.bThumbnail.position.random
+		});
+		$("ul.round").roundabout();
+	});
+</script>
+{/literal}
+
+
+
+<div class="contents">
+{literal}
+<pre>
+jQuery&nbsp;bThumbnail
+
+imgタグの一部を切り出して表示するプラグイン
+
+usage:
+&lt;img&nbsp;class=&quot;thumbnail&quot;&nbsp;src=&quot;.....&quot;&nbsp;/&gt;
+$(document).ready(function(){
+	$('img.thumbnail').bThumbnail(options);
+}
+
+options&nbsp;
+	integer&nbsp;width
+		切り出し後の画像横幅
+				default&nbsp;100
+
+	integer&nbsp;height
+		切り出し後の画像の高さ
+			default	100
+	
+	string&nbsp;unit
+		サイズを指定する単位
+			default	'px'
+	
+	string&nbsp;appendclass
+		自動生成される描画領域(div)タグの&nbsp;class&nbsp;属性
+		このタグのスタイルが、表示されるサムネイルに適用される。
+			default&nbsp;'b-thumbnails'
+
+	callback&nbsp;position
+		切り出す画像の座標を決めるためのコールバック関数、&nbsp;
+		ディフォルトの関数は、表示領域より小さければ中央寄せ、
+		大きければ余白が出ない範囲でランダム。
+		
+		array[x,y]&nbsp;callback(options){...}
+		
+		default&nbsp;getPositionRandom
+</pre>
+{/literal}
+</div>

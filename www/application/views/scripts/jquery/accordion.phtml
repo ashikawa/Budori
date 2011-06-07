@@ -1,0 +1,94 @@
+<div class="contents">
+	<h3 class="title">accordion</h3>
+
+	<div class="accordion" id="item001">
+		<div class="head" id="item001head">
+			menu01
+		</div>
+		<div class="content">
+			<ul>
+				<li>item01</li>
+				<li>item02</li>
+				<li>item03</li>
+				<li>item04</li>
+				<li>item05</li>
+			</ul>
+		</div>
+	</div>
+	<div class="accordion" id="item002">
+		<div class="head" id="item002head">
+			menu02
+		</div>
+		<div class="content">
+			<ul>
+				<li>item06</li>
+				<li>item07</li>
+				<li>item08</li>
+				<li>item09</li>
+				<li>item10</li>
+			</ul>
+		</div>
+		<div class="foot">
+			&nbsp;
+		</div>
+	</div>
+	
+	<br />
+	<br />
+	
+	<hr />
+	
+	<div class="accordion" id="item003">
+		<div class="head" id="item003head01">
+			menu03
+		</div>
+		<div class="content">
+			<ul>
+				<li>001</li>
+				<li>002</li>
+			</ul>
+		</div>
+		<div class="head" id="item002head02">
+			menu04
+		</div>
+		<div class="content">
+			<ul>
+				<li>003</li>
+				<li>004</li>
+			</ul>
+		</div>
+		<div class="head" id="item002head02">
+			menu05
+		</div>
+		<div class="content">
+			<ul>
+				<li>005</li>
+				<li>006</li>
+			</ul>
+		</div>
+	</div>
+	
+<!--//end div#jquery--></div>
+
+
+{literal}
+<script type="text/javascript" src="/js/jquery.json.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery.accordion.js"></script>
+<script type="text/javascript" src="/js/jquery.bAccordion.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function (){
+	
+		//バグがあったら　$(".accordion").accordion({ 
+		//と書き換えると Cookie 無しの jquery.accordion に戻ります。
+		$("div.accordion").bAccordion({ 
+			header: ".head", 
+			active: ".selected", 
+			active: 1,
+			alwaysOpen: false, 
+			autoheight: false
+		});
+	});
+</script>
+{/literal}

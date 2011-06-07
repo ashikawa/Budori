@@ -1,0 +1,45 @@
+<div class="contents">
+	<h3 class="title">menu</h3>
+
+	<form action="/{$controller}/{$action}">
+	
+		<div id="addMenu">
+			<div class="itemarea">
+				<div class="menuItem contents">
+					<input type="text" name="text1[]" />&nbsp;<a class="del">del</a>
+				</div>
+			</div>
+			<div class="menubox">
+				<a>add</a>
+			</div>
+			<input type="submit" />
+		</div>
+	</form>
+<!--//end div#contents--></div>
+
+
+
+{literal}
+<script type="text/javascript">
+;(function($) {
+	$.fn.extend({
+		addMenu: function( options ) {
+			
+		},
+		menuItem: function(){
+			parent = $(this);
+			$(this).find('.del').bind('click',function(){
+				parent.animate({height:'hide'},'first','linear',function(){
+					parent.remove();
+				});
+			});
+		}
+	});
+})(jQuery);
+
+$(document).ready(function(){
+	//$('#addMenu').addMenu();
+	$('.menuItem').menuItem();
+});
+</script>
+{/literal}

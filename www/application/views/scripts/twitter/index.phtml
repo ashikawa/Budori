@@ -1,0 +1,46 @@
+<div class="contents">
+	
+	<h3 class="title">twitter</h3>
+	
+	<ul class="menu">
+{if $client->isAuthorised()}
+		<li><a href="/{$controller}/logout">log out</a></li>
+{else}
+		<li><a href="/{$controller}/authorize">log in</a></li>
+{/if}
+	</ul>
+	
+	<br />
+	
+{if $client->isAuthorised()}
+	<form method="post" action="/{$controller}/post">
+		<textarea name="comment"></textarea><br />
+		<input type="submit" />
+	</form>
+{/if}
+
+</div>
+
+{if $timeline|default:false}
+<div class="contents">
+	<ul class="timeline">
+{foreach from=$timeline|default:null item="_tweet"}
+		<li class="tweet cfix">
+			<div class="profile_image">
+				<a href="http://twitter.com/#!/{$_tweet->user->screen_name}" target="_blank">
+					<img class="rounded-img" alt="{$_tweet->user->screen_name}" src="{$_tweet->user->profile_image_url}" />
+				</a>
+			</div>
+			<div class="status">
+<!-- 
+				<a href="http://twitter.com/#!/{$_tweet->user->screen_name}" target="_blank">
+					@{$_tweet->user->screen_name}
+				</a>
+ -->
+				<p>{$_tweet->text|tweet nofilter}</p>
+			</div>
+		</li>
+{/foreach}
+	</ul>
+</div>
+{/if}

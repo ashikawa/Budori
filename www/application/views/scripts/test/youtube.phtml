@@ -1,0 +1,23 @@
+
+<div class="youtube contents">
+	
+	<h3 class="title">youtube</h3>
+	
+	<form action="/{$controller}/{$action}">
+		<input name="query" type="text" value="{$query|default:""}" /><br />
+		<input type="submit" />
+	</form>
+</div>
+
+{if !empty($result)}
+<div class="contents">
+{foreach from=$result item='item' name='loop1'}
+	<object width="425" height="344">
+		<param name="movie" value="http://www.youtube.com/v/{$item->getVideoId()}=ja&amp;fs=1"></param>
+		<param name="allowFullScreen" value="true"></param>
+		<param name="allowscriptaccess" value="always"></param>
+		<embed src="http://www.youtube.com/v/{$item->getVideoId()}&amp;hl=ja&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
+	</object>
+{/foreach}
+<!--//end div#youtube--></div>
+{/if}

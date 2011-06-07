@@ -1,0 +1,35 @@
+<div class="contents">
+
+	<h3 class="title">disable</h3>
+	
+	<form action="/{$controller}/{$action}" method="get">
+	
+	<select id="trigger">
+		<option value="0">enable</option>
+		<option value="1">disable</option>
+	</select><br />
+	
+	<br />
+	
+	<input class="target" type="text" /><br />
+	
+	<input type="checkbox" id="item1" /><label for="item1">check1</label><br />
+	<input type="checkbox" id="item2" class="target" /><label for="item2">check2</label><br />
+	<br />
+	
+	<input type="submit" />
+	</form>
+	
+<!--//end div#disable--></div>
+
+{literal}
+<script type="text/javascript">
+		
+	$(document).ready(function() {
+		$("#trigger").bind('change',function(){
+				$(".target").enable($(this).val()=="0");
+			} ).trigger('change');
+	});
+	
+</script>
+{/literal}

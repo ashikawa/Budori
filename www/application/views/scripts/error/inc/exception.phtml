@@ -1,0 +1,58 @@
+<dl class="table">
+	<dt>class</dt>
+	<dd>{$exception|get_class}</dd>
+	
+	<dt>code</dt>
+	<dd>{$exception->getCode()}</dd>
+	
+	<dt>file</dt>
+	<dd>{$exception->getFile()}&nbsp;({$exception->getLine()})</dd>
+	
+	<dt>message</dt>
+	<dd>{$exception->getMessage()}</dd>
+	
+	<dt>trace</dt>
+{foreach from=$exception->getTrace() item='trace' name="loop1"}
+	<dd>
+		{* 通し番号 *}
+		#{$smarty.foreach.loop1.index} 
+		{* ファイルと行。　無い場合はマジックメソッド等の internal function *}
+{if $trace.file|default:false}
+		{$trace.file}&nbsp;({$trace.line})
+{else}
+		[internal function]
+{/if} : <br />
+		{$trace.class|default:""}{$trace.type|default:"" nofilter}{$trace.function}
+{strip}
+	{*　引数の型判別。 '@'が付いているのは Smartyが変な変換かけるから。　*}
+	({foreach from=$trace.args item='arg' name='loopException'}
+		{if $arg|@is_null}
+			NULL
+		{elseif $arg|@is_object}
+			object({$arg|get_class})
+		{elseif $arg|@is_string}
+			'{$arg}'
+		{elseif $arg|@is_array}
+			Array
+		{else}
+			{$arg nofilter}
+		{/if}
+		{if !$smarty.foreach.loopException.last}, {/if}
+	{/foreach})
+{/strip}
+	</dd>
+{/foreach}
+</dl>
+{* Zend1.10 以降、またはPHP5.3 以降。　例外コンストラクタの第三引数previousの処理 *}
+{if $smarty.const.PHP_VERSION|version_compare:"5.3.0":"<"}
+	{if ($zend_version|version_compare:"1.10.0":">") && ($exception instanceof Zend_Exception)}
+		{assign var='_next' value=$exception->getPrevious()}
+	{else}
+		{assign var='_next' value=null}
+	{/if}
+{/if}
+{if $_next|default:false}
+	<br />
+	next exceptinon<br />
+	{include file='error/inc/exception.phtml' exception=$_next}
+{/if}

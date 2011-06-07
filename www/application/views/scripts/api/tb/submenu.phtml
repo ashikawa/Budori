@@ -1,0 +1,12 @@
+<div>
+{literal}
+	<a href="#" onclick="tbCallback({id:1});">menu1</a><br />
+	<a href="#" onclick="tbCallback({id:2});">menu2</a><br />
+	<a href="#" onclick="tbCallback({id:3});">menu3</a><br />
+{/literal}
+
+<br />
+page:{$p}<br />
+<a href="/{$controller}/{$action}?p=1" class="thickbox"　title="submenu normal　page1">before</a> 
+<a href="/{$controller}/{$action}?p=2" class="thickbox"　title="submenu normal　page2">next</a><br />
+</div>

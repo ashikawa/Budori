@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=480, user-scalable=no, maximum-scale=0.6667" />
+<script type="text/javascript" charset="utf-8">
+{literal}
+<!--
+// 初期化
+function init() {
+	document.addEventListener("touchstart", touchHandler, false);
+	document.addEventListener("touchmove", touchHandler, false);
+	document.addEventListener("touchend", touchHandler, false);
+}
+
+function touchHandler(event) {
+	// タッチ数を取得
+	document.getElementById("touchnum").innerHTML = event.touches.length;
+
+	// タッチ位置を取得
+	for (var i = 0; i < 5; i++) {
+		if (event.touches[i]) {
+			// 座標をセット
+			document.getElementById("loc" + i + "_x").innerHTML = event.touches[i].pageX;
+			document.getElementById("loc" + i + "_y").innerHTML = event.touches[i].pageY;
+		} else {
+			document.getElementById("loc" + i + "_x").innerHTML = '';
+			document.getElementById("loc" + i + "_y").innerHTML = '';
+		}
+	}
+
+	event.preventDefault();
+}
+// -->
+{/literal}
+</script>
+</head>
+
+<body onLoad="init();">
+
+タッチ数: <span id="touchnum"></span><br />
+タッチ0: X:<span id="loc0_x"></span>, Y:<span id="loc0_y"></span><br />
+タッチ1: X:<span id="loc1_x"></span>, Y:<span id="loc1_y"></span><br />
+タッチ2: X:<span id="loc2_x"></span>, Y:<span id="loc2_y"></span><br />
+タッチ3: X:<span id="loc3_x"></span>, Y:<span id="loc3_y"></span><br />
+タッチ4: X:<span id="loc4_x"></span>, Y:<span id="loc4_y"></span><br />
+
+</body>
+</html>

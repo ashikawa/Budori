@@ -1,0 +1,23 @@
+<div class="contents">
+	curry
+</div>
+
+<script type="text/javascript">
+	function schonfinkelize(fn){
+		var slice = Array.prototype.slice,
+			stored_args = slice.call(arguments, 1);
+
+		return function(){
+			var new_args = slice.call(arguments),
+				args = stored_args.concat(new_args);
+			return fn.apply(null, args);
+		};
+	};
+	
+	function add(a, b, c, d, e){
+		return a + b + c + d + e;
+	};
+
+	console.log( schonfinkelize(add, 1, 2, 3)(5, 5) );
+	
+</script>
