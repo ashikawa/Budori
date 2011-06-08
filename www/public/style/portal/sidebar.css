@@ -9,7 +9,8 @@ ul.sidemenu li{
 body.jquery ul.sidemenu li#jquery,
 body.picture ul.sidemenu li#picture,
 body.query ul.sidemenu li#query,
-body.blog ul.sidemenu li#blog {
+body.blog ul.sidemenu li#blog,
+body.twitter ul.sidemenu li#twitter {
 	background-color: #E0EEEE;
 }
 
