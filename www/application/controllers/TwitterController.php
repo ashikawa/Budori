@@ -35,7 +35,7 @@ class TwitterController extends Neri_Controller_Action_Http
 	 */
 	protected function _initTwitter()
 	{
-		$options = Budori_Config::factory('twitter.ini', 'global')->toArray();
+		$options = Budori_Config::factory('twitter.ini', 'oauth')->toArray();
 		
 		if( isset( $this->_session->access_token ) ){
 			$options['accessToken'] = $this->_session->access_token;
@@ -100,7 +100,9 @@ class TwitterController extends Neri_Controller_Action_Http
 			$requestToken	= $twitter->getRequestToken();
 			$this->_session->request_token	= $requestToken;
 			
-			return $twitter->redirect();
+			//return $twitter->redirect();
+			$url = $twitter->getRedirectUrl();
+			return $this->_redirect($url);
 		}
 		
 		return $this->_forward('index');
@@ -125,7 +127,7 @@ class TwitterController extends Neri_Controller_Action_Http
 		}
 		
 		$controlelr = $this->getRequest()->getControllerName();
-		$this->_redirect("/$controlelr/");
+		return $this->_redirect("/$controlelr/");
 	}
 	
 	/**
@@ -140,7 +142,7 @@ class TwitterController extends Neri_Controller_Action_Http
 		}
 		
 		$controlelr = $this->getRequest()->getControllerName();
-		$this->_redirect("/$controlelr/");
+		return $this->_redirect("/$controlelr/");
 	}
 	
 //	public function searchAction()
