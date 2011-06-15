@@ -18,7 +18,6 @@ class FacebookController extends Neri_Controller_Action_Http
 	{
 		parent::init();
 		
-		Zend_Session::start();
 		$this->_session = new Zend_Session_Namespace("FACEBOOK_CLIENT");
 		
 		$this->_initSdk();
@@ -69,6 +68,11 @@ class FacebookController extends Neri_Controller_Action_Http
 	{
 		$facebook	= $this->_facebookSdk;
 		$session	= $this->_session;
+		
+		
+		// Error!
+		// Error validating verification code
+		
 		$accessToken =  $facebook->getAccessToken();
 		$session->ACCESS_TOKEN = $accessToken;
 		

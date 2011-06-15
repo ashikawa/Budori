@@ -6,24 +6,20 @@
   margin: 0;
   padding: 0;
 }
-
 body{
-  color: #000000;
-  font-family: Verdana, Osaka, sans-serif;
-  line-height: 2;
-  font-size: 80%;
-  background-color: #ffffff;
-  word-break: break-all;
-  word-wrap: break-word;
+	height: 100%;
+	width: 720px;
+	margin: 0 auto; /* center */;
+
+	color: #000000;
+	font-family: Verdana, Osaka, sans-serif;
+	line-height: 2;
+	font-size: 80%;
+	background-color: #ffffff;
+	word-break: break-all;
+	word-wrap: break-word;
 }
 
-#wrapper{
-	text-align:center;
-	margin-left:auto;
-	margin-right:auto;
-	text-align:left;
-	width: 720px;
-}
 div#header{
 	padding: 25px 6px 25px 6px;
 	width: 708px;
