@@ -14,11 +14,11 @@ class Neri_Controller_Plugin_Profiler extends Zend_Controller_Plugin_Abstract
 		parent::postDispatch($request);
 		
         if ( $request->isDispatched() ){
-        	$this->_output();
+        	$this->_outputDisplay();
         }
     }
     
-    protected function _output()
+    protected function _outputDisplay()
     {
    		require_once 'Zend/Controller/Action/HelperBroker.php';
    		
@@ -28,7 +28,8 @@ class Neri_Controller_Plugin_Profiler extends Zend_Controller_Plugin_Abstract
     		
 	    	$view = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->view;
 	    	
-	    	$profiles = Budori_Db::factory()->getProfiler()->getQueryProfiles(null,true);
+	    	$profiles = $this->_getProfiler()
+	    					->getQueryProfiles(null,true);
 	    	
 	    	if(!empty($profiles)){
 		    	$view->assign(
@@ -39,5 +40,30 @@ class Neri_Controller_Plugin_Profiler extends Zend_Controller_Plugin_Abstract
 		    	$this->getResponse()->insert( $this->_layoutName, $view->render($this->_viewScript) );
 	    	}
     	}
+    }
+    
+	protected function _outputLogger()
+    {
+		$profiles = $this->_getProfiler()
+						->getQueryProfiles(null,true);
+		
+		$logger = Seal_Log::factory();
+		
+		if(!empty($profiles)){
+			foreach ($profiles as $key => $result){
+				$logger->info( $result->getQuery()
+							. " {" . var_export($result->getQueryParams(),true) . "} "
+							. "(" . $result->getElapsedSecs() ." msec)"
+						);
+			}
+		}
+    }
+	
+	/**
+	 * @return Zend_Db_Profiler
+	 */
+	protected function _getProfiler()
+	{
+    	return Budori_Db::factory()->getProfiler();
     }
 }
