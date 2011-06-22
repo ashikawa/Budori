@@ -4,11 +4,15 @@
  * Zend_Log ファクトリクラス
  * Zend_Registry に 'log' の名前で登録されている事。
  */
+/**
+ * 
+ * @author shigeru.ashikawa
+ */
 class Budori_Log 
 {
 	/**
-     * Enter description here...
-     * @return Budori_Log_Interface
+     * log factory
+     * @return Zend_Log
      */
     public static function factory()
     {
