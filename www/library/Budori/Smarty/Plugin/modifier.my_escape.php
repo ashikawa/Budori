@@ -5,7 +5,12 @@
  * @return string
  */
 function smarty_modifier_my_escape( $input )
-{	
-	require_once 'Budori/Util/String.php';
-	return Budori_Util_String::escape($input);
+{
+	static $filter;
+	
+	if( !$filter ){
+		$filter = new Budori_Filter_Escape();
+	}
+	
+	return $filter->filter($input);
 }

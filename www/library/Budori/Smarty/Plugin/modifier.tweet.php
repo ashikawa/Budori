@@ -1,5 +1,5 @@
 <?php
-require_once 'modifier.link.php';
+require_once 'modifier.my_escape.php';
 /**
  * @todo Tweet
  * 			:: toString() ...
@@ -8,7 +8,7 @@ require_once 'modifier.link.php';
  */
 function smarty_modifier_tweet( $string )
 {
-	$string = Budori_Util_String::escape($string);
+	$string = smarty_modifier_my_escape($string );
 	
 //	短縮URL
 	if( preg_match_all('/http:\/\/t.co\/(\w+)/i', $string, $matches) ){
@@ -35,10 +35,19 @@ function smarty_modifier_tweet( $string )
 		}
 	}
 	
-	$string = smarty_modifier_link($string);
+	static $filter;
 	
-	$string = preg_replace("/([\s]|^)\@([\w\-]+)/i", '$1<a href="http://twitter.com/$2" target="_blank">@$2</a>', $string);
-	$string = preg_replace("/([\s]|^)\#([\w\-]+)/i", '$1<a href="http://twitter.com/search?q=%23$2" target="_blank">@$2</a>', $string);
+	if( !$filter ){
+		
+		$filter = new Zend_Filter();
+		
+		$filter->addFilter(new Budori_Filter_Html_Link())
+			->addFilter(new Budori_Filter_Twitter_Hash())
+			->addFilter(new Budori_Filter_Twitter_user());
+	}
+	$string = $filter->filter($string);
+	
+	
 	
 	foreach ($imageService as $_val){
 		$string .= "<img src=\"$_val\" />";

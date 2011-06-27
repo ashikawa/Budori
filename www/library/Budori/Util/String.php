@@ -8,22 +8,7 @@ class Budori_Util_String
 	const NUMBER	= '0123456789';
 	
 	const ALPHA		= 'abcdefghijklmnopqrstuvwxyz';
-	
-    /**
-     * マルチバイトのTrim
-     *
-     * @param string $str
-     * @param string $chars
-     * @return Budori_String
-     */
-	public static function mbTrim( $string, $chars = "\s")
-	{ 
-		$string = mb_ereg_replace("^[$chars]+", "", $string);
-		$string = mb_ereg_replace("[$chars]+$", "", $string);
 		
-		return $string;
-	}
-	
 	/**
 	 * テキストにパラメータを埋め込む
 	 * @param string $string
@@ -66,22 +51,6 @@ class Budori_Util_String
 		
 		return $matches;
 	}
-	
-	/**
-	 * エスケープ処理
-	 * 
-	 * @param mixed $input
-	 * @return mixed
-	 */
-	public static function escape( $input,$optional=ENT_QUOTES,$encode='UTF-8' )
-	{
-		if( is_string($input) ) {
-			return htmlentities($input, $optional, $encode);
-		}else{
-			return $input;
-		}
-	}
-	
 	
 	/**
 	 * ランダムな文字列を生成する。

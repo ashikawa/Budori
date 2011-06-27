@@ -14,14 +14,23 @@ class Budori_Filter_MbTrim extends Zend_Filter_StringTrim
 	 * @param string $value
 	 * @return string
 	 */
-    public function filter($value)
-    {
-    	require_once 'Budori/Util/String.php';
-    	
-        if (null === $this->_charList) {
-            return Budori_Util_String::mbTrim((string) $value);
-        } else {
-            return Budori_Util_String::mbTrim((string) $value, $this->_charList);
-        }
+	public function filter( $value )
+	{
+		return self::mbTrim($value);
     }
+    
+	/**
+	 * マルチバイトのTrim
+	 *
+	 * @param string $str
+	 * @param string $chars
+	 * @return Budori_String
+	 */
+	public static function mbTrim( $string, $chars = "\s")
+	{ 
+		$string = mb_ereg_replace("^[$chars]+", "", $string);
+		$string = mb_ereg_replace("[$chars]+$", "", $string);
+		
+		return $string;
+	}
 }
