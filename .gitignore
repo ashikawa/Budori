@@ -2,3 +2,5 @@
 www/data/log/*
 document/.settings
 www/.project
+
+.DS_Store
