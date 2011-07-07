@@ -54,5 +54,5 @@
 {if $_next|default:false}
 	<br />
 	next exceptinon<br />
-	{include file='error/inc/exception.phtml' exception=$_next}
+	{include file=$smarty.template exception=$_next}
 {/if}

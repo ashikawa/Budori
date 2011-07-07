@@ -145,12 +145,13 @@ class TwitterController extends Neri_Controller_Action_Http
 		return $this->_redirect("/$controlelr/");
 	}
 	
-//	public function searchAction()
-//	{
-//		$service = new Zend_Service_Twitter_Search();
-//		
-//		$result	= $service->search('@s_ashikawa');
-//		
-//		$this->view->assign('result', new Budori_Service_Twitter_TimeLine($result) );
-//	}
+	public function searchAction()
+	{
+		$clowler	= new TwitterClowler();
+		$result		= $clowler->search();
+		
+		var_dump($result);
+		
+		$this->view->assign('result', new Budori_Service_Twitter_TimeLine($result) );
+	}
 }

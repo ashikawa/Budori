@@ -32,16 +32,31 @@ class FacebookController extends Neri_Controller_Action_Http
 		
 		$session = $this->_session;
 		
-		if( isset($session->ACCESS_TOKEN) ){
-			$accessToken =  $session->ACCESS_TOKEN;
-			$facebook->setAccessToken($accessToken);
-		}
+//		if( isset($session->ACCESS_TOKEN) ){
+//			$accessToken =  $session->ACCESS_TOKEN;
+//			$facebook->setAccessToken($accessToken);
+//		}
+		
+		$facebook->setAccessToken("182201908479030|2.AQANJAe700e-Wh8c.3600.1309244400.0-100001895370536|BAjrVME_s0MsauUr-gB4-vY52Fo");
 		
 		$this->_facebookSdk = $facebook;
 	}
 	
 	public function indexAction()
-	{}
+	{
+		$facebook = $this->_facebookSdk;
+		
+		$uid = $this->_facebookSdk->getUser();
+		
+		$result = $facebook->api(array(
+						"method"	=> "fql.query",
+						"query"		=> "SELECT app_id,display_name FROM application WHERE app_id IN ( SELECT application_id FROM developer WHERE developer_id = '$uid' )",
+					));
+		
+		$this->view->assign(
+				array( "result" => $result )
+			);
+	}
 	
 	
 	/**
