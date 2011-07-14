@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 /**
  * php --define APPLICATION_ENV=development batch.php -c ... ?
@@ -20,6 +21,7 @@ $frontController = $application->getBootstrap()->getResource('FrontController');
 $frontController->resetInstance();
 
 $frontController->throwExceptions(true)
+	->setParam('noViewRenderer', true)
 	->setRequest( new Zend_Controller_Request_Simple() )
 	->setResponse( new Zend_Controller_Response_Cli() )
 	->setRouter( new Budori_Controller_Router_Cli() )
