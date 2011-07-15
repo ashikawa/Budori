@@ -21,16 +21,13 @@ class Budori_Filter_MbTrim extends Zend_Filter_StringTrim
     
 	/**
 	 * マルチバイトのTrim
-	 *
+	 *　
 	 * @param string $str
 	 * @param string $chars
 	 * @return Budori_String
 	 */
-	public static function mbTrim( $string, $chars = "\s")
-	{ 
-		$string = mb_ereg_replace("^[$chars]+", "", $string);
-		$string = mb_ereg_replace("[$chars]+$", "", $string);
-		
-		return $string;
+	public static function mbTrim( $string )
+	{
+		return trim( $string, " 　\t\n\rv");
 	}
 }
