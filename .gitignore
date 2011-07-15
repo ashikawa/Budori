@@ -3,3 +3,4 @@ www/data/log/*
 document/.settings
 www/.project
 .DS_Store
+www/data/cache/zend_cache*
