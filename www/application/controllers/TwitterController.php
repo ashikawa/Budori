@@ -83,7 +83,12 @@ class TwitterController extends Neri_Controller_Action_Http
 		
 		if( $twitter->isAuthorised() ){
 			// post message
-			$response = $twitter->status->update( $this->_getParam("comment") );
+			try {
+				$response = $twitter->status->update( $this->_getParam("comment") );
+			}catch (Exception $e){
+				$this->_logout();
+				throw $e;
+			}
 		}
 		
 		return $this->_forward('index');
@@ -138,7 +143,7 @@ class TwitterController extends Neri_Controller_Action_Http
 		$twitter = $this->_twitter;
 		
 		if( $twitter->isAuthorised() ){
-			$this->_session->unsetAll();
+			$this->_logout();
 		}
 		
 		$controlelr = $this->getRequest()->getControllerName();
@@ -153,5 +158,10 @@ class TwitterController extends Neri_Controller_Action_Http
 		var_dump($result);
 		
 		$this->view->assign('result', new Budori_Service_Twitter_TimeLine($result) );
+	}
+	
+	protected function _logout()
+	{
+		$this->_session->unsetAll();
 	}
 }

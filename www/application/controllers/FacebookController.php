@@ -32,13 +32,11 @@ class FacebookController extends Neri_Controller_Action_Http
 		
 		$session = $this->_session;
 		
-//		if( isset($session->ACCESS_TOKEN) ){
-//			$accessToken =  $session->ACCESS_TOKEN;
-//			$facebook->setAccessToken($accessToken);
-//		}
-		
-		$facebook->setAccessToken("182201908479030|2.AQANJAe700e-Wh8c.3600.1309244400.0-100001895370536|BAjrVME_s0MsauUr-gB4-vY52Fo");
-		
+		if( isset($session->ACCESS_TOKEN) ){
+			$accessToken =  $session->ACCESS_TOKEN;
+			$facebook->setAccessToken($accessToken);
+		}
+				
 		$this->_facebookSdk = $facebook;
 	}
 	
@@ -93,5 +91,33 @@ class FacebookController extends Neri_Controller_Action_Http
 		
 		$controlelr = $this->getRequest()->getControllerName();
 		return $this->_redirect("/$controlelr/");
+	}
+	
+	
+	/**
+	 * post message for wall
+	 */
+	public function postAction()
+	{
+		$facebook = $this->_facebookSdk;
+		
+		if( $facebook->getUser()
+				&& $this->_getParam("value") ){
+			
+			try {
+				$result	= $model->statusUpdate( $this->_getParam("value") );
+			}catch (Exception $e){
+				$this->_logout();
+				throw $e;
+			}
+		}
+	}
+	
+	/**
+	 * remove oauth session
+	 */
+	protected function _logout()
+	{
+		$this->_session->unsetAll();
 	}
 }
