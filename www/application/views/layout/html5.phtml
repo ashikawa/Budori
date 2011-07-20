@@ -1,15 +1,17 @@
-<!doctype html><!-- simplified doctype works for all previous versions of HTML as well -->
+<!doctype html>
 <html lang="ja" class="no-js">
 <head>
 	<meta charset="utf-8">
-	<title>title</title>
 	<meta name="description" content="Easy HTML5 Template">
 	<meta name="author" content="">
+	<title>title</title>
 	<link rel="shortcut icon" href="/favicon.ico">
 	<!-- apple touch icon 57x57 -->
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<!-- Main style sheet. Change version number in query string to force styles refresh -->
+<!-- 
 	<link rel="stylesheet" href="css/screen.css?v=1.0">
+ -->
 </head>
 <body class="portal">
 	
@@ -30,43 +32,39 @@
 		</nav>
 	</header><!-- /#headerSection -->
 	
-	<div id="main">
+	<section class="section1">
+		<header>
+			<h1>page sub title</h1>
+		</header>
 		
-		<section class="section1">
-			<header>
-				<h1>page sub title</h1>
-			</header>
-			
-			<p>Some content...</p>
-			
-			<!-- The h2 below is a sub heading relative to the h1 in this section, not for the whole document -->
-			<h2>Demonstrating EM and STRONG</h2>
-			
-			<!-- "strong" is used for SEO and contextual hierarchy -->
-			<p><strong>This text will have more importance (SEO-wise and contextually)</strong></p>
-			
-			<!-- "b" is used for stylistic offset of text that's NOT important contextually -->
-			<p><b>This text has visual importance but has no contextual or SEO importance</b></p>
-			
-			<!-- "em" is used for colloquial-style emphasis -->
-			<p>This is a <em>very</em> colloquial expression.</p>
-			
-			<!-- There can be multiple footers on each page -->
-			<!-- Secondary headers and footers don't necesarily need ids; they can be targeted via context (i.e. ".hs1 footer") -->
-			<footer>
-				<!-- incite a riot: http://24ways.org/2009/incite-a-riot -->
-				<p>Author: <cite>Louis Lazaris</cite></p>
-			</footer>
-			
-		</section><!-- .hs1 -->
+		<p>Some content...</p>
 		
-		<!-- This is another section; doesn't have header/footer because it's not required -->
-		<section class="hs2">
-			<h1>This is another section</h1>
-			<p>This is some dummy content</p>
-		</section><!-- .hs2 -->
+		<!-- The h2 below is a sub heading relative to the h1 in this section, not for the whole document -->
+		<h2>Demonstrating EM and STRONG</h2>
 		
-	</div><!-- #main -->
+		<!-- "strong" is used for SEO and contextual hierarchy -->
+		<p><strong>This text will have more importance (SEO-wise and contextually)</strong></p>
+		
+		<!-- "b" is used for stylistic offset of text that's NOT important contextually -->
+		<p><b>This text has visual importance but has no contextual or SEO importance</b></p>
+		
+		<!-- "em" is used for colloquial-style emphasis -->
+		<p>This is a <em>very</em> colloquial expression.</p>
+		
+		<!-- There can be multiple footers on each page -->
+		<!-- Secondary headers and footers don't necesarily need ids; they can be targeted via context (i.e. ".hs1 footer") -->
+		<footer>
+			<!-- incite a riot: http://24ways.org/2009/incite-a-riot -->
+			<p>Author: <cite>Louis Lazaris</cite></p>
+		</footer>
+		
+	</section><!-- .hs1 -->
+	
+	<!-- This is another section; doesn't have header/footer because it's not required -->
+	<section class="hs2">
+		<h1>This is another section</h1>
+		<p>This is some dummy content</p>
+	</section><!-- .hs2 -->
 	
 	<aside id="sidebar">
 		<p>Sidebar content</p>

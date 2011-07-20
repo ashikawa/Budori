@@ -82,8 +82,7 @@
 			}
 			return jQuery.accumlate(op,[[]],items.reverse());
 		},
-		'sigma': function( items )
-		{
+		'sigma': function( items ){
 			var op = function(head, next){
 				return head + next;
 			}

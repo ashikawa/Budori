@@ -27,7 +27,7 @@
 						var arg = {'width':width,'height':height,
 									'oWidth':oWidth,'oHeight':oHeight};
 						
-						position	= options.position(arg)
+						position	= options.position(arg);
 					}else{
 						position	= options.position;
 					}
@@ -38,7 +38,7 @@
 					defImage.parent('div.'+options.appendclass).css({
 							'position':'relative',
 							'height':height+unit,
-							'width':width+unit,
+							'width':width+unit
 						});
 					defImage.css({
 							'position':'absolute',
@@ -48,7 +48,7 @@
 						});
 					
 					defImage.trigger('postRender');
-				}
+				};
 				imgPreloader.src = $(this).attr('src');
 			});
 		}
@@ -77,7 +77,7 @@
 			return {'x': center(opt.oWidth,opt.width),
 					'y': center(opt.oHeight,opt.height)};
 		}
-	}
+	};
 	
 	$.fn.bThumbnail.defaults = {
 		'width':100,
@@ -85,6 +85,6 @@
 		'unit':'px',
 		'appendclass':'b-thumbnails',
 		'position': $.fn.bThumbnail.position.center
-	}
+	};
 })(jQuery);
 

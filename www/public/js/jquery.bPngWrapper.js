@@ -37,5 +37,5 @@
 	});
 	jQuery.fn.pngwrapper.defaults = {
 		'wrapperClass': "pngwrapper"
-	}
+	};
 })(jQuery);

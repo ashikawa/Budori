@@ -41,10 +41,10 @@
 	$.fn.bTwitter.defaults = {
 		users:[],
 		createTweet: function(key,result){
-			var str = '	<div class="tweet">\
-					<div class="txt">'+this.formatString(result.text)+'</div>\
-					<div class="time">'+this.relativeTime(result.created_at)+'</div>\
-					</div>';
+			var str = '<div class="tweet">'
+					+ '<div class="txt">'+this.formatString(result.text)+'</div>'
+					+ '<div class="time">'+this.relativeTime(result.created_at)+'</div>'
+					+ '</div>';
 			return str;
 		},
 		formatString: function(str){
@@ -74,5 +74,5 @@
 			var dateArr = pastTime.split(' ');
 			return dateArr[4].replace(/\:\d+$/,'')+' '+dateArr[2]+' '+dateArr[1]+(dateArr[3]!=curDate.getFullYear()?' '+dateArr[3]:'');
 		}
-	}
+	};
 })(jQuery);
