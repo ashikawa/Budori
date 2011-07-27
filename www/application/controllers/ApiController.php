@@ -29,7 +29,7 @@ class ApiController extends Budori_Controller_Action
 //		if( !$this->getRequest()->isXmlHttpRequest() ){
 //			throw new Zend_Controller_Action_Exception('wrong request', 404);
 //		}
-		
+//		header("Content-Type: text/javascript; charset=utf-8"); 
 		$contextSwitch = $this->_helper->getHelper('contextSwitch')
 											->initContext('json');
 		
