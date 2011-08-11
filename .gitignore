@@ -5,3 +5,4 @@ www/.project
 .DS_Store
 www/data/cache/zend_cache*
 .project
+document/test/output.txt

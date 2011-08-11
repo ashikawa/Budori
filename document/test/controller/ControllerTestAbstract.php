@@ -6,8 +6,6 @@ class ControllerTestAbstract extends Zend_Test_PHPUnit_ControllerTestCase
 	public function setUp()
 	{
 		parent::setUp();
-		// add by ashikawa
-		require_once  '../application/defines.inc';
 		
 		require_once 'Zend/Application.php';
 		$application = new Zend_Application(

@@ -1,7 +1,6 @@
 #!/bin/sh
 
-echo "" > output.txt
-
+:> output.txt
 alias testlog="tee -a output.txt"
 
 # controlelr test
