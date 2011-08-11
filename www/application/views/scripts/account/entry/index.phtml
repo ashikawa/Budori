@@ -6,36 +6,38 @@
 <!-- 
 			<legend>アカウント作成</legend>
  -->
-			<dt class="label">
-				<label for="name">name</label>
-			</dt>
-			<dd class="input">
-				<input type="text" id="name" name="name" value="{$name|default:''}" /> <br />
-				{messages value=$messages.name|default:null id="validName"}
-			</dd>
-			
-			<dt class="label">
-				<label for="id">id</label>
-			</dt>
-			<dd class="input">
-				<input type="text" id="id" name="id" value="{$id|default:''}" /> <br />
-				{messages value=$messages.id|default:null id="validId"}	
-			</dd>
-			
-			<dt class="label">
-				<label for="pass1">pass</label>
-			</dt>
-			<dd class="input">
-				<input type="password" id="pass1" name="pass1" value="{$pass1|default:''}" /><br />
-				{messages value=$messages.pass1|default:null id="validPass"}
-			</dd>
-			<dt class="label">
-				<label for="pass2">conf</label>
-			</dt>
-			<dd class="input">
-				<input type="password" id="pass2" name="pass2" value="{$pass2|default:''}" />
-				{messages value=$messages.equals|default:null id="validEquals"}
-			</dd>
+ 			<dl>
+				<dt class="label">
+					<label for="name">name</label>
+				</dt>
+				<dd class="input">
+					<input type="text" id="name" name="name" value="{$name|default:''}" /> <br />
+					{messages value=$messages.name|default:null id="validName"}
+				</dd>
+				
+				<dt class="label">
+					<label for="id">id</label>
+				</dt>
+				<dd class="input">
+					<input type="text" id="id" name="id" value="{$id|default:''}" /> <br />
+					{messages value=$messages.id|default:null id="validId"}	
+				</dd>
+				
+				<dt class="label">
+					<label for="pass1">pass</label>
+				</dt>
+				<dd class="input">
+					<input type="password" id="pass1" name="pass1" value="{$pass1|default:''}" /><br />
+					{messages value=$messages.pass1|default:null id="validPass"}
+				</dd>
+				<dt class="label">
+					<label for="pass2">conf</label>
+				</dt>
+				<dd class="input">
+					<input type="password" id="pass2" name="pass2" value="{$pass2|default:''}" />
+					{messages value=$messages.equals|default:null id="validEquals"}
+				</dd>
+			</dl>
 		</fieldset>
 
 		<input id="submit" type="submit" /> <br />
@@ -45,16 +47,19 @@
 {literal}
 	<script type="text/javascript" src="/js/jquery.budori.js"></script>
 	<script type="text/javascript">
-	return ;
-	;(function($) {
+	
+	/**
+	 * @todo create validation plugin
+	 */
+	(function($) {
 		$.fn.extend({
-			sclValidation: function( options ){
+			bValidation: function( options ){
 				$(this).bind('change keyup',options.rule);
 			}
 		});
 	})(jQuery);
 	
-	$(document).ready(function(){
+	$(function(){
 		$('#submit').enable(false);
 		
 		$('#name').bind('change',function(){
