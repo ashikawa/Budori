@@ -4,22 +4,22 @@
  *
  * 2009/04/28 a.shigeru
  */
-;(function(jQuery) {
-	jQuery.fn.extend({
+;(function($) {
+	$.fn.extend({
 		bAccordion: function( options, data ){
 			
 			var active = options.active ? options.active + ',' : '';
 			
-			jQuery.each( this, function( key, val ){
-				var json = jQuery.parseJSON( jQuery.cookie( "bAccordion" ));
+			$.each( this, function( key, val ){
+				var json = $.parseJSON( $.cookie( "bAccordion" ));
 				if( json && json[val.id] ){
-					jQuery.each( json[val.id], function( k, v){
+					$.each( json[val.id], function( k, v){
 						active = active + "#" + v + ",";
 					});
 				}
 			});
 			
-			options = jQuery.extend(options,{ "active" : active } );
+			options = $.extend(options,{ "active" : active } );
 			
 			this.accordion(options, data)
 				.bind("change.ui-accordion", setCookie );
@@ -29,14 +29,14 @@
 	
 	function setCookie( event, ui ) {
 		
-		var active = jQuery.parseJSON( jQuery.cookie( "bAccordion" )) || {};
+		var active = $.parseJSON( $.cookie( "bAccordion" )) || {};
 		var id = this.id;
 		
 		active[id] = {};
-		jQuery.each( jQuery(ui.options.active), function( key, val ){
+		$.each( $(ui.options.active), function( key, val ){
 			active[id][key] = val.id;
 		});
 		
-		jQuery.cookie( "bAccordion", jQuery.toJSON(active), { expires: 7, path:'/' } );
+		$.cookie( "bAccordion", $.toJSON(active), { expires: 7, path:'/' } );
 	};
 })(jQuery);
