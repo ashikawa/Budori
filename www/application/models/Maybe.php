@@ -38,6 +38,7 @@ class Maybe
 	protected function _search( $word, $list )
 	{
 		$shortest	= -1;
+		$value		= "";
 		
 		foreach ($list as $_v){
 			
