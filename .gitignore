@@ -6,3 +6,4 @@ www/.project
 www/data/cache/zend_cache*
 .project
 document/test/output.txt
+.buildpath
