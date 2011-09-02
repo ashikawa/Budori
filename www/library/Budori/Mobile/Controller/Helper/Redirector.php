@@ -2,7 +2,7 @@
 /**
  * 携帯用、リダイレクター
  */
-class  Budori_Controller_Action_Helper_MobileRedirector extends Zend_Controller_Action_Helper_Abstract 
+class  Budori_Mobile_Controller_Action_Helper_Redirector extends Zend_Controller_Action_Helper_Abstract 
 {
 	public function direct($url, $options = array())
 	{

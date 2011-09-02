@@ -65,6 +65,9 @@ class Budori_Mobile
 	 */
 	public static function getDomains()
 	{
+		/**
+		 * @todo cache !!
+		 */
 		require_once 'Budori/Config.php';
 		return Budori_Config::factory('Budori/Mobile/domains.inc');
 	}

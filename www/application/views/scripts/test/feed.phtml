@@ -6,7 +6,7 @@
 	<hr />
 {foreach from=$feed item='item' name='loop1'}
 	<div class="feeditem contents">
-		{$item->description}
+		{$item->description nofilter}
 	</div>
 {/foreach}
 	{$feed->copyright}<br />
