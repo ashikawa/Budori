@@ -28,7 +28,7 @@ class Budori_Controller_Plugin_Mobile extends Zend_Controller_Plugin_Abstract
 					->setHeader('charset','SJIS');
 		
 		
-		if( $this->_mobile->getCarrier() == Budori_Mobile::CARRIER_DOCOMO ){
+		if( $this->_mobile->searchCarrier() == Budori_Mobile::CARRIER_DOCOMO ){
 			
 			parse_str(str_replace(',','&',ini_get("url_rewriter.tags")), $tags);
 			
