@@ -8,13 +8,12 @@ class  Budori_Mobile_Controller_Action_Helper_Redirector extends Zend_Controller
 	{
 		if( empty($_COOKIE) && Zend_Session::getOptions('use_only_cookies') != '1' ){
 			
-			
 			if ( $id = Zend_Session::getId() ) {
 				
-				$name	= session_name();
+				$name	= Zend_Session::getOptions("name");
 				$id		= strip_tags($id);
 				
-				$query = "";
+				$query	= "";
 				list($url, $query) = explode('?', $url, 2);
 				
 				$url .= sprintf('?%s=%s', $name, urlencode($id));
