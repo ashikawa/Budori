@@ -40,7 +40,9 @@ class TwitterController extends Neri_Controller_Action_Http
 		if( isset( $this->_session->access_token ) ){
 			$options['accessToken'] = $this->_session->access_token;
 		}
-		$this->_twitter	= new Zend_Service_Twitter($options);
+		
+//		$this->_twitter	= new Zend_Service_Twitter($options);
+		$this->_twitter	= new Budori_Service_Twitter($options);
 	}
 	
 	/**
@@ -85,10 +87,91 @@ class TwitterController extends Neri_Controller_Action_Http
 			// post message
 			try {
 				$response = $twitter->status->update( $this->_getParam("comment") );
+				
+				var_export($twitter->getLocalHttpClient()->getLastRequest());
+				exit;
+				
 			}catch (Exception $e){
 				$this->_logout();
 				throw $e;
 			}
+		}
+		
+		return $this->_forward('index');
+	}
+	
+	
+	public function upload2Action()
+	{
+		require 'tmhOAuth/tmhOAuth.php';
+		require 'tmhOAuth/tmhUtilities.php';
+		
+		/**
+		 * @var Zend_Oauth_Token_Access $accessToken 
+		 */
+		$accessToken = $this->_session->access_token;
+		
+		$tmhOAuth = new tmhOAuth(array(
+			'consumer_key'		=> '1Fju1DFa9mwBzXGYjDjlA',
+			'consumer_secret'	=> 'YaHait8vDgLWtTvd3mfnZf0KS99jivlcl7zwcwDM8wk',
+			'user_token'		=> $accessToken->getToken(),
+			'user_secret'		=> $accessToken->getTokenSecret(),
+		));
+		
+		$image	= "/tmp/20095212000019.jpg";
+		
+		$code	= $tmhOAuth->request(
+			'POST',
+			'https://upload.twitter.com/1/statuses/update_with_media.json',
+			array(
+				'media[]'	=> "@{$image};type=image/jpeg;filename=20095212000019.jpg",
+				'status'	=> 'Picture time',
+			),
+			true,	// use auth
+			true	// multipart
+		);
+		
+		if( $code == 200 ){
+			tmhUtilities::pr( json_decode($tmhOAuth->response['response']) );
+		}else{
+			tmhUtilities::pr( $tmhOAuth->response['response'] );
+		}
+		
+		
+		
+		header("Content-Type: text/plain");
+		exit;
+		return $this->_forward('index');
+	}
+	
+	
+	public function uploadAction()
+	{
+		$twitter = $this->_twitter;
+		//https://upload.twitter.com/1/statuses/update_with_media.json
+		
+		
+		if( $twitter->isAuthorised() ){
+			
+			// for develop
+			$this->disableLayout();
+			$this->setNoRender();
+			
+			
+			$status		= "test!!";
+			$file		= "/tmp/20095212000019.jpg";
+			
+			$response	= $twitter->statuses->updateWithMedia($status, $file);
+			
+			
+			header("Content-Type: text/plain");
+			var_export( $twitter->getUri()->getUri() );
+			echo PHP_EOL . PHP_EOL;
+			var_export( $twitter->getLocalHttpClient()->getLastRequest() );
+			echo PHP_EOL . PHP_EOL . "=====response=====" . PHP_EOL . PHP_EOL;
+			
+			var_export($response);
+			exit;
 		}
 		
 		return $this->_forward('index');
