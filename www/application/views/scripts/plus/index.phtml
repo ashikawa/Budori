@@ -1,0 +1,38 @@
+<div class="contents">
+	gogole plus<br />
+	<a href="/plus/authorize">login</a>
+</div>
+
+<div class="contents">
+	<img src="{$me.image.url}"><br />
+	{$me.id}<br />
+	<a href="{$me.url}" target="_blank">{$me.displayName}</a><br />
+</div>
+
+<div class="contents">
+{foreach from=$activities.items item="_r" name="activities"}
+	
+	{$_r.title}<br />
+	
+	<a href="{$_r.url}" target="_blank">{$_r.updated}</a><br />
+{if isset($_r.object.attachments)}
+	{foreach from=$_r.object.attachments item="_o" name="attachments"}
+		
+		{if $_o.objectType == "article"}
+			<a href="{$_o.url}" target="_blank">{$_o.displayName}</a><br />
+			{if isset($_o.content)}
+				{$_o.content|strip_tags}
+			{/if}
+		{/if}
+		
+		{if $_o.objectType == "photo"}
+			<img src="{$_o.image.url}" />
+			{*<!--<img src="{$_o.fullImage.url}"> -->*}
+		{/if}
+	{/foreach}
+{/if}	
+	{*<!-- @todo replies -->*}
+	{*<!--$_r.object.replies|var_dump-->*}<br />
+<br />
+{/foreach}
+</div>
