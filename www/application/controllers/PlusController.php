@@ -1,142 +1,129 @@
 <?php
-
-
+/**
+ * 公式ライブラリの移植
+ * @author shigeru.ashikawa
+ */
 class PlusController extends Neri_Controller_Action_Http
 {
 	
-	const CLIENT_ID		= 'xxxxxxxxxxxxxxxxxx';
+	const CLIENT_ID		= '682295594430.apps.googleusercontent.com';
 	
-	const CLIENT_SECRET	= 'yyyyyyyyyyyyyyyyyy';
+	const CLIENT_SECRET	= 'IqgT_ZLr4CmmY3wW9Xn-2GgJ';
 	
-	const CALLBACK_URL	= 'http://budori.ashikawa.com/plus/callback';
+	const REDIRECT_URI	= 'http://budori.ashikawa.com/plus/callback';
 	
-	/**
-	 * @var apiClient
-	 */
-	protected $_client	= null;
 	
 	/**
-	 * @var apiPlusService
-	 */
-	protected $_plus	= null;
-	
-	/**
-	 * @var 
+	 * @var Zend_Session_Namespace
 	 */
 	protected $_session	= null;
+	
+	/**
+	 * @var Budori_Oauth_Consumer
+	 */
+	protected $_consumer = null;
+	
 	
 	public function init()
 	{
 		parent::init();
-		
-		// for dev
+		// for devel
 		Zend_Session::setOptions(array("cookie_domain" => ".ashikawa.com"));
-		
-		
-		require_once 'google-api-php-client/src/apiClient.php';
-		
-		$client = new apiClient();
-		
-		$client->setApplicationName("Google+ PHP Starter Application");
-		$client->setClientId( self::CLIENT_ID );
-		$client->setClientSecret( self::CLIENT_SECRET );
-		$client->setRedirectUri( self::CALLBACK_URL );
-		
-		$this->_client = $client;
-		
 		
 		
 		$session = new Zend_Session_Namespace("GOOGLE_PLUS");
 		
-		if( isset($session->OAUTH_TOKEN) ){
-			$client->setAccessToken($session->OAUTH_TOKEN);
-		}		
-		$this->_session = $session;
+		$options = array(
+			'client_id'		=> self::CLIENT_ID,
+			'client_secret'	=> self::CLIENT_SECRET,
+			'auth_uri'		=> 'https://accounts.google.com/o/oauth2/auth',
+			'token_uri'		=> 'https://accounts.google.com/o/oauth2/token',
+			'redirect_uri'	=> self::REDIRECT_URI,
+		);
 		
+		if( !is_null($session->OAUTH_TOKEN) ){
+			$options['token'] = $session->OAUTH_TOKEN;
+		}
 		
+		$this->_session		= $session;
 		
-		require_once 'google-api-php-client/src/contrib/apiPlusService.php';
-		
-		$plus = new apiPlusService($client);
-		
-		$this->_plus = $plus;
+		$this->_consumer	= new Budori_Oauth_Consumer($options);
 	}
 	
 	public function indexAction()
 	{
-		$client = $this->_client;
+		$consumer = $this->_consumer;
 		
-		if( $client->getAccessToken() ){
-			
-			$plus = $this->_plus;
-			$optParams = array('maxResults' => 100);
-			
-			$this->view->assign(array(
-				"me"			=> $plus->people->get('me'),
-				"activities"	=> $plus->activities->listActivities('me', 'public', $optParams),
-			));
+		$token = $consumer->getToken();
+		
+		if( is_null( $token ) ){
+			return;
 		}
+		
+		$url		= "https://www.googleapis.com";
+		
+		$service	= new Zend_Rest_Client($url);
+		
+		$service->getHttpClient()->setHeaders("Authorization", "OAuth " . $token->access_token);
+		
+		
+		$response = $service->restGet("/plus/v1/people/me");
+		
+		if( $response->getStatus() != 200){
+			throw new Zend_Service_Exception( $response->getMessage(), $response->getStatus() );
+		}
+		
+		$this->view->assign(array(
+			'me'	=> json_decode($response->getBody(), true),
+		));
 	}
 	
+	
+	/**
+	 * Google は RequestToken 使わないらしいので、普通に組み立ててリダイレクトでOK
+	 */
 	public function authorizeAction()
 	{
-		$client	= $this->_client;
+		$options = array(
+			"scope"	=> "https://www.googleapis.com/auth/plus.me",
+		);
 		
-		$client->authenticate();
-		exit;
+		$url	= $this->_consumer->getRedirectUrl( $options );
+		return $this->_redirect( $url );
 	}
 	
+	/**
+	 * @todo makeRequest
+	 * 著名とかは何故か callback で行う
+	 * FB とかとは著名とユーザー認証の順番が入れ替わる。　何故？
+	 */
 	public function callbackAction()
 	{
+		$consumer	= $this->_consumer;
 		$session	= $this->_session;
-		$client		= $this->_client;
 		
-		$session->OAUTH_TOKEN = $client->authenticate();
+		$session->OAUTH_TOKEN = $consumer->requestToken( $this->_getAllParams() );
 		
-		$this->_redirect("/plus/");
+		$this->_forward("index");
 	}
 	
 	
-//	/**
-//	 * @var Budori_Service_Google_Plus
-//	 */
-//	protected $_service = null;
-//	
-//	public function init()
-//	{
-//		parent::init();
-//		
-//		$options = array(
-//			"requestScheme"		=> Zend_Oauth::REQUEST_SCHEME_HEADER,
-//			"signatureMethod"	=> "HMAC-SHA1",
-//			"authorizeUrl"		=> "https://accounts.google.com/o/oauth2/auth",
-//			"siteUrl"			=> "https://accounts.google.com/o/oauth2/auth",
-//			"accessTokenUrl"	=> "https://accounts.google.com/o/oauth2/token",
-//			"callbackUrl"		=> self::CALLBACK_URL,
-//			"consumerKey"		=> self::CLIENT_ID,
-//			"consumerSecret"	=> self::CLIENT_SECRET,
-//		);
-//		
-//		$this->_service = new Budori_Service_Google_Plus( $options );
-//	}
-//	
-//	/**
-//	 * call oauth and redirect
-//	 */
-//	public function authorizeAction()
-//	{
-//		$service = $this->_service;
-//		
-//		if( !$service->isAuthorised() ){
-//			$requestToken	= $service->getRequestToken();
-//			$this->_session->request_token	= $requestToken;
-//			
-//			//return $twitter->redirect();
-//			$url = $service->getRedirectUrl();
-//			return $this->_redirect($url);
-//		}
-//		
-//		return $this->_forward('index');
-//	}
+	public function refreshAction()
+	{
+		$session	= $this->_session;
+		$consumer	= $this->_consumer;
+		
+		$session->OAUTH_TOKEN = $consumer->refreshToken();
+		
+		$this->_forward("index");
+	}
 	
+	
+	public function logoutAction()
+	{
+		$session = $this->_session;
+		$session->unsetAll();
+		
+		$this->_forward("index");
+	}
 }

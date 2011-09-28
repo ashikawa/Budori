@@ -1,22 +1,37 @@
 <div class="contents">
 	gogole plus<br />
-	<a href="/plus/authorize">login</a>
+	<a href="/plus/authorize">login</a><br />
+	<a href="/plus/logout">logout</a><br />
+	<a href="/plus/reflesh">reflesh</a><br />
 </div>
 
+{if isset($me)}
 <div class="contents">
-	<img src="{$me.image.url}"><br />
+	<img src="{$me.image.url}" /><br />
 	{$me.id}<br />
 	<a href="{$me.url}" target="_blank">{$me.displayName}</a><br />
 </div>
+{/if}
 
+
+{if isset($activities)}
 <div class="contents">
+
+<ul>
 {foreach from=$activities.items item="_r" name="activities"}
+<li>
 	
-	{$_r.title}<br />
-	
+	<p>{$_r.title}</p>
 	<a href="{$_r.url}" target="_blank">{$_r.updated}</a><br />
+	
 {if isset($_r.object.attachments)}
+	<p style="font-size: small;">
 	{foreach from=$_r.object.attachments item="_o" name="attachments"}
+		
+		{if $_o.objectType == "photo"}
+			<img src="{$_o.image.url}" style="float: left;"/>
+			{*<!--<img src="{$_o.fullImage.url}"> -->*}
+		{/if}
 		
 		{if $_o.objectType == "article"}
 			<a href="{$_o.url}" target="_blank">{$_o.displayName}</a><br />
@@ -25,14 +40,15 @@
 			{/if}
 		{/if}
 		
-		{if $_o.objectType == "photo"}
-			<img src="{$_o.image.url}" />
-			{*<!--<img src="{$_o.fullImage.url}"> -->*}
-		{/if}
 	{/foreach}
-{/if}	
+	</p>
+{/if}
 	{*<!-- @todo replies -->*}
 	{*<!--$_r.object.replies|var_dump-->*}<br />
-<br />
+</li>
 {/foreach}
+</ul>
+
+
 </div>
+{/if}

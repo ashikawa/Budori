@@ -64,7 +64,7 @@ class Budori_Service_Google_Plus extends Zend_Rest_Client
      */
     public function __construct($options = null, Zend_Oauth_Consumer $consumer = null)
     {
-        $this->setUri('http://api.twitter.com');
+        $this->setUri('https://www.googleapis.com/plus/v1/');
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }

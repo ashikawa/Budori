@@ -10,13 +10,17 @@
  */
 class ErrorController extends Neri_Controller_Action_Http 
 {
+	/**
+	 * @todo application.ini にでも移す? 検討中
+	 * @var bool
+	 */
+	public $errorReporting = false;
 	
 	/**
 	 * 初期化、ルーティング
 	 */
 	public function init()
 	{
-		
 		parent::init();
 		$this->setLayout('simple');
 		
@@ -38,7 +42,7 @@ class ErrorController extends Neri_Controller_Action_Http
 		if(is_null($errors)){
 			return $this->_forward('notfound');
 		}
-				
+		
 		switch ($errors->type) {
 			case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
 			case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
@@ -55,10 +59,24 @@ class ErrorController extends Neri_Controller_Action_Http
 	
 	public function errorAction()
 	{
-		$this->getResponse()->setHttpResponseCode(500);
 		
-		$this->appendPankuzu('エラーが発生しました');
-		$this->prependTitle('エラーが発生しました');
+		$errors = $this->_getParam('error_handler', null);
+		
+		if( ($errors->exception instanceof Zend_Controller_Action_Exception)
+				&& $errors->exception->getCode() == 400 ){
+			
+			$this->getResponse()->setHttpResponseCode(400);
+			
+			$this->appendPankuzu('Bad Request');
+			$this->prependTitle('Bad Request');
+			
+		}else{
+			
+			$this->getResponse()->setHttpResponseCode(500);
+			
+			$this->appendPankuzu('エラーが発生しました');
+			$this->prependTitle('エラーが発生しました');
+		}
 		
 		$this->_errorReport();
 	}
@@ -104,6 +122,10 @@ class ErrorController extends Neri_Controller_Action_Http
 	
 	protected function _errorReport()
 	{
+		if( !$this->errorReporting ){
+			return;
+		}
+		
 		$errors		= $this->_getParam('error_handler');
 		$exception	= $errors->offsetGet('exception');
 		
