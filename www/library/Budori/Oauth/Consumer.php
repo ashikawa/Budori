@@ -91,19 +91,10 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 	}
 	
 	/**
+	 * get or reflesh token
 	 * @return Budori_Oauth_Token
 	 */
 	public function getToken()
-	{
-		return $this->_token;
-	}
-	
-	/**
-	 * get or request OAuth token
-	 * @param array $params
-	 * @return Budori_Oauth_Token
-	 */
-	public function requestToken( $params = array() )
 	{
 		if( !is_null( $this->_token ) ){
 			
@@ -113,9 +104,21 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 				
 				$this->refreshToken();
 			}
-			return $this->_token;
 		}
 		
+		return $this->_token;
+	}
+	
+	/**
+	 * request OAuth token
+	 * @param array $params
+	 * 	array(
+	 * 		'code'	=> oauth callback code $_REQUEST['code'], required
+	 * 	)
+	 * @return Budori_Oauth_Token
+	 */
+	public function requestToken( $params = array() )
+	{
 		$params = array_merge(array(
 			'grant_type'	=> self::GRANT_TYPE_AUTHORIZATION_CODE,
 			'redirect_uri'	=> $this->_options['redirect_uri'],

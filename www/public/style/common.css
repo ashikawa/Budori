@@ -1,35 +1,35 @@
 @charset "UTF-8";
 
 table{
-  font-size: 90%;
-  border-right: 1px solid #989898;
-  border-left: 1px solid #989898;
-  border-bottom: 1px solid #989898;
-  background-color: #ffffff;
+	font-size: 90%;
+	border-right: 1px solid #989898;
+	border-left: 1px solid #989898;
+	border-bottom: 1px solid #989898;
+	background-color: #ffffff;
 }
 
 table td{
-  background-color:transparent;
+	background-color:transparent;
 }
 
 table table{
-  background-color: #ffffff;
-  border: none;
-  width: 100%;
+	background-color: #ffffff;
+	border: none;
+	width: 100%;
 }
 
 table td{
-  background-color:transparent;
+	background-color:transparent;
 }
 
 table font,
 table a{
-  border:none;
-  font-size: 100%;
+	border:none;
+	font-size: 100%;
 }
 
 table font font{
-  font-size: 100%;
+	font-size: 100%;
 }
 
 table a{
@@ -37,66 +37,66 @@ table a{
 }
 
 table input{
-  border: 1px solid #dcdcdc;
-  background-color : transparent;
+	border: 1px solid #dcdcdc;
+	background-color : transparent;
 }
 
 h1{
-  font-size: 150%;
-  text-align: left ;
-  color: #cccccc;
-  clear: both;
-  margin: 0 auto;
-  font-weight: bold;
+	font-size: 150%;
+	text-align: left ;
+	color: #cccccc;
+	clear: both;
+	margin: 0 auto;
+	font-weight: bold;
 }
 
 h1 a{
-  color: #cccccc;
-  border: none;
-  text-decoration: none;
+	color: #cccccc;
+	border: none;
+	text-decoration: none;
 }
 
 h2,
 h2 a{
-  text-decoration: none;
-  border: none;
-  color: #696969;
+	text-decoration: none;
+	border: none;
+	color: #696969;
 }
 
 h2 {
-  padding: 7px 10px;
-  text-align: right;
-  font-size: 100%;
-  font-weight: normal;
+	padding: 7px 10px;
+	text-align: right;
+	font-size: 100%;
+	font-weight: normal;
 }
 
 a.edit{
-  color: #CCCCCC;
-  font-size: 10px;
-  font-weight: normal;
+	color: #CCCCCC;
+	font-size: 10px;
+	font-weight: normal;
 }
 
 div.body {
-  _width: 100%;
-  text-align: left;
-  zoom:1;
+	_width: 100%;
+	text-align: left;
+	zoom:1;
 }
 
 div.body:after {
-  display:block;
-  clear:both;
+	display:block;
+	clear:both;
 }
 
 div.section{
-  margin: 0;
-  padding: 20px 25px ;
-  text-align: justify;
-  border-top: 1px dashed #bbbbbb;
+	margin: 0;
+	padding: 20px 25px ;
+	text-align: justify;
+	border-top: 1px dashed #bbbbbb;
 }
 
 div.section p {
-  margin: 10px 0;
-  padding: 0;
+	margin: 10px 0;
+	padding: 0;
 }
 
 h3 {
@@ -107,36 +107,36 @@ h3 {
 }
 
 h3 img{
-  vertical-align: middle;
+	vertical-align: middle;
 }
 
 /*--- 文字装飾 ------------------------------------------------*/  
 
 a{
-  color: #c0c0c0;
-  text-decoration: none;
+	color: #c0c0c0;
+	text-decoration: none;
 }
 
 a:hover,
 a:hover font,
 a:hover span{
-  color: #99cccc;
+	color: #99cccc;
 }
 
 h4 {
-  font-size: 100%;
-  font-weight: normal;
-  margin: 20px 0 0 0;
-  padding: 0 0 0 0.5em;
-  border-left: 5px solid #d3d3d3;
+	font-size: 100%;
+	font-weight: normal;
+	margin: 20px 0 0 0;
+	padding: 0 0 0 0.5em;
+	border-left: 5px solid #d3d3d3;
 }
 
 h5{
-  font-size: 100%;
-  font-weight: normal;
-  margin: 15px 0 0 0;
-  padding: 0 0 0 0.5em;
-  border-left: 4px double #d3d3d3;
+	font-size: 100%;
+	font-weight: normal;
+	margin: 15px 0 0 0;
+	padding: 0 0 0 0.5em;
+	border-left: 4px double #d3d3d3;
 }
 
 blockquote{
@@ -155,43 +155,43 @@ pre	{
 }
 
 strong{
-  font-weight: bold;
+	font-weight: bold;
 }
 
 span.highlight {
-  background-color: #ffff00;
-  padding: 1px;
+	background-color: #ffff00;
+	padding: 1px;
 }
 
 /*--- テーブル ------------------------------------------------*/                                              
 
 table{
-  margin: 15px 0;
-  font-size: 100%;
-  _font-size: 90%;
-  border: none;
-  border-collapse: collapse;
-  text-align: left;
-  border: solid 1px #989898;
+	margin: 15px 0;
+	font-size: 100%;
+	_font-size: 90%;
+	border: none;
+	border-collapse: collapse;
+	text-align: left;
+	border: solid 1px #989898;
 }
 
 td{
-  padding: 8px 10px;
-  margin: 0;
-  border: 1px solid #989898;
+	padding: 8px 10px;
+	margin: 0;
+	border: 1px solid #989898;
 }
 
 th{
-  text-align: left;
-  padding: 8px 10px;
-  margin: 0;
-  border: solid 1px #989898;
-  font-weight: normal;
-  background: #F0FFFF;
+	text-align: left;
+	padding: 8px 10px;
+	margin: 0;
+	border: solid 1px #989898;
+	font-weight: normal;
+	background: #F0FFFF;
 }
 
 a img{
-  border: none;
+	border: none;
 }
 
 hr{
@@ -205,21 +205,6 @@ textarea {
 	height: 20%;
 }
 
-
 input:focus, textarea:focus {
-  border: solid 1px #989898;
-}
-
-/* clear fix */
-.cfix:before,
-.cfix:after {
-    content:"";
-    display:table;
-}
- 
-.cfix:after {
-    clear:both;
-}
-.cfix {
-    zoom:1;
+	border: solid 1px #989898;
 }

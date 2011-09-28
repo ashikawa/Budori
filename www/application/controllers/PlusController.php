@@ -13,6 +13,9 @@ class PlusController extends Neri_Controller_Action_Http
 	const REDIRECT_URI	= 'http://budori.ashikawa.com/plus/callback';
 	
 	
+	protected $_scope	= array("https://www.googleapis.com/auth/plus.me");
+	
+	
 	/**
 	 * @var Zend_Session_Namespace
 	 */
@@ -54,30 +57,17 @@ class PlusController extends Neri_Controller_Action_Http
 	{
 		$consumer = $this->_consumer;
 		
-		$token = $consumer->getToken();
-		
-		if( is_null( $token ) ){
+		if( is_null( $consumer->getToken() ) ){
 			return;
 		}
 		
-		$url		= "https://www.googleapis.com";
-		
-		$service	= new Zend_Rest_Client($url);
-		
-		$service->getHttpClient()->setHeaders("Authorization", "OAuth " . $token->access_token);
-		
-		
-		$response = $service->restGet("/plus/v1/people/me");
-		
-		if( $response->getStatus() != 200){
-			throw new Zend_Service_Exception( $response->getMessage(), $response->getStatus() );
-		}
+		$service	= new Budori_Service_Google_Plus($consumer);
 		
 		$this->view->assign(array(
-			'me'	=> json_decode($response->getBody(), true),
+			'me'			=> $service->get("people/me"),
+			'activities'	=> $service->get("people/me/activities/public"),
 		));
 	}
-	
 	
 	/**
 	 * Google は RequestToken 使わないらしいので、普通に組み立ててリダイレクトでOK
@@ -85,28 +75,25 @@ class PlusController extends Neri_Controller_Action_Http
 	public function authorizeAction()
 	{
 		$options = array(
-			"scope"	=> "https://www.googleapis.com/auth/plus.me",
+			"scope"	=> implode(" ", $this->_scope),
 		);
 		
 		$url	= $this->_consumer->getRedirectUrl( $options );
 		return $this->_redirect( $url );
 	}
 	
-	/**
-	 * @todo makeRequest
-	 * 著名とかは何故か callback で行う
-	 * FB とかとは著名とユーザー認証の順番が入れ替わる。　何故？
-	 */
 	public function callbackAction()
 	{
 		$consumer	= $this->_consumer;
 		$session	= $this->_session;
 		
-		$session->OAUTH_TOKEN = $consumer->requestToken( $this->_getAllParams() );
+		$params = array(
+			'code'	=> $this->_getParam("code"),
+		);
+		$session->OAUTH_TOKEN = $consumer->requestToken( $params );
 		
-		$this->_forward("index");
+		$this->_redirect("/plus/");
 	}
-	
 	
 	public function refreshAction()
 	{
@@ -115,15 +102,13 @@ class PlusController extends Neri_Controller_Action_Http
 		
 		$session->OAUTH_TOKEN = $consumer->refreshToken();
 		
-		$this->_forward("index");
+		$this->_redirect("/plus/");
 	}
-	
 	
 	public function logoutAction()
 	{
-		$session = $this->_session;
-		$session->unsetAll();
+		$this->_session->unsetAll();
 		
-		$this->_forward("index");
+		$this->_redirect("/plus/");
 	}
 }

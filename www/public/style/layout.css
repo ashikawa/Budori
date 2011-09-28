@@ -3,8 +3,8 @@
 /* 全体のレイアウト */
 
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 body{
 	height: 100%;
@@ -49,8 +49,8 @@ div#main{
 }
 
 div#sidebar {
-  float: right;
-  width: 200px;
-  text-align: left;
-  font-size: 90%;
+	float: right;
+	width: 200px;
+	text-align: left;
+	font-size: 90%;
 }
