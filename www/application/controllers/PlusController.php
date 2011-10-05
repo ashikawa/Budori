@@ -12,6 +12,7 @@ class PlusController extends Neri_Controller_Action_Http
 	
 	const REDIRECT_URI	= 'http://budori.ashikawa.com/plus/callback';
 	
+	const API_KEY		= 'AIzaSyCp-zLXRsandyG57C9HTQE16gOwqY-tuA0';
 	
 	protected $_scope	= array("https://www.googleapis.com/auth/plus.me");
 	
@@ -66,6 +67,7 @@ class PlusController extends Neri_Controller_Action_Http
 		$this->view->assign(array(
 			'me'			=> $service->get("people/me"),
 			'activities'	=> $service->get("people/me/activities/public"),
+//			'searchActivities'	=>	$service->get("activities", $params),
 		));
 	}
 	
@@ -110,5 +112,14 @@ class PlusController extends Neri_Controller_Action_Http
 		$this->_session->unsetAll();
 		
 		$this->_redirect("/plus/");
+	}
+	
+	
+	
+	protected function _debugMode()
+	{
+		$this->disableLayout();
+		$this->setNoRender();
+		$this->getResponse()->setHeader("Content-Type", "text/plain");
 	}
 }

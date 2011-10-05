@@ -70,14 +70,12 @@ abstract class Budori_Service_Google_Abstract extends Zend_Rest_Client
 	
 	
 	
-	
-	
-	public function get($query, $version=null)
+	public function get($path, $query=null, $version=null)
 	{
 		$this->_init();
-		$query = $this->_assembleQuery($query, $version);
+		$path = $this->_assembleQuery($path, $version);
 		
-		$response = $this->restGet($query);
+		$response = $this->restGet($path, $query);
 		
 		if( $response->getStatus() != 200){
 			throw new Zend_Service_Exception( $response->getMessage(), $response->getStatus() );
