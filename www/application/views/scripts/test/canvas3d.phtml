@@ -1,0 +1,319 @@
+<div class="contents">
+	<canvas id='canvas' width="445" height="445"></canvas>
+</div>
+
+
+
+<script type="text/javascript">
+<!--
+/* ------ Stage Class ------------------------------------------*/
+var Stage = function( id ){
+    this.id = id;
+    this.canvas;
+    this.timer;
+    this.points = [];
+    this.triangles = [];
+
+    this.stageWidth = 445;
+    this.stageHeight = 445;
+    this.angleX = 0;
+    this.angleY = 0;
+    this.timerDelay = 33;
+
+    this.init();
+};
+
+Stage.prototype = {
+	// constructor
+	init: function(){
+		var node = document.getElementById( this.id );
+		
+		if(!node.getContext) return;
+		this.canvas = node.getContext("2d");
+		
+		Base.addevent( node, "mousemove", Base.getMousePos);
+	},
+	start: function(){
+		this.enterFrame();
+		this.internal = setInterval( Base.bind( this, this.enterFrame ), this.timerDelay );
+	},
+	stop: function(){
+		clearInterval( this.internal );
+	},
+	setPoint: function( point ){
+		this.points.push( point );
+	},
+	setTriangles: function( triangle ){
+		this.triangles.push( triangle );
+	},
+	enterFrame: function(){
+		for( var i = 0, n = this.points.length ; i < n; i++ ){
+			this.angleX += ( Base.mouseY - this.points[i].vpY ) * 0.0001;
+			this.angleY += ( Base.mouseX - this.points[i].vpX ) * 0.0001;
+			
+			this.rotateX( this.points[i], this.angleX ); 
+			this.rotateY( this.points[i], this.angleY ); 
+			this.render(); 
+		}
+	},
+	rotateX: function( point, angle ){
+		cosX = Math.cos( angle );
+		sinX = Math.sin( angle );
+		
+		y1 = point.cy * cosX - point.cz * sinX;
+		z1 = point.cz * cosX + point.cy * sinX;
+		
+		point.y = y1;
+		point.z = z1;
+	},
+	rotateY: function( point, angle ){
+		cosY = Math.cos( angle );
+		sinY = Math.sin( angle );
+		
+		x1 = point.cx * cosY - point.z * sinY;
+		z1 = point.z * cosY + point.cx * sinY;
+		
+		point.x = x1;
+		point.z = z1;
+	},
+	render: function(){
+		this.canvas.clearRect( 0, 0, this.stageWidth, this.stageHeight );
+		this.canvas.save();
+		
+		for( var i = 0, n = this.triangles.length; i < n; i++ ){
+			var triangle = this.triangles[i];
+			
+			if( triangle.isBackFace() ){ continue; };
+			var color = triangle.getAdjustedColor();
+			
+			this.canvas.beginPath();
+			this.canvas.fillStyle = color;
+			this.canvas.strokeStyle = color;
+			this.canvas.lineWidth = 2;
+			this.canvas.lineJoin = "round";
+			
+			this.canvas.moveTo( triangle.a.screenX(), triangle.a.screenY() );
+			this.canvas.lineTo( triangle.b.screenX(), triangle.b.screenY() );
+			this.canvas.lineTo( triangle.c.screenX(), triangle.c.screenY() );
+			this.canvas.lineTo( triangle.a.screenX(), triangle.a.screenY() );
+			
+			this.canvas.closePath();
+			this.canvas.fill();
+			this.canvas.stroke();
+		}
+		this.sortZ();
+		
+		this.canvas.restore();
+	},
+	sortZ: function(){
+		this.triangles.sort( function(a, b){ return ( b.depth() - a.depth() ); } );
+	}
+};
+
+/* ------ Point3D Class ------------------------------------------*/
+
+var Point3D = function( posX, posY, posZ ){
+	this.x = posX;
+	this.y = posY;
+	this.z = posZ;
+	this.cx = posX;
+	this.cy = posY;
+	this.cz = posZ;
+	this.centerX = 0;
+	this.centerY = 0;
+	this.centerZ = 0;
+	
+	this.fl = 250;
+	this.vpX = 0;
+	this.vpY = 0;
+};
+
+Point3D.prototype = {
+	setVanishingPoint: function( vpX, vpY ){
+		this.vpX = vpX;
+		this.vpY = vpY;
+	},
+	setCenter: function( centerX, centerY, centerZ ){
+		this.centerX = centerX;
+		this.centerY = centerY;
+		this.centerZ = centerZ;
+	},
+	screenX: function(){
+		return this.vpX + this.centerX + this.x * this.getScale();
+	},
+	screenY: function(){
+		return this.vpY + this.centerY + this.y * this.getScale();
+	},
+	getScale: function(){
+		return this.fl / ( this.fl + this.z + this.centerZ );
+	}
+};
+
+/* ------ Triangle Class ------------------------------------------*/
+
+var Triangle = function( pointA, pointB, pointC, color ){
+	this.a = pointA;
+	this.b = pointB;
+	this.c = pointC;
+	this.color = color;
+	this.light;
+};
+
+Triangle.prototype = {
+	depth: function(){
+		var posZ = Math.min( this.a.z, this.b.z );
+		posZ = Math.min( posZ, this.c.z );
+		return posZ;
+	},
+	isBackFace: function(){
+		var cax = this.c.screenX() - this.a.screenX();
+		var cay = this.c.screenY() - this.a.screenY();
+		var bcx = this.b.screenX() - this.c.screenX();
+		var bcy = this.b.screenY() - this.c.screenY();
+		
+		return cax * bcy > cay * bcx;
+	},
+	getAdjustedColor: function(){
+		var color = parseInt( '0x'+( this.color.charAt(0) == "#" ? this.color.substring(1) : this.color ) );
+		var red = ( color & 0xff0000 ) >> 16;
+		var green = ( color & 0x00ff00 ) >> 8;
+		var blue = ( color & 0x0000ff );
+		
+		var lightFactor = this.getLightFactor();
+		red *= lightFactor;
+		green *= lightFactor;
+		blue *= lightFactor;
+		color = red << 16 | green << 8 | blue ;
+		return "#" + color.toString(16);
+	},
+	getLightFactor: function(){
+		var ab = new Object();
+		ab.x = this.a.x - this.b.x;
+		ab.y = this.a.y - this.b.y;
+		ab.z = this.a.z - this.b.z;
+		
+		var bc = new Object();
+		bc.x = this.b.x - this.c.x;
+		bc.y = this.b.y - this.c.y;
+		bc.z = this.b.z - this.c.z;
+		
+		var norm = new Object();
+		norm.x = ( ab.y * bc.z ) - ( ab.z * bc.y );
+		norm.y = -(( ab.x * bc.z ) - ( ab.z * bc.x ));
+		norm.z = ( ab.x * bc.y ) - ( ab.y * bc.x );
+
+		var dotProd = norm.x * this.light.x + norm.y * this.light.y + norm.z * this.light.z;
+		var normMag = Math.sqrt( norm.x * norm.x + norm.y * norm.y + norm.z * norm.z );
+		var lightMag = Math.sqrt( this.light.x * this.light.x + this.light.y * this.light.y + this.light.z * this.light.z );
+		return ( Math.acos(dotProd / (normMag * lightMag)) / Math.PI) * this.light.brightness;
+	}
+};
+
+/* ------ Light Class ------------------------------------------*/
+
+var Light = function( posX, posY, posZ, brightness ){
+	this.x = -100;
+	this.y = -100;
+	this.z = -100;
+	this.brightness = 1;
+	
+	if( arguments[0] ) this.x = posX;
+	if( arguments[1] ) this.y = posY;
+	if( arguments[2] ) this.z = posZ;
+	if( arguments[3] ) this.brightness = brightness;
+};
+
+Light.prototype = {
+	setBrightness: function( num ){
+		this.brightness = Math.max( num, 0 );
+		this.brightness = Math.min( this.brightness, 1 );
+	}
+};
+/* ------ Base Class ------------------------------------------*/
+
+var Base = {
+	mouseX: 0,
+	mouseY: 0,
+	getMousePos: function( e ){
+		var obj = new Object();
+		if( document.all ){
+			Base.mouseX = event.x + document.body.scrollLeft;
+			Base.mouseY = event.y + document.body.scrollTop;
+		} else {
+			Base.mouseX = e.pageX;
+			Base.mouseY = e.pageY;
+		}
+		return obj;
+	},
+	addevent: function(node,evt,func){
+		if(node.addEventListener){
+			node.addEventListener(evt,func,false);
+		} else if(node.attachEvent){
+			node.attachEvent("on"+evt,func);  
+		}
+	},
+	bind: function(){
+		var args=[];
+		if(arguments){
+			for(var i=0,n=arguments.length;i<n;i++){
+				args.push(arguments[i]);
+			}
+		}
+		var object=args.shift();
+		var func=args.shift();
+
+		return function(event) {
+			return func.apply(object,[event||window.event].concat(args));
+		};
+	}
+};
+
+/* ------ Client ------------------------------------------*/
+(function(){ window.onload = function(){
+	
+	var stage = new Stage("canvas");
+	var color = "#cc0000";
+	
+	var points = [ 
+		new Point3D( -80, -80, -80 ),
+		new Point3D( 80, -80, -80 ),
+		new Point3D( 80, 80, -80 ),
+		new Point3D( -80, 80, -80 ),
+		new Point3D( -80, -80, 80 ),
+		new Point3D( 80, -80, 80 ),
+		new Point3D( 80, 80, 80 ),
+		new Point3D( -80, 80, 80 )
+	];
+	
+	for( var i = 0; i < points.length; i++ ){
+		var point = points[i];
+		point.setVanishingPoint( stage.stageWidth / 2, stage.stageHeight / 2 );
+		point.setCenter( 0, 0, 50);
+		stage.setPoint( point );
+	}
+	
+	var points2 = stage.points;
+	
+	stage.setTriangles( new Triangle( points2[0], points2[1], points2[2], color ) );
+	stage.setTriangles( new Triangle( points2[0], points2[2], points2[3], color ) );
+	stage.setTriangles( new Triangle( points2[1], points2[5], points2[6], color ) );
+	stage.setTriangles( new Triangle( points2[1], points2[6], points2[2], color ) );
+	stage.setTriangles( new Triangle( points2[4], points2[0], points2[3], color ) );
+	stage.setTriangles( new Triangle( points2[4], points2[3], points2[7], color ) );
+	stage.setTriangles( new Triangle( points2[5], points2[4], points2[7], color ) );
+	stage.setTriangles( new Triangle( points2[5], points2[7], points2[6], color ) );
+	stage.setTriangles( new Triangle( points2[4], points2[5], points2[1], color ) );
+	stage.setTriangles( new Triangle( points2[4], points2[1], points2[0], color ) );
+	stage.setTriangles( new Triangle( points2[3], points2[2], points2[6], color ) );
+	stage.setTriangles( new Triangle( points2[3], points2[6], points2[7], color ) );
+	
+	var triangles = stage.triangles;
+	
+	var light = new Light();
+	for( i = 0; i < triangles.length; i++ ){
+		triangles[i].light = light;
+	}
+	stage.start();
+}; })();
+//-->
+</script>

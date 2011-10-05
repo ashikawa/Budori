@@ -394,4 +394,7 @@ class TestController extends Neri_Controller_Action_Http
 			$this->view->assign('node',$node);
 		}
 	}
+	
+	public function canvas3dAction()
+	{}
 }
