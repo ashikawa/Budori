@@ -72,8 +72,20 @@ class TwitterController extends Neri_Controller_Action_Http
 			$response	= $twitter->status->statusFriendsTimeline();
 			$timeline	= $response->getIterator();
 		}
+			$this->view->assign("timeline", $timeline);
+	}
+	
+	
+	public function friendsAction()
+	{
+		$this->disableLayout();
+		$this->setNoRender();
+		$this->getResponse()->setHeader("Content-Type", "text/plain");
 		
-		$this->view->assign("timeline", $timeline);
+		
+		$twitter	= $this->_twitter;
+		
+		var_dump($twitter->userFriends());
 	}
 	
 	/**
