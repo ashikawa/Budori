@@ -1,4 +1,9 @@
 <?php
+/**
+ * http://fierce-winter-3467.herokuapp.com/
+ * @author shigeru.ashikawa
+ *
+ */
 class FacebookController extends Neri_Controller_Action_Http 
 {
 	
@@ -35,6 +40,8 @@ class FacebookController extends Neri_Controller_Action_Http
 		if( isset($session->ACCESS_TOKEN) ){
 			$accessToken =  $session->ACCESS_TOKEN;
 			$facebook->setAccessToken($accessToken);
+			
+			Budori_Log::factory()->debug("token: " . $accessToken);
 		}
 				
 		$this->_facebookSdk = $facebook;
@@ -44,18 +51,31 @@ class FacebookController extends Neri_Controller_Action_Http
 	{
 		$facebook = $this->_facebookSdk;
 		
-		$uid = $this->_facebookSdk->getUser();
+		$user = $this->_facebookSdk->getUser();
 		
-		$result = $facebook->api(array(
-						"method"	=> "fql.query",
-						"query"		=> "SELECT app_id,display_name FROM application WHERE app_id IN ( SELECT application_id FROM developer WHERE developer_id = '$uid' )",
-					));
+		var_export($user);
 		
-		$this->view->assign(
-				array( "result" => $result )
-			);
+//		$result = $facebook->api(array(
+//						"method"	=> "fql.query",
+//						"query"		=> "SELECT app_id,display_name FROM application WHERE app_id IN ( SELECT application_id FROM developer WHERE developer_id = '$uid' )",
+//					));
+//		
+//		$this->view->assign(
+//				array( "result" => $result )
+//			);
 	}
 	
+	public function friendsAction()
+	{
+		$this->disableLayout();
+		$this->setNoRender();
+		$this->getResponse()->setHeader("Content-Type", "text/plain");
+		
+		
+		$facebook = $this->_facebookSdk;
+		
+		var_dump($facebook->api("/me/friends"));
+	}
 	
 	/**
 	 * call oauth and redirect
@@ -70,7 +90,7 @@ class FacebookController extends Neri_Controller_Action_Http
 		$url = $facebook->getLoginUrl(
 					array(
 						'scope'			=> implode(",", $scope),
-						'redirect_uri'	=> "http://$domain/facebook/callback",
+						'redirect_uri'	=> "http://budori.ashikawa.vm/facebook/callback",
 					)
 				);
 		
@@ -82,14 +102,22 @@ class FacebookController extends Neri_Controller_Action_Http
 		$facebook	= $this->_facebookSdk;
 		$session	= $this->_session;
 		
-		
-		// Error!
-		// Error validating verification code
+		//　{
+		//　	"error": {
+		//　		"type": "OAuthException",
+		//　		"message": "Error validating verification code."
+		//　	}
+		//　}
+		// currentUrl と redirectUrl が違っていると発生するらしい。
 		
 		$accessToken =  $facebook->getAccessToken();
 		$session->ACCESS_TOKEN = $accessToken;
 		
+		
+		Budori_Log::factory()->debug("token: " . $accessToken);
+		
 		$controlelr = $this->getRequest()->getControllerName();
+		
 		return $this->_redirect("/$controlelr/");
 	}
 	
@@ -113,11 +141,19 @@ class FacebookController extends Neri_Controller_Action_Http
 		}
 	}
 	
+	
+	public function logoutAction()
+	{
+		$this->_logout();
+		$this->_redirect("/facebook/");
+	}
+	
 	/**
 	 * remove oauth session
 	 */
 	protected function _logout()
 	{
+		$this->_facebookSdk->destroySession();
 		$this->_session->unsetAll();
 	}
 }
