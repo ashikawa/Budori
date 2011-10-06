@@ -651,11 +651,11 @@ abstract class BaseFacebook
     if (empty($code)) {
       return false;
     }
-          
+
     if ($redirect_uri === null) {
       $redirect_uri = $this->getCurrentUrl();
     }
-Budori_Log::factory()->debug("------- $redirect_uri ---------");
+
     try {
       // need to circumvent json_decode by calling _oauthRequest
       // directly, since response isn't JSON format.
@@ -671,7 +671,7 @@ Budori_Log::factory()->debug("------- $redirect_uri ---------");
       // In any event, we don't have an access token, so say so.
       return false;
     }
-Budori_Log::factory()->debug("===== $access_token_response ======");
+
     if (empty($access_token_response)) {
       return false;
     }
