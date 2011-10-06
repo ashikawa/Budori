@@ -3,7 +3,6 @@
 /**
  * php --define APPLICATION_ENV=development batch.php -c ... ?
  */
-//var_export($_SERVER);
 define("APPLICATION_ENV", 'development');
 
 require_once dirname( dirname(__FILE__) ) . "/application/defines.inc";
@@ -29,5 +28,3 @@ $frontController->throwExceptions(true)
 
 
 $application->run();
-
-return 0;

@@ -208,3 +208,19 @@ textarea {
 input:focus, textarea:focus {
 	border: solid 1px #989898;
 }
+
+
+/* clear fix */
+.cfix:before,
+.cfix:after {
+    content:"";
+    display:table;
+}
+ 
+.cfix:after {
+    clear:both;
+    border: solid 1px #989898;
+}
+.cfix {
+    zoom:1;
+}
