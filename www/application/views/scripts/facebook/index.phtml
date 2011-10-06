@@ -1,7 +1,8 @@
+<div class="contents">
+	<a href="/facebook/authorize">ログイン</a><br />
+	<a href="/facebook/logout">ログアウト</a><br />
+</div>
 
-<a href="/facebook/authorize">ログイン</a><br />
-
-
-{foreach from=$result item="_r" name="apploop"}
+{*foreach from=$result item="_r" name="apploop"}
 {$_r.display_name}:{$_r.app_id}<br />
-{/foreach}
+{/foreach*}
