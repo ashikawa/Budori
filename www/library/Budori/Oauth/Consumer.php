@@ -22,9 +22,20 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 	protected $_token = null;
 	
 	/**
+	 * @var string
+	 */
+	protected $_apiKey = null;
+	
+	/**
+	 * @var array
+	 */
+	protected $_scope = null;
+	
+	/**
 	 * @var array
 	 */
 	protected $_options = array();
+	
 	
 	/**
 	 * @param array $options
@@ -35,13 +46,24 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 	 *		'token_uri'		=> get token uri,
 	 *		'redirect_uri'	=> callback uri,
 	 *		'token'			=> Budori_Oauth_Token (optional)
+	 *		'api_key'		=> api_key
 	 *	)
 	 */
 	public function __construct($options)
 	{
+		$this->setOptions($options);
+	}
+	
+	public function setOptions($options)
+	{
 		if( isset($options['token']) ){
 			$this->_token = $options['token'];
 			unset( $options['token'] );
+		}
+		
+		if( isset($options['api_key']) ){
+			$this->_apiKey = $options['api_key'];
+			unset( $options['api_key'] );
 		}
 		
 		$this->_options = $options;
@@ -51,7 +73,7 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 	 * redirect and exit
 	 * @param $options
 	 */
-	public function redirect( $options )
+	public function redirect( $options = array() )
 	{
 		$redirectUrl	= $this->getRedirectUrl( $options );
 		header('Location: ' . $redirectUrl);
@@ -65,7 +87,7 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 	 * 		'scope'	=> require auth scope
 	 * 	)
 	 */
-	public function getRedirectUrl( $options )
+	public function getRedirectUrl( $options=array() )
 	{
 		$opt = $this->_options;
 		
@@ -75,7 +97,10 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 			"response_type"	=> self::RESPONSE_TYPE_CODE,
 			"redirect_uri" 	=> $opt['redirect_uri'],
  			"client_id"		=> $opt['client_id'],
+ 			"scope"			=> $opt['scope'],
 		), $options);
+		
+		$options['scope'] = implode(" ", $options['scope']);
 		
 		$uri->setQuery( $options );
 		
@@ -119,6 +144,10 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 	 */
 	public function requestToken( $params = array() )
 	{
+		if( isset($params['error']) ){
+			throw new Zend_Oauth_Exception("{$params['error']} : {$params['error_description']}");
+		}
+		
 		$params = array_merge(array(
 			'grant_type'	=> self::GRANT_TYPE_AUTHORIZATION_CODE,
 			'redirect_uri'	=> $this->_options['redirect_uri'],

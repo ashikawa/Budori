@@ -82,10 +82,20 @@ class TwitterController extends Neri_Controller_Action_Http
 		$this->setNoRender();
 		$this->getResponse()->setHeader("Content-Type", "text/plain");
 		
-		
 		$twitter	= $this->_twitter;
 		
-		var_dump($twitter->userFriends());
+		
+//		$options = array(
+////			'id'	=> "",
+////			'page'	=> "2",
+//		);
+		
+		$options = $this->_getAllParams();
+		
+		/**	
+		 * フォロー
+		 */
+		var_dump($twitter->userFriends($options));
 	}
 	
 	/**

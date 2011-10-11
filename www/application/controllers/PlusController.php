@@ -5,18 +5,6 @@
  */
 class PlusController extends Neri_Controller_Action_Http
 {
-	
-	const CLIENT_ID		= '682295594430.apps.googleusercontent.com';
-	
-	const CLIENT_SECRET	= 'IqgT_ZLr4CmmY3wW9Xn-2GgJ';
-	
-	const REDIRECT_URI	= 'http://budori.ashikawa.com/plus/callback';
-	
-	const API_KEY		= 'AIzaSyCp-zLXRsandyG57C9HTQE16gOwqY-tuA0';
-	
-	protected $_scope	= array("https://www.googleapis.com/auth/plus.me");
-	
-	
 	/**
 	 * @var Zend_Session_Namespace
 	 */
@@ -31,28 +19,31 @@ class PlusController extends Neri_Controller_Action_Http
 	public function init()
 	{
 		parent::init();
+		
+		$this->_initSession();
+		$this->_initConsumer();
+	}
+	
+	protected function _initSession()
+	{
 		// for devel
 		Zend_Session::setOptions(array("cookie_domain" => ".ashikawa.com"));
+		$this->_session		= new Zend_Session_Namespace("GOOGLE_PLUS");
+	}
+	
+	protected function _initConsumer()
+	{
+		$options = Budori_Config::factory("plus.ini", "oauth")->toArray();
 		
-		
-		$session = new Zend_Session_Namespace("GOOGLE_PLUS");
-		
-		$options = array(
-			'client_id'		=> self::CLIENT_ID,
-			'client_secret'	=> self::CLIENT_SECRET,
-			'auth_uri'		=> 'https://accounts.google.com/o/oauth2/auth',
-			'token_uri'		=> 'https://accounts.google.com/o/oauth2/token',
-			'redirect_uri'	=> self::REDIRECT_URI,
-		);
+		$session = $this->_session;
 		
 		if( !is_null($session->OAUTH_TOKEN) ){
 			$options['token'] = $session->OAUTH_TOKEN;
 		}
 		
-		$this->_session		= $session;
-		
 		$this->_consumer	= new Budori_Oauth_Consumer($options);
 	}
+	
 	
 	public function indexAction()
 	{
@@ -76,11 +67,7 @@ class PlusController extends Neri_Controller_Action_Http
 	 */
 	public function authorizeAction()
 	{
-		$options = array(
-			"scope"	=> implode(" ", $this->_scope),
-		);
-		
-		$url	= $this->_consumer->getRedirectUrl( $options );
+		$url	= $this->_consumer->getRedirectUrl();
 		return $this->_redirect( $url );
 	}
 	
@@ -89,9 +76,8 @@ class PlusController extends Neri_Controller_Action_Http
 		$consumer	= $this->_consumer;
 		$session	= $this->_session;
 		
-		$params = array(
-			'code'	=> $this->_getParam("code"),
-		);
+		$params = $this->_getAllParams();
+		
 		$session->OAUTH_TOKEN = $consumer->requestToken( $params );
 		
 		$this->_redirect("/plus/");
