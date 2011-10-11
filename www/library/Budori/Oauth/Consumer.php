@@ -69,6 +69,11 @@ class Budori_Oauth_Consumer extends Zend_Oauth
 		$this->_options = $options;
 	}
 	
+	public function setOption($name, $value)
+	{
+		$this->_options[$name] = $value;
+	}
+	
 	/**
 	 * redirect and exit
 	 * @param $options
