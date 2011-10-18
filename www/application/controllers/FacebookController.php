@@ -121,7 +121,6 @@ class FacebookController extends Neri_Controller_Action_Http
 		return $this->_redirect("/$controlelr/");
 	}
 	
-	
 	/**
 	 * post message for wall
 	 */
@@ -129,15 +128,36 @@ class FacebookController extends Neri_Controller_Action_Http
 	{
 		$facebook = $this->_facebookSdk;
 		
-		if( $facebook->getUser()
-				&& $this->_getParam("value") ){
+		if( !$facebook->getUser() || ! $this->_getParam("value") ){
+			return ;
+		}
+		
+		$client		= $this->_facebookSdk;
+		$message	= $this->_getParam("value");
+		
+		// 改行コードを CRLF に統一
+		$message	= str_replace(array("\x0d\x0a", "\x0a", "\x0d"), "\x0d\x0a", $message);
+		
+		$options = array(
+			"picture"		=> "http://example.com/hoge.gif",
+			"link"			=> "http://example.com/",
+			"name"			=> "application name",
+			"caption"		=> "short caption",
+			"description"	=> "long desctiption",
+			"source"		=> "http://example.com/",
+			"actions"		=> array(
+				array("name" => "action(optional)", "link" => "action link(optional)"),
+			),
+			"message"		=> $message,
+		);
+		
+		try {
 			
-			try {
-				$result	= $model->statusUpdate( $this->_getParam("value") );
-			}catch (Exception $e){
-				$this->_logout();
-				throw $e;
-			}
+			$result = $client->api('/me/feed', 'post', $options);
+			
+		}catch (Exception $e){
+			$this->_logout();
+			throw $e;
 		}
 	}
 	
