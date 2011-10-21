@@ -397,4 +397,9 @@ class TestController extends Neri_Controller_Action_Http
 	
 	public function canvas3dAction()
 	{}
+	
+	public function webglAction()
+	{
+		$this->setLayout("simple");
+	}
 }
