@@ -16,7 +16,7 @@ class Media_Image
 	
 	/**
 	 * 画像オブジェクト
-	 * @var Budori_Image
+	 * @var Budori_Image_Resource
 	 */
 	protected $_image = null;
 	
@@ -73,7 +73,7 @@ class Media_Image
 	 * Enter description here...
 	 *
 	 * @param string $mode
-	 * @return Budori_Image
+	 * @return Budori_Image_Resource
 	 */
 	public function createImage($mode=null)
 	{
@@ -91,7 +91,7 @@ class Media_Image
 		
 		$data =  Media::decodeData( $row[0]->{$this->_dataColmn} );
 		
-		$this->_image = new Budori_Image($data);
+		$this->_image = new Budori_Image_Resource($data);
 		
 		if(!is_null($mode)){
 			if(array_key_exists($mode,$this->_procs)){
