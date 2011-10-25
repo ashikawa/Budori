@@ -161,6 +161,34 @@ class FacebookController extends Neri_Controller_Action_Http
 		}
 	}
 	
+	public function albumAction()
+	{
+		$facebook = $this->_facebookSdk;
+		$facebook->setFileUploadSupport(true);
+		
+		$options = array(
+			"name"			=> "penguin (album)",
+			"description"	=> "album description!!!!!",
+		);
+		
+		$albumResult	= $facebook->api("/me/albums", "POST", $options);
+		$albumId		= $albumResult['id'];
+		
+		$photoResult = array();
+		
+		$image	= realpath(ROOT . "/data/img/20.jpg");
+		$options = array(
+			"image"		=> '@' . $image,
+//			"message"	=> "Photo Message 20",
+		);
+		
+		$photoResult[] = $facebook->api("/$albumId/photos", "POST", $options);
+		
+		$this->view->assign(array(
+			"album"	=> $albumResult,
+			"photo"	=> $photoResult,
+		));
+	}
 	
 	public function logoutAction()
 	{
