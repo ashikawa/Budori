@@ -206,16 +206,16 @@ class TwitterController extends Neri_Controller_Action_Http
 	{
 		$twitter = $this->_twitter;
 		
-		if( !$twitter->isAuthorised() ){
-			$requestToken	= $twitter->getRequestToken();
-			$this->_session->request_token	= $requestToken;
-			
-			//return $twitter->redirect();
-			$url = $twitter->getRedirectUrl();
-			return $this->_redirect($url);
+		if( $twitter->isAuthorised() ){
+			return $this->_forward('index');
 		}
 		
-		return $this->_forward('index');
+		$requestToken	= $twitter->getRequestToken();
+		$this->_session->request_token	= $requestToken;
+		
+		//return $twitter->redirect();
+		$url = $twitter->getRedirectUrl();
+		return $this->_redirect($url);
 	}
 	
 	/**
