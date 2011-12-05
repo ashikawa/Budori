@@ -74,23 +74,24 @@ class Budori_Image_Resource
 			
 			if(is_file($data)){
 				
-				$mime = $mime->file($data);
+				$mimeType	= $mime->file($data);
+				$type 		= $this->_getImageTypeFromMime($mimeType);
 				
-				$type = $this->_getImageTypeFromMime($mime);
-				
-				if( !in_array($type,$this->_arrowType) ){
-					throw new Budori_Image_Exception("wrong data type");
+				if( !in_array($type, $this->_arrowType) ){
+					throw new Budori_Image_Exception("wrong data type '$mimeType'");
 				}
 				
 				$this->_loadResourceFile($data, $type);
 				
 			}else if(is_string($data)){
+				
 				$mime = $mime->buffer($data);
 				
 				$type = $this->_getImageTypeFromMime($mime);
 				
 				if( !in_array($type,$this->_arrowType) ){
-					throw new Budori_Image_Exception("wrong data type");
+					// @todo data がパスでファイルが無い時
+					throw new Budori_Image_Exception("wrong data type '$mime'");
 				}
 				
 				$this->_loadResourceString($data);
@@ -205,7 +206,6 @@ class Budori_Image_Resource
 	{
 		$type	= $this->getType();
 		
-		
 		/**
 		 * オプションの切り分け
 		 * imagejpg の quality オプションは 0 ～ 100
@@ -214,15 +214,23 @@ class Budori_Image_Resource
 		 */
 		switch ($type){
 			case IMAGETYPE_GIF:
-			case IMAGETYPE_PNG:
 				$arg = array( $this->_data, $stream );
 				break;
+				
+			case IMAGETYPE_PNG:
+				imagealphablending($this->_data, false);
+				imagesavealpha($this->_data, true);
+				
+				$arg = array( $this->_data, $stream );
+				break;
+				
 			case IMAGETYPE_JPEG:
 				$arg = array( $this->_data, $stream, $this->getQuality() );
 				break;
+				
 			default:
 				require_once 'Budori/Image/Exception.php';
-				throw new Budori_Image_Exception("un supported file type $type");
+				throw new Budori_Image_Exception("un supported file type '$type'");
 				break;
 		}
 		
@@ -306,6 +314,7 @@ class Budori_Image_Resource
 		$this->destroy();
 		
 		$data = imagecreatetruecolor($width, $height);
+		
 		$this->setData($data);
 		return $this;
 	}
@@ -314,6 +323,12 @@ class Budori_Image_Resource
 	{
 		$data = $this->getData();
 		return imagecolorallocate($data, $red, $green, $blue);
+	}
+	
+	public function getColorAllocateAlpha($red, $green, $blue,$alpha)
+	{
+		$data = $this->getData();
+		return imagecolorallocatealpha($data, $red, $green, $blue,$alpha);
 	}
 	
 	/**
@@ -350,6 +365,9 @@ class Budori_Image_Resource
 		imagefill($this->getData(),0,0,$color);
 		return $this;
 	}
+	
+	
+	
 	
 	/**
 	 * Enter description here...

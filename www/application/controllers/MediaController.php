@@ -90,7 +90,7 @@ class MediaController extends Budori_Controller_Action
 	{
 		$this->setNoRender();
 		
-		$image	= new Budori_Image( ROOT . '/public/img/tile.jpg');
+		$image	= new Budori_Image( new Budori_Image_Resource(ROOT . '/public/img/tile.jpg'));
 		
 		$color	= array(255,255,255);
 		$font	= ROOT . "/data/font/ipamp.ttf";
