@@ -26,6 +26,8 @@ class JqueryController extends Neri_Controller_Action_Http
 		"tile",
 		"twitter",
 		"zip",
+		"cssmenu",
+		"carousel",
 	);
 	
 	public function init()
@@ -66,14 +68,6 @@ class JqueryController extends Neri_Controller_Action_Http
 		
 		$this->view->assign('domains', Budori_Mobile::getDomains()->toArray());
 	}
-	
-	public function cssmenuAction()
-	{
-		$this->setLayout('simple');
-		$this->prependTitle('css menu');
-		$this->appendPankuzu('css menu');
-	}
-	
 	
 	public function __call($methodName,$args)
 	{
