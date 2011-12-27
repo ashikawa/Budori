@@ -1,0 +1,51 @@
+<div class="contents">
+	<h3 class="title">calendear</h3>
+
+	<div id="target">
+		<img src="/media/image/ashikawa/3.jpg" />
+	</div>
+	<a id="open">open</a>
+<!--//end div#contents--></div>
+
+{literal}
+<script type="text/javascript">
+
+;(function($) {
+
+	function fullScreen(el){
+		
+		if (el.webkitRequestFullScreen) {
+			el.webkitRequestFullScreen();
+		} else if (el.mozRequestFullScreen) {
+			el.mozRequestFullScreen();
+		} else {
+			el.requestFullScreen();
+		}
+	}
+	function close() {
+		if (document.webkitCancelFullScreen) {
+			document.webkitCancelFullScreen();
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else {
+			document.exitFullscreen();
+		}
+	}
+	$.fn.extend({
+		bFullScreen: function(options){
+			
+			this.each( function(){
+					fullScreen(this);
+					return false;
+				});
+		}
+	});
+})(jQuery);
+
+$(function(){
+	$("#open").click(function(){
+			$("#target").bFullScreen();
+		});
+});
+</script>
+{/literal}
