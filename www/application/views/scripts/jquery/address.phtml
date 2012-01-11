@@ -1,0 +1,35 @@
+<div class="contents">
+	<h3 class="title">address</h3>
+	
+	<a href="hash1" class="hash">#hash1</a><br />
+	<a href="hash2" class="hash">#hash2</a><br />
+	<a href="hash3" class="hash">#hash3</a><br />
+	
+<!--//end div.contents--></div>
+
+{literal}
+<script type="text/javascript" src="/js/jquery.address.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.address.change(function(e){
+			console.log("$.address.change called");
+		});
+	$.address.init(function(e){
+			console.log("$.address.init called");
+		});
+	$.address.internalChange(function(e){
+			console.log("$.address.internalChange called");
+		});
+	$.address.externalChange(function(e){
+			console.log("$.address.externalChange called");
+		});
+	$.address.tracker(function(){
+			console.log("$.address.tracker called");
+		});
+	$("a.hash").click(function(e){
+			$.address.value( $(this).attr("href") );
+			return false;
+		});
+});
+</script>
+{/literal}

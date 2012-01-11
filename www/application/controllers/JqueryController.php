@@ -28,6 +28,7 @@ class JqueryController extends Neri_Controller_Action_Http
 		"zip",
 		"cssmenu",
 		"carousel",
+		"address",
 	);
 	
 	public function init()
