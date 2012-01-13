@@ -1,0 +1,71 @@
+<div class="contents">
+	<h3 class="title">strage</h3>
+	
+	<textarea id="memo"></textarea>
+	<input type="button" id="save" value="save" />
+	<input type="button" id="clear" value="clear" />
+
+<!--//end div.contents--></div>
+{literal}
+<script type="text/javascript">
+
+( function(){
+
+	/**
+	 * Editor Object
+	 */
+	function Editor( key ){
+		
+		if( !(this instanceof arguments.callee) ){
+			return new arguments.callee(key);
+		}
+		
+		/**
+		 * private members
+		 */
+		var _strageKey = key || "memo";
+
+		/**
+		 * public functions
+		 */
+		this.save = function( value ){
+			localStorage.setItem( _strageKey, value );
+		};
+		this.load = function(){
+			return localStorage.getItem( _strageKey );
+		};
+		this.clear = function(){
+			localStorage.removeItem( _strageKey );
+		};
+	};
+	
+	window.Editor = Editor;
+} )();
+
+$(function() {
+	
+	var $memo = $("#memo")
+		, editor = new Editor();
+	
+	$memo.val( editor.load() );
+	
+	$("#save").click(function(){
+			editor.save( $memo.val() );
+		});
+
+	$("#clear").click(function(){
+			$memo.val("");
+			editor.clear();
+		});
+
+	$memo.bind("change", function(){
+			editor.save( $memo.val() );
+		});
+	
+//	( function autoSave(){
+//		editor.save( $memo.val() );
+//		setTimeout( arguments.callee, 1000);
+//	} )();
+});
+</script>
+{/literal}
