@@ -43,6 +43,9 @@ class Budori_Application_Resource_Smarty extends Zend_Application_Resource_Resou
 			
 			foreach ( $config as $_key => $_val ){
 				switch ($_key){
+					case 'template_dir':
+						$smarty->addTemplateDir($_val);
+						break;
 					case 'postfilter':
 						foreach ($_val as $_k => $_v){
 							$smarty->loadFilter('post', $_v);
@@ -59,9 +62,7 @@ class Budori_Application_Resource_Smarty extends Zend_Application_Resource_Resou
 						}
 						break;
 					case 'plugins_dir':
-						foreach ($_val as $_k => $_v){
-							$smarty->plugins_dir[] = $_v;
-						}
+						$smarty->addPluginsDir($_val);
 						break;
 					default:
 						$smarty->$_key = $_val;

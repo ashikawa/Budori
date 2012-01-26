@@ -39,7 +39,7 @@ class Budori_View_Plugin
     public function __construct(Zend_View_Interface $view)
     {
     	$this->view = $view;
-    	$this->view->getEngine()->_plugins['helper'] = $this;
+    	$this->view->getEngine()->registered_plugins['helper'] = $this;
     }
     
     /**

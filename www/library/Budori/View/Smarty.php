@@ -64,8 +64,8 @@ class Budori_View_Smarty implements Zend_View_Interface
     	if(!is_array($paths)){
     		$paths = array($paths);
     	}
-    	
-		$this->_smarty->template_dir = $paths;
+    	$this->_smarty->setTemplateDir($path);
+		// $this->_smarty->template_dir = $paths;
 		return;
     }
     
@@ -76,7 +76,8 @@ class Budori_View_Smarty implements Zend_View_Interface
     public function addScriptPath($name)
     {
         if (is_readable($name)) {
-            $this->_smarty->template_dir[] = $name;
+        	$this->_smarty->addTemplateDir($name);
+            // $this->_smarty->template_dir[] = $name;
             return;
         }
 		

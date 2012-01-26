@@ -12,10 +12,10 @@
  */
 function smarty_helper_loader( $params, &$smarty )
 {
-	if( !isset($smarty->_plugins['helper']) ){
+	if( !isset($smarty->registered_plugins['helper']) ){
 		throw new SmartyException('cannot read helper');
 //		$smarty->trigger_error('cannot read helper');
 	}
 	
-	return $smarty->_plugins['helper'];
+	return $smarty->registered_plugins['helper'];
 }
