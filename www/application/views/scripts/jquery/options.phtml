@@ -30,7 +30,7 @@ $(document).ready(function(){
 	});
 	 
 	$('#center').bind('change success',function(){
-		$.bAjax({
+		$.ajax({
 			'url': "/api/sample",
 			'data': {'key':$(this).val()},
 			'success': function(obj){
@@ -40,7 +40,7 @@ $(document).ready(function(){
 	});
 	
 	$('#left').bind('change success',function(){
-		$.bAjax({
+		$.ajax({
 			'url': "/api/sample",
 			'data': {'key': $(this).val()},
 			'success': function(obj){
@@ -48,7 +48,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$.bAjax({
+	$.ajax({
 		'url':'/api/sample',
 		'success' : function(obj){
 			$('#left').trigger('success',obj);

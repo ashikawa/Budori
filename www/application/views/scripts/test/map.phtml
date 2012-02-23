@@ -73,7 +73,7 @@ function initialize( target ) {
 		var southWest	= bounds.getSouthWest();
 		var northEast	= bounds.getNorthEast();
 		
-		$.bAjax({
+		$.ajax({
 			'url':'http://search.twitter.com/search.json',
 			'dataType':'jsonp',
 			'data':{

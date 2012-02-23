@@ -78,7 +78,7 @@
 			
 			// \w は [a-zA-Z0-9] と等価
 			if(str.match(/^[\w]{5,255}$/)){
-				$.bAjax({
+				$.ajax({
 					'url': "/api/valid-id",
 					'data': {'val': str },
 					'success': function(obj){

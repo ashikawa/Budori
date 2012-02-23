@@ -18,7 +18,7 @@
 			
 			container.data('init',options);
 			
-			$.bAjax({
+			$.ajax({
 				'url':'http://search.twitter.com/search.json',
 				'dataType':'jsonp',
 				'data':{

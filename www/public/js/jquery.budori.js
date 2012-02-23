@@ -1,6 +1,27 @@
-;(function(jQuery) {
-	jQuery.fn.extend({
-		enable: function( flag ){
+(function(jQuery) {
+	
+	function _parseUrl(url){
+		var params	= {}
+			, splits	= url.split("?", 2)
+			, splits, args, tmp, i, l;
+		
+		if( splits.length != 2){
+			return params;
+		}
+		
+		args = splits[1].split("&");
+		
+		for( i=0, l=args.length; i<l; i++ ){
+			tmp = args[i].split("=", 2);
+			
+			params[tmp[0]] = tmp[1];
+		}
+		
+		return params;
+	}
+	
+	$.fn.extend({
+		'enable': function( flag ){
 			if( flag ){
 				this.removeAttr("disabled");
 			}else{
@@ -8,51 +29,35 @@
 			}
 			return this;
 		},
-		setOption: function(obj){
+		'setOption': function(obj){
 			return this.each(function(){
 				var sb = window.document.getElementById(this.id);
 				var i = 0;
-				jQuery(this).children("option").remove();
-				jQuery.each(obj,function(key,value){
+				$(this).children("option").remove();
+				$.each(obj,function(key,value){
 					sb.options[i++] = new Option(value,key);
 				});
 			});
 			return this;
 		}
 	});
-	jQuery.extend({
-		'bAjax': function( options ) {
-			jQuery.ajax(jQuery.extend({
-				type: 'get',
-				dataType: 'json',
-//				beforeSend: function(xhr){
-//					xhr.overrideMimeType("text/javascript;charset=UTF-8");
-//				},
-				timeout: 30000
-			}, options ));
-		},
+		
+	$.extend({
 		'getUrlVars': function( url ){
 			if( !url ){url = document.location.href;}
-			var query = url.replace(/^[^�?]+�??/,'');
+			return _parseUrl(url);
+		},
+		'getScriptVars': function(){アプリの名前空間:
 			
-			var Params = {};
-			if ( ! query ) {return Params;}// return empty object
-			var Pairs = query.split(/[;&?]/);
-			for ( var i = 0; i < Pairs.length; i++ ) {
-				var KeyVal = Pairs[i].split('=');
-				if ( ! KeyVal || KeyVal.length > 2 ) {continue;}
-				
-				if(KeyVal.length == 1){
-					var key = unescape( KeyVal[0] );
-					Params[key] = null;
-				}else{
-					var key = unescape( KeyVal[0] );
-					var val = unescape( KeyVal[1] );
-					val = val.replace(/�+/g, ' ');
-					Params[key] = val;
-				}
+			var scripts		= document.getElementsByTagName( 'script' )
+				, script;
+			
+			if( scripts.length == 0 ){
+				return {};
 			}
-			return Params;
+			script	= scripts[scripts.length-1].src;
+			
+			return _parseUrl(script);
 		},
 		'addlink':function(str){
 			return str.replace(
@@ -80,7 +85,7 @@
 				}
 				return arr;
 			}
-			return jQuery.accumlate(op,[[]],items.reverse());
+			return $.accumlate(op,[[]],items.reverse());
 		},
 		'sigma': function( items ){
 			var op = function(head, next){
@@ -88,7 +93,6 @@
 			}
 			return $.accumlate(op,0,items);
 		}
-		
 	});
 })(jQuery);
 

@@ -6,6 +6,10 @@ ul.sidemenu li{
 	background-repeat: no-repeat;
 	padding: 0 0 0 17px;
 }
+/* クリック領域を親要素(li)と同じ幅に広げる */
+ul.sidemenu li a{
+	display: block;
+}
 body.jquery ul.sidemenu li#jquery,
 body.picture ul.sidemenu li#picture,
 body.query ul.sidemenu li#query,
