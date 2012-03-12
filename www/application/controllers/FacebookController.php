@@ -204,4 +204,15 @@ class FacebookController extends Neri_Controller_Action_Http
 		$this->_facebookSdk->destroySession();
 		$this->_session->unsetAll();
 	}
+	
+	
+	
+	public function tabAction()
+	{
+		$this->setNoRender();
+		$this->disableLayout();
+		
+		$facebook = $this->_facebookSdk;
+		var_export( $facebook->getSignedRequest() );
+	}
 }
