@@ -219,7 +219,6 @@ input:focus, textarea:focus {
  
 .cfix:after {
     clear:both;
-    border: solid 1px #989898;
 }
 .cfix {
     zoom:1;

@@ -45,7 +45,7 @@ class Budori_Image
 	}
 	
 	/**
-	 * @return Budori_Image_Resourde
+	 * @return Budori_Image_Resource
 	 */
 	public function getResource()
 	{

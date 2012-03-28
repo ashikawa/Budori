@@ -98,10 +98,10 @@ class MediaController extends Budori_Controller_Action
 		
 		$image->setText($string, 20, 0, 50, 50, $color, $font);
 		
-		$output = $image->saveImage();
+		$output = $image->getResource()->saveImage();
 		
 		$this->getResponse()
-				->setHeader("Content-Type", $image->getMime())
+				->setHeader("Content-Type", $image->getResource()->getMime())
 				->setHeader('Content-Length', strlen($output));
 		
 		$this->getResponse()->setBody($output);

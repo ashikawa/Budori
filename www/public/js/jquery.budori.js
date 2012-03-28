@@ -47,7 +47,7 @@
 			if( !url ){url = document.location.href;}
 			return _parseUrl(url);
 		},
-		'getScriptVars': function(){アプリの名前空間:
+		'getScriptVars': function(){//アプリの名前空間:
 			
 			var scripts		= document.getElementsByTagName( 'script' )
 				, script;
