@@ -7,7 +7,7 @@ class Budori_File_Mime
 {
 	/**
 	 * file_info resource
-	 * @var resource
+	 * @var finfo
 	 */
 	protected $_finfo = null;
 	
@@ -29,7 +29,7 @@ class Budori_File_Mime
 	 * FILEINFO_RAW (integer) 
 	 * 	表示できない文字を \ooo 形式の 8 進表現に変換しません。	 
 	 */
-	const FINFO_OPTION	= FILEINFO_MIME;
+	const FINFO_OPTION	= FILEINFO_MIME_TYPE;
 	
 	/**
 	 * Enter description here...
@@ -51,7 +51,7 @@ class Budori_File_Mime
 			$this->open();
 		}
 		
-		return finfo_file($this->_finfo,$file,$options,$context);
+		return $this->_finfo->file($file);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ class Budori_File_Mime
 			$this->open();
 		}
 		
-		return finfo_buffer($this->_finfo,$buffer,$options,$context);
+		return $this->_finfo->buffer($buffer);
 	}
 	
 	/**
@@ -85,15 +85,11 @@ class Budori_File_Mime
 			throw new Budori_Exception('magic file not found');
 		}
 		
-		$this->_finfo = finfo_open(self::FINFO_OPTION, $magicFile);
+		$this->_finfo = new finfo(self::FINFO_OPTION, $magicFile);
 	}
 	
-	/**
-	 * Enter description here...
-	 * @return boolean
-	 */
 	public function close()
 	{
-		return finfo_close($this->_finfo);
+		$this->_finfo = null;
 	}
 }
