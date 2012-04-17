@@ -43,6 +43,7 @@
 	</dd>
 {/foreach}
 </dl>
+
 {* Zend1.10 以降、またはPHP5.3 以降。　例外コンストラクタの第三引数previousの処理 *}
 {if $smarty.const.PHP_VERSION|version_compare:"5.3.0":"<"}
 	{if ($zend_version|version_compare:"1.10.0":">") && ($exception instanceof Zend_Exception)}
@@ -50,7 +51,10 @@
 	{else}
 		{assign var='_next' value=null}
 	{/if}
+{else}
+	{assign var='_next' value=$exception->getPrevious()}
 {/if}
+
 {if $_next|default:false}
 	<br />
 	next exceptinon<br />
