@@ -35,7 +35,7 @@ class TwitterController extends Neri_Controller_Action_Http
 	 */
 	protected function _initTwitter()
 	{
-		$options = Budori_Config::factory('twitter.ini', 'oauth')->toArray();
+		$options = $this->getBootstrap()->getOption("twitter");
 		
 		if( isset( $this->_session->access_token ) ){
 			$options['accessToken'] = $this->_session->access_token;

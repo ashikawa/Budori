@@ -64,7 +64,7 @@ class Budori_View_Smarty implements Zend_View_Interface
     	if(!is_array($paths)){
     		$paths = array($paths);
     	}
-    	$this->_smarty->setTemplateDir($path);
+    	$this->_smarty->setTemplateDir($paths);
 		// $this->_smarty->template_dir = $paths;
 		return;
     }

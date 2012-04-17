@@ -30,7 +30,7 @@ class FacebookController extends Neri_Controller_Action_Http
 	
 	protected function _initSdk()
 	{
-		$options = Budori_Config::factory("facebook.ini","oauth")->toArray();
+		$options = $this->getBootstrap()->getOption("facebook");
 		
 		require_once 'facebook/facebook.php';
 		$facebook = new Facebook($options);
