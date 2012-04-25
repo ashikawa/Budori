@@ -1,0 +1,54 @@
+<div class="contents">
+
+	<h3 class="title">メール送信</h3>
+	
+	<form action="/{$controller}/{$action}" method="post">
+		<dl>
+			<dt><label for="mailsubject">subject</label></dt>
+		 	<dd><input id="mailsubject" type="text" name="subject" value="{$subject|default:''}" placeholder="mail subject" /></dd>
+		 	
+			<dt><label for="mailto">to</label></dt>
+			<dd><input id="mailto" type="email" name="to" value="{$to|default:''}" placeholder="toaddr@example.com" /></dd>
+			
+			<dt><label for="mailfromname">from ( name /addr )</label></dt>
+			<dd>
+				<input id="mailfromname" type="text" name="fromname" value="{$fromname|default:''}" placeholder="your name" /> / 
+				<input type="email" name="fromaddr" value="{$fromaddr|default:''}" placeholder="your address" />
+			</dd>
+			<dt><label for="droptarget">body</label></dt>
+			<dd>
+				↓Chromeのみ、ファイルドロップ対応 (Shift-JISのみ)<br />
+				<textarea id="droptarget" name="body" rows="20">{$body|default:''}</textarea>
+			</dd>
+			
+		</dl>
+		
+		<input type="submit" /><br />
+	</form>
+	
+</div>
+
+<script>
+$(function () {
+	
+	// Chrome のみ?
+	document.getElementById("droptarget").addEventListener('drop', function (e) {
+		
+		e.preventDefault();
+		e.stopPropagation();
+		
+		if (!FileReader) {
+			return;
+		}
+		
+		var file	= e.dataTransfer.files[0],
+			reader	= new FileReader();  
+		
+		reader.onload = function (e) {
+			$("#droptarget").val( e.target.result );
+		};
+		
+		reader.readAsText(file, 'Shift-JIS');
+	}, false);
+});
+</script>
