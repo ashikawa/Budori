@@ -3,34 +3,19 @@ require_once 'Smarty.class.php';
 
 /**
  * Smarty　のラッパー
- * ※　これ以上の機能拡張はしない！！
- * 際限無いし、Smartyのバージョンアップに対応できなくなる可能性があるため。
+ * 必要に応じて拡張
  * 
- * Smarty3 から例外ちゃんと投げるようになったので、その役目を終えた。
+ * @author shigeru.ashikawa
+ * @copyright Copyright (c) 2011, infobahn inc.
  */
 class Budori_Smarty extends Smarty 
 {
-//	
-//	/**
-//	 * エラー時に例外を投げるか
-//	 * @var boolean
-//	 */
-//	public $throw_exception = true;
-//	
-//	/**
-//	 * over ride
-//	 * Smartyの汎用エラー処理を例外に変換
-//	 * 
-//	 * @param string $error_msg
-//	 * @param integer $error_type
-//	 */
-//	public function trigger_error( $error_msg, $error_type = E_USER_WARNING )
-//	{
-//		if( $this->throw_exception ){
-//			require_once 'Budori/Smarty/Exception.php';
-//			throw new Budori_Smarty_Exception( $error_msg );
-//		}else{
-//			parent::trigger_error( $error_msg, $error_type );
-//		}
-//	}
+	/**
+	 * 不要な大域変数を削除
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		Smarty::$global_tpl_vars = array();
+	}
 }

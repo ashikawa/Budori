@@ -1,6 +1,6 @@
 <?php
 /**
- * Smarty {zemd_layout} function plugin
+ * Smarty {zend_layout} function plugin
  * 
  * Input:
  * 		- call					id prefix
