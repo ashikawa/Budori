@@ -127,7 +127,24 @@ class TestController extends Neri_Controller_Action_Http
 		$this->appendPankuzu('log');
 
 		$log = Budori_Log::factory();
-		$log->warn(__CLASS__."(".__LINE__.") moge");
+		
+//		const EMERG   = 0;  // Emergency: system is unusable
+//		const ALERT   = 1;  // Alert: action must be taken immediately
+//		const CRIT    = 2;  // Critical: critical conditions
+//		const ERR     = 3;  // Error: error conditions
+//		const WARN    = 4;  // Warning: warning conditions
+//		const NOTICE  = 5;  // Notice: normal but significant condition
+//		const INFO    = 6;  // Informational: informational messages
+//		const DEBUG   = 7;  // Debug: debug messages
+		
+		$log->emerg(__CLASS__."(".__LINE__.") EMERG");
+		$log->alert(__CLASS__."(".__LINE__.") ALERT");
+		$log->crit(__CLASS__."(".__LINE__.") CRIT");
+		$log->err(__CLASS__."(".__LINE__.") ERR");
+		$log->warn(__CLASS__."(".__LINE__.") WARN");
+		$log->notice(__CLASS__."(".__LINE__.") NOTICE");
+		$log->info(__CLASS__."(".__LINE__.") INFO");
+		$log->debug(__CLASS__."(".__LINE__.") DEBUG");		
 	}
 
 	/**
