@@ -1,0 +1,312 @@
+@charset "utf-8";
+
+/* mix-ins */
+
+.box-shadow(@style) {
+	-webkit-box-shadow: @style;
+	-moz-box-shadow: @style;
+	-o-box-shadow: @style;
+	-ms-box-shadow: @style;
+	box-shadow: @style;
+}
+
+.border-radius(@style) {
+	-webkit-border-radius: @style;
+	-moz-border-radius: @style;
+	-o-border-radius: @style;
+	-ms-border-radius: @style;	
+	border-radius: @style;
+}
+
+.transition(@interval){
+	-webkit-transition: @interval;
+	-moz-transition: @interval;
+	-o-transition: @interval;
+	-ms-transition: @interval;
+	transition: @interval;
+}
+
+
+.h-large(@color) {
+	
+	color: @color;
+	
+	a {
+		border: none;
+		text-decoration: none;
+		color: @color;
+	}
+}
+
+h1 {
+	font-size: 150%;
+	text-align: left ;
+	color: ;
+	clear: both;
+	margin: 0 auto;
+	font-weight: bold;
+	
+	.h-large(#cccccc);
+}
+
+h2 {
+	padding: 7px 10px;
+	text-align: right;
+	font-size: 100%;
+	font-weight: normal;
+	
+	.h-large(#696969);
+}
+
+h3 {
+	margin:10px 0 10px 0;
+	padding:0px 0px 0px 5px;
+	border-left:9px solid #99cccc;
+	text-align: left;
+	
+	img {
+		vertical-align: middle;
+	}
+}
+
+/* mix-in*/
+.h-middle() {
+	font-size: 100%;
+	font-weight: normal;
+	padding: 0 0 0 0.5em;
+	border-left: 4px double #d3d3d3;	
+}
+
+h4 {
+	margin: 20px 0 0 0;
+	.h-middle();
+}
+
+h5 {
+	margin: 15px 0 0 0;
+	.h-middle();
+}
+
+/*--- 文字装飾 ------------------------------------------------*/  
+
+a {
+	color: #c0c0c0;
+	text-decoration: none;
+	
+	&:hover,
+	&:hover font,
+	&:hover span {
+		color: #99cccc;
+	}
+
+	&.edit {
+		color: #CCCCCC;
+		font-size: 10px;
+		font-weight: normal;
+	}
+	
+	img {
+		border: none;
+	}
+}
+
+blockquote {
+	margin: 15px 0;
+	padding: 12px 15px;
+	border: 1px solid #989898;
+	line-height: 1.5;
+}
+
+pre	{
+	margin: 15px 0;
+	padding: 1em;
+	line-height: 1.2;
+	font-family:sans-serif;
+/*	border: 1px solid #B9B8B4;*/
+}
+
+strong {
+	font-weight: bold;
+	
+	&.highlight {
+		background-color: #ffff00;
+		padding: 1px;
+	}
+}
+
+/*--- テーブル ------------------------------------------------*/                                              
+table{
+
+	@border-style: solid 1px #989898;
+	
+	background-color: #ffffff;
+	margin: 15px 0;
+	font-size: 100%;
+	border: none;
+	border-collapse: collapse;
+	text-align: left;
+	border: @border-style;
+	
+	tr {
+		background-color: #ffffff;
+		border: none;
+		width: 100%;
+	}
+	
+	th {
+		text-align: left;
+		padding: 8px 10px;
+		margin: 0;
+		border: @border-style;
+		font-weight: normal;
+		background: #F0FFFF;
+	}
+	
+	td {
+		background-color:transparent;
+		padding: 8px 10px;
+		margin: 0;
+		border: @border-style;
+		
+		font, a {
+			border:none;
+			font-size: 100%;
+		}
+		
+		input {
+			border: 1px solid #dcdcdc;
+			background-color : transparent;
+		}
+	}
+}
+
+hr {
+	border: 1px solid #B9B8B4;
+}
+
+textarea {
+	display: block;
+	margin-bottom: 0pt;
+	width: 95%;
+	height: 20%;
+}
+// input or textarea
+:focus {
+	border: solid 1px #989898;
+}
+
+
+
+span.timestamp {
+	font-size: 70%;
+	font-weight: normal;
+	letter-spacing: 0;
+}
+
+div {
+	&.contents {
+		margin: 5px 0 5px 0;
+		padding: 10px;
+		border: 1px solid #B9B8B4;
+		
+		.box-shadow(1px 1px 3px #B9B8B4);
+	}
+	
+	&.grippie {
+		background: #EEEEEE url('/img/grippie.png') no-repeat scroll center 2px;
+		border-color: #DDDDDD;
+		border-style: solid;
+		border-width: 0pt 1px 1px;
+		cursor: s-resize;
+		height: 9px;
+		overflow: hidden;
+	}
+	
+	&.logbox {
+		border: solid 1px #808080;
+		background-color: #F0FFFF;
+		width: 400px;
+		height: 120px;
+		padding: 0.5em;
+		overflow: auto;
+	}
+	
+	&.body {
+		text-align: left;
+		zoom:1;
+		
+		&:after {
+			display:block;
+			clear:both;
+		}
+	}
+	
+	&.section {
+		margin: 0;
+		padding: 20px 25px ;
+		text-align: justify;
+		border-top: 1px dashed #bbbbbb;
+		
+		p {
+			margin: 10px 0;
+			padding: 0;
+		}
+	}
+}
+
+ul.errors li {
+ 	color: #FF5555;
+}
+
+dl.table {
+
+	@border-style: 1px solid #ccc;
+	
+	border-left: @border-style;
+	border-right: @border-style;
+	border-bottom: @border-style;
+	background-color: #F0FFFF;
+	
+	dt {
+		margin: 0;
+		padding: 0.2em 0;
+		border-top: @border-style;
+		float: left;
+		display: inline;
+		width: 10em;
+		text-indent: 10px;
+	}
+	
+	dd {
+		margin-left:10em;
+		padding: 0.2em 10px;
+		border-left: @border-style;
+		border-top: @border-style;
+		background-color: #FFFFFF;
+	}
+}
+
+.must {
+	color: #FF0000;
+}
+
+.inline {
+	display: inline;
+}
+
+
+/* clear fix */
+.cfix {
+	zoom:1;
+	
+	&:before {
+		content: "";
+		display: table;	    
+	}
+	
+	&:after {
+		content: "";
+		display: table;	    
+		clear: both;
+	}
+}

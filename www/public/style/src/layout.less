@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+/* mix-ins */
+
+.box-shadow(@style) {
+	-webkit-box-shadow: @style;
+	-moz-box-shadow: @style;
+	-o-box-shadow: @style;
+	-ms-box-shadow: @style;
+	box-shadow: @style;
+}
+
+.border-radius(@style) {
+	-webkit-border-radius: @style;
+	-moz-border-radius: @style;
+	-o-border-radius: @style;
+	-ms-border-radius: @style;	
+	border-radius: @style;
+}
+
+.transition(@interval) {
+	-webkit-transition: @interval;
+	-moz-transition: @interval;
+	-o-transition: @interval;
+	-ms-transition: @interval;
+	transition: @interval;
+}
+
+/* main */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	height: 100%;
+	width: 720px;
+	margin: 0 auto; /* center */
+	color: #000000;
+	font-family: Verdana, Osaka, sans-serif;
+	line-height: 2;
+	font-size: 80%;
+	background-color: #ffffff;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+#header {
+	@border-style: 1px solid #989898;
+	
+	padding: 25px 6px 25px 6px;
+	width: 708px;
+	
+	border-right: @border-style;
+	border-bottom: @border-style;
+	border-left: @border-style;
+	
+	.box-shadow(1px 1px 3px #B9B8B4);
+}
+
+#middle {
+	width: 100%;
+	
+	&:after {
+		height: 0;
+		visibility: hidden;
+		content: "";
+		display: block;
+		clear: both;
+	}
+	
+	#main {
+		float: left;
+		width: 500px;
+	}
+	
+	#sidebar {
+		@border-style: solid 1px #808080;
+		
+		float: right;
+		width: 200px;
+		text-align: left;
+		font-size: 90%;
+	}
+}
+
+ul.sidemenu li {
+	background-repeat: no-repeat;
+	padding: 0 0 0 17px;
+	
+	a {
+		/* クリック領域を親要素(li)と同じ幅に広げる */
+		display: block;
+	}
+	
+	&#auth-mixi {
+		background-image: url("/img/icon/mixi_icon001.gif");
+	}
+}
+
+body.jquery ul.sidemenu li#jquery,
+body.picture ul.sidemenu li#picture,
+body.query ul.sidemenu li#query,
+body.blog ul.sidemenu li#blog,
+body.twitter ul.sidemenu li#twitter,
+body.mail ul.sidemenu li#mail {
+	background-color: #E0EEEE;
+}
+
+
+#footer {
+	padding: 10px 0 10px 0;
+	font-size: 90%;
+	
+	#fNavi {
+		padding: 5px;
+		text-align: center;
+		
+		li {
+			@border-style: 1px solid #989898;
+		
+			display: inline;
+			margin: 0 0 0 5px;
+			padding: 0 5px;
+			border-right: @border-style;
+			
+			&:first-child {
+				padding-left: 10px;
+				border-left: @border-style;
+			}
+			
+			a {
+				color:#989898;
+			}
+		}
+	}
+	
+	p.copyright {
+		text-align: center;
+		font-size:90%;
+	}
+}

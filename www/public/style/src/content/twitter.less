@@ -1,0 +1,55 @@
+@charset "utf-8";
+/* mix-ins */
+
+.box-shadow(@style) {
+	-webkit-box-shadow: @style;
+	-moz-box-shadow: @style;
+	-o-box-shadow: @style;
+	-ms-box-shadow: @style;
+	box-shadow: @style;
+}
+
+.border-radius(@style) {
+	-webkit-border-radius: @style;
+	-moz-border-radius: @style;
+	-o-border-radius: @style;
+	-ms-border-radius: @style;	
+	border-radius: @style;
+}
+
+.transition(@interval){
+	-webkit-transition: @interval;
+	-moz-transition: @interval;
+	-o-transition: @interval;
+	-ms-transition: @interval;
+	transition: @interval;
+}
+
+
+/* main */
+
+body.twitter {
+	
+	.rounded-img {
+		display: inline-block;
+		overflow: hidden;
+		
+		.border-radius(8px);
+		.box-shadow(0 1px 3px rgba(0, 0, 0, .4));
+	}
+	.tweet {
+	
+		min-height:60px;
+		
+		.profile_image {
+			float: left;
+		}
+		.status {
+			float: right;
+			width : 420px;
+		}
+		&:nth-child(odd) {
+			background-color: #F4F4F4;
+		}
+	}	
+}

@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+/* mix-ins */
+
+.box-shadow(@style) {
+	-webkit-box-shadow: @style;
+	-moz-box-shadow: @style;
+	-o-box-shadow: @style;
+	-ms-box-shadow: @style;
+	box-shadow: @style;
+}
+
+.border-radius(@style) {
+	-webkit-border-radius: @style;
+	-moz-border-radius: @style;
+	-o-border-radius: @style;
+	-ms-border-radius: @style;	
+	border-radius: @style;
+}
+
+.transition(@interval){
+	-webkit-transition: @interval;
+	-moz-transition: @interval;
+	-o-transition: @interval;
+	-ms-transition: @interval;
+	transition: @interval;
+}
