@@ -11,7 +11,7 @@
 			var active = options.active ? options.active + ',' : '';
 			
 			$.each( this, function( key, val ){
-				var json = $.parseJSON( $.cookie( "bAccordion" ));
+				var json = JSON.parse( $.cookie( "bAccordion" ));
 				if( json && json[val.id] ){
 					$.each( json[val.id], function( k, v){
 						active = active + "#" + v + ",";
@@ -29,7 +29,7 @@
 	
 	function setCookie( event, ui ) {
 		
-		var active = $.parseJSON( $.cookie( "bAccordion" )) || {};
+		var active = JSON.parse( $.cookie( "bAccordion" )) || {};
 		var id = this.id;
 		
 		active[id] = {};
@@ -37,6 +37,6 @@
 			active[id][key] = val.id;
 		});
 		
-		$.cookie( "bAccordion", $.toJSON(active), { expires: 7, path:'/' } );
+		$.cookie( "bAccordion", JSON.stringify(active), { expires: 7, path:'/' } );
 	};
 })(jQuery);
