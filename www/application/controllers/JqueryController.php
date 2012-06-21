@@ -27,7 +27,6 @@ class JqueryController extends Neri_Controller_Action_Http
 		"twitter",
 		"zip",
 		"cssmenu",
-		"carousel",
 		"address",
 		"strage",
 	);

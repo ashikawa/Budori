@@ -1,43 +1,42 @@
-(function($) {
-	$.pluginName = function(element, options) {
+/*global jQuery*/
+(function ($) {
+	$.pluginName = function (element, options) {
 		
 		var defaults = {
 				foo: 'bar',
-				onFoo: function() {}
-		};
-		
-		var plugin = this;
+				onFoo: function () {}
+			},
+			plugin		= this,
+			$element	= $(element);
 		
 		plugin.settings = {};
 		
-		var $element = $(element)
-			, element = element;
 		
-		plugin.init = function() {
+		function foo_private_method() {
+			// code goes here
+		}
+		
+		plugin.init = function () {
 			plugin.settings = $.extend({}, defaults, options);
 			// code goes here
 		};
 		
-		plugin.foo_public_method = function() {
-			// code goes here
-		};
-		
-		var foo_private_method = function() {
+		plugin.foo_public_method = function () {
 			// code goes here
 		};
 		
 		plugin.init();
 	};
 	
-	$.fn.pluginName = function(options) {
-		return this.each(function() {
-			if (undefined == $(this).data('pluginName')) {
+	$.fn.pluginName = function (options) {
+		return this.each(function () {
+			if (undefined === $(this).data('pluginName')) {
 				var plugin = new $.pluginName(this, options);
 				$(this).data('pluginName', plugin);
 			}
 		});
 	};
-})(jQuery);
+}(jQuery));
 
 /*
 $( function() {
