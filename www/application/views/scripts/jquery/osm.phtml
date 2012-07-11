@@ -1,0 +1,14 @@
+<div class="contents">
+	<h3 class="title">OpenStreetMap</h3>
+	
+	<div id="demoMap" style="width:450px;height:450px"></div>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script>
+	map = new OpenLayers.Map("demoMap");
+	map.addLayer(new OpenLayers.Layer.OSM());
+	map.zoomToMaxExtent();
+</script>
+
+{literal}
+{/literal}
+<!--//end div#jquery--></div>

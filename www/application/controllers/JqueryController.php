@@ -29,6 +29,7 @@ class JqueryController extends Neri_Controller_Action_Http
 		"cssmenu",
 		"address",
 		"strage",
+		"osm",
 	);
 	
 	public function init()
