@@ -1,0 +1,7 @@
+<div class="contents">
+<ul>
+{foreach from=$metadata.body->contents item="_c" name="contents"}
+	<li><a href="/dropbox/download?f={$_c->path|urlencode}">{$_c->path}</a></li>
+{/foreach}
+</ul>
+</div>
