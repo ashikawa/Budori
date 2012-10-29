@@ -26,6 +26,11 @@
 	transition: @interval;
 }
 
+/* vars */
+@globalwidth : 720px;
+@mainwidth: 500px;
+@sidewidth: 200px;
+
 /* main */
 
 * {
@@ -35,7 +40,7 @@
 
 body {
 	height: 100%;
-	width: 720px;
+	width: @globalwidth;
 	margin: 0 auto; /* center */
 	color: #000000;
 	font-family: Verdana, Osaka, sans-serif;
@@ -48,9 +53,10 @@ body {
 
 #header {
 	@border-style: 1px solid #989898;
-	
-	padding: 25px 6px 25px 6px;
-	width: 708px;
+	@padding: 6px;
+
+	padding: 25px 6px;
+	width: @globalwidth - (@padding * 2) - 2px;	/* global - padding - border */
 	
 	border-right: @border-style;
 	border-bottom: @border-style;
@@ -60,7 +66,7 @@ body {
 }
 
 #middle {
-	width: 100%;
+	width: @globalwidth;
 	
 	&:after {
 		height: 0;
@@ -72,14 +78,14 @@ body {
 	
 	#main {
 		float: left;
-		width: 500px;
+		width: @mainwidth;
 	}
 	
 	#sidebar {
 		@border-style: solid 1px #808080;
 		
 		float: right;
-		width: 200px;
+		width: @sidewidth;
 		text-align: left;
 		font-size: 90%;
 	}
@@ -99,13 +105,15 @@ ul.sidemenu li {
 	}
 }
 
-body.jquery ul.sidemenu li#jquery,
-body.picture ul.sidemenu li#picture,
-body.query ul.sidemenu li#query,
-body.blog ul.sidemenu li#blog,
-body.twitter ul.sidemenu li#twitter,
-body.mail ul.sidemenu li#mail {
-	background-color: #E0EEEE;
+body {
+	.jquery ul.sidemenu li#jquery,
+	.picture ul.sidemenu li#picture,
+	.query ul.sidemenu li#query,
+	.blog ul.sidemenu li#blog,
+	.twitter ul.sidemenu li#twitter,
+	.mail ul.sidemenu li#mail {
+		background-color: #E0EEEE;
+	}
 }
 
 
