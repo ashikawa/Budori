@@ -1,38 +1,35 @@
 <?php
 class Budori_Service_Twitter_TimeLine implements Iterator, Countable
 {
-	/**
-	 * @var array
-	 */
-	protected $_result = null;
-	
-	/**
-	 * @var array
-	 */
-	protected $_results = null;
-	
-	protected $_pointer = 0;
-	
-	
-	public function __construct($result)
-	{
-		$this->_result = $result;
-		$this->_init();
-	}
-	
-	
-	protected function _init()
-	{
-		$results = $this->_result['results'];
-		
-		require_once 'Budori/Service/Twitter/Tweet.php';
+    /**
+     * @var array
+     */
+    protected $_result = null;
 
-		foreach ( $results as $_key => $_value ){
-			$this->_results[] = new Budori_Service_Twitter_Tweet($_value);
-		}
-	}
-	
-	
+    /**
+     * @var array
+     */
+    protected $_results = null;
+
+    protected $_pointer = 0;
+
+    public function __construct($result)
+    {
+        $this->_result = $result;
+        $this->_init();
+    }
+
+    protected function _init()
+    {
+        $results = $this->_result['results'];
+
+        require_once 'Budori/Service/Twitter/Tweet.php';
+
+        foreach ($results as $_key => $_value) {
+            $this->_results[] = new Budori_Service_Twitter_Tweet($_value);
+        }
+    }
+
 //  ["max_id"]=>
 //  float(7.509408625159E+16)
 //  ["since_id"]=>
@@ -53,40 +50,40 @@ class Budori_Service_Twitter_TimeLine implements Iterator, Countable
 //  string(17) "75094086251589632"
 //  ["query"]=>
 //  string(7) "%40noma"
-	
-	
-	public function count()
-	{
-		return count($this->_results);
-	}
-	
-	public function current()
-	{
+
+    public function count()
+    {
+        return count($this->_results);
+    }
+
+    public function current()
+    {
         if ($this->valid() === false) {
             return null;
         }
         // return the row object
         return $this->_results[$this->_pointer];
-	}
-	
-	public function key()
-	{
+    }
+
+    public function key()
+    {
         return $this->_pointer;
-	}
-	
-	public function next()
-	{
+    }
+
+    public function next()
+    {
         ++$this->_pointer;
-	}
-	
-	public function rewind()
-	{
+    }
+
+    public function rewind()
+    {
         $this->_pointer = 0;
+
         return $this;
-	}
-	
-	public function valid()
-	{
+    }
+
+    public function valid()
+    {
         return $this->_pointer >= 0 && $this->_pointer < $this->count();
-	}
+    }
 }

@@ -1,8 +1,7 @@
 <?php
 require_once 'Zend/View/Helper/HeadTitle.php';
 
-
-class Budori_View_Helper_HeadTitle extends Zend_View_Helper_HeadTitle 
+class Budori_View_Helper_HeadTitle extends Zend_View_Helper_HeadTitle
 {
     protected $_regKey = __CLASS__;
 
@@ -21,7 +20,7 @@ class Budori_View_Helper_HeadTitle extends Zend_View_Helper_HeadTitle
 
         $items = array();
 
-        if($this->_translate && $translator = $this->getTranslator()) {
+        if ($this->_translate && $translator = $this->getTranslator()) {
             foreach ($this as $item) {
                 $items[] = $translator->translate($item, $locale);
             }
@@ -33,11 +32,11 @@ class Budori_View_Helper_HeadTitle extends Zend_View_Helper_HeadTitle
 
         $separator = $this->getSeparator();
         $output = '';
-        if(($prefix = $this->getPrefix())) {
+        if (($prefix = $this->getPrefix())) {
             $output  .= $prefix;
         }
         $output .= implode($separator, $items);
-        if(($postfix = $this->getPostfix())) {
+        if (($postfix = $this->getPostfix())) {
             $output .= $postfix;
         }
 

@@ -11,19 +11,20 @@
  */
 function smarty_function_pankuzu( $params, &$smarty )
 {
-    require_once('shared.helper_loader.php');
-	$helper = smarty_helper_loader($params,$smarty);
-	
-	foreach ( $params as $key => $value ){
-		switch ($key){
-			case 'append':
-			case 'prepend':
-				$helper->Pankuzu()->$key($value);
-				return ;
-			default:
-				break;
-		}
-	}
-	
-	return $helper->Pankuzu();
+    require_once 'shared.helper_loader.php';
+    $helper = smarty_helper_loader($params,$smarty);
+
+    foreach ($params as $key => $value) {
+        switch ($key) {
+            case 'append':
+            case 'prepend':
+                $helper->Pankuzu()->$key($value);
+
+                return ;
+            default:
+                break;
+        }
+    }
+
+    return $helper->Pankuzu();
 }

@@ -3,5 +3,5 @@ require_once 'Budori/Mobile/Abstruct.php';
 
 /**
  */
-class Budori_Mobile_Willcom extends Budori_Mobile_Abstruct 
+class Budori_Mobile_Willcom extends Budori_Mobile_Abstruct
 {}

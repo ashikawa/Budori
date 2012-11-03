@@ -6,11 +6,11 @@
  */
 class Neri_Const
 {
-	private function __construct()
-	{}
-	
-	/**
-	 * ログイン、ログアウト後のりダイレクト、　GETパラメータ。
-	 */
-	const AUTH_REDIRECT_KEY = 'r';
+    private function __construct()
+    {}
+
+    /**
+     * ログイン、ログアウト後のりダイレクト、　GETパラメータ。
+     */
+    const AUTH_REDIRECT_KEY = 'r';
 }

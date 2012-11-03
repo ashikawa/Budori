@@ -8,8 +8,8 @@ require_once 'Zend/Db/Table/Abstract.php';
  */
 abstract class Neri_Db_Table_Abstract extends Zend_Db_Table_Abstract
 {
-	public function getCols()
-	{
-		return $this->_getCols();
-	}
+    public function getCols()
+    {
+        return $this->_getCols();
+    }
 }

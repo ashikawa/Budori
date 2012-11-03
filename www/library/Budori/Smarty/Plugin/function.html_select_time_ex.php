@@ -4,28 +4,28 @@
  *
  * {@link http://www.smarty.net/manual/ja/language.function.html.select.time.php}
  *          (Smarty online manual)
- * 
+ *
  * <pre>
  * 追加パラメータ
  * Input:
  *	hour_selected     選択済みの時間
  *	minutes_seleted   選択済みの分
  *	seconds_selected　　選択済みの秒
- * 
+ *
  *	hour_separator　　　　時間の区切り文字
  *	minutes_separator　 分の区切り文字
  *	seconds_separator　 秒の区切り文字
  * </pre>
- * 
+ *
  * @param array $params
  * @param Smarty $smarty
  * @return string
  */
 function smarty_function_html_select_time_ex($params, &$smarty)
 {
-	require_once(SMARTY_PLUGINS_DIR . 'shared.make_timestamp.php');
+    require_once(SMARTY_PLUGINS_DIR . 'shared.make_timestamp.php');
     require_once(SMARTY_PLUGINS_DIR . 'function.html_options.php');
-    
+
     /* Default values. */
     $prefix             = "Time_";
     $time               = "00:00:00";
@@ -47,7 +47,7 @@ function smarty_function_html_select_time_ex($params, &$smarty)
     $minute_extra       = null;
     $second_extra       = null;
     $meridian_extra     = null;
-    
+
     $hour_selected		= date("H");
     $minutes_seleted	= date("i");
     $seconds_selected	= date("s");
@@ -55,8 +55,7 @@ function smarty_function_html_select_time_ex($params, &$smarty)
     $hour_separator		= null;
     $minutes_separator	= null;
     $seconds_separator	= null;
-    
-    
+
     foreach ($params as $_key=>$_value) {
         switch ($_key) {
             case 'hour_selected';
@@ -65,8 +64,8 @@ function smarty_function_html_select_time_ex($params, &$smarty)
             case 'hour_separator';
             case 'minutes_separator';
             case 'seconds_separator';
-                
-        	case 'prefix':
+
+            case 'prefix':
             case 'time':
             case 'field_array':
             case 'all_extra':
@@ -74,28 +73,28 @@ function smarty_function_html_select_time_ex($params, &$smarty)
             case 'minute_extra':
             case 'second_extra':
             case 'meridian_extra':
-                $$_key = (string)$_value;
+                $$_key = (string) $_value;
                 break;
-            
+
             case 'display_hours':
             case 'display_minutes':
             case 'display_seconds':
             case 'display_meridian':
             case 'use_24_hours':
-                $$_key = (bool)$_value;
+                $$_key = (bool) $_value;
                 break;
             case 'set_default':
             case 'minute_interval':
             case 'second_interval':
-                $$_key = (int)$_value;
+                $$_key = (int) $_value;
                 break;
             default:
                 $smarty->trigger_error("[html_select_time_ex] unknown parameter $_key", E_USER_WARNING);
         }
     }
-    
+
     $time = "$hour_selected:$minutes_seleted:$seconds_selected";
-    
+
     $time = smarty_make_timestamp($time);
 
     $html_result = '';
@@ -111,10 +110,10 @@ function smarty_function_html_select_time_ex($params, &$smarty)
         } else {
             $html_result .= '"' . $prefix . 'Hour"';
         }
-        if (null !== $hour_extra){
+        if (null !== $hour_extra) {
             $html_result .= ' ' . $hour_extra;
         }
-        if (null !== $all_extra){
+        if (null !== $all_extra) {
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
@@ -138,21 +137,21 @@ function smarty_function_html_select_time_ex($params, &$smarty)
         } else {
             $html_result .= '"' . $prefix . 'Minute"';
         }
-        if (null !== $minute_extra){
+        if (null !== $minute_extra) {
             $html_result .= ' ' . $minute_extra;
         }
-        if (null !== $all_extra){
+        if (null !== $all_extra) {
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
-        
+
         $html_result .= smarty_function_html_options(array('output'          => $minutes,
                                                            'values'          => $minutes,
                                                            'selected'      => $selected,
                                                            'print_result' => false),
                                                      $smarty);
         $html_result .= "</select>\n";
-		$html_result .= $minutes_separator;
+        $html_result .= $minutes_separator;
     }
 
     if ($display_seconds) {
@@ -166,15 +165,15 @@ function smarty_function_html_select_time_ex($params, &$smarty)
         } else {
             $html_result .= '"' . $prefix . 'Second"';
         }
-        
-        if (null !== $second_extra){
+
+        if (null !== $second_extra) {
             $html_result .= ' ' . $second_extra;
         }
-        if (null !== $all_extra){
+        if (null !== $all_extra) {
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
-        
+
         $html_result .= smarty_function_html_options(array('output'          => $seconds,
                                                            'values'          => $seconds,
                                                            'selected'      => $selected,
@@ -190,15 +189,15 @@ function smarty_function_html_select_time_ex($params, &$smarty)
         } else {
             $html_result .= '"' . $prefix . 'Meridian"';
         }
-        
-        if (null !== $meridian_extra){
+
+        if (null !== $meridian_extra) {
             $html_result .= ' ' . $meridian_extra;
         }
-        if (null !== $all_extra){
+        if (null !== $all_extra) {
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
-        
+
         $html_result .= smarty_function_html_options(array('output'          => array('AM', 'PM'),
                                                            'values'          => array('am', 'pm'),
                                                            'selected'      => strtolower(strftime('%p', $time)),

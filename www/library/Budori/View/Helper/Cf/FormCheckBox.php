@@ -1,47 +1,47 @@
 <?php
 require_once 'Zend/View/Helper/FormElement.php';
 
-class Budori_View_Helper_Cf_FormCheckbox extends Zend_View_Helper_FormElement
+class Budori_View_Helper_Cf_FormCheckBox extends Zend_View_Helper_FormElement
 {
     protected static $_defaultCheckedOptions = array(
         'checkedValue'   => '1',
         'uncheckedValue' => '0'
     );
-	
-	public function Cf_formCheckbox($name, $value = null, $attribs = null, array $checkedOptions = null)
-	{
-		$info = $this->_getInfo($name, $value, $attribs);
-		extract($info); // name, id, value, attribs, options, listsep, disable
-		
-		$checkedOptions = self::determineCheckboxInfo($value, $checked, $checkedOptions);
-		
-		$xhtml = $this->view->escape($checkedOptions['checkedValue']);
-		
-		return $xhtml;
-	}
 
-	/**
-	 * Determine checkbox information
-	 *
-	 * @param  string $value
-	 * @param  bool $checked
-	 * @param  array|null $checkedOptions
-	 * @return array
-	 */
-	public static function determineCheckboxInfo($value, $checked, array $checkedOptions = null)
-	{
-		// Checked/unchecked values
-		$checkedValue   = null;
-		$uncheckedValue = null;
-		if (is_array($checkedOptions)) {
-			if (array_key_exists('checkedValue', $checkedOptions)) {
-				$checkedValue = (string) $checkedOptions['checkedValue'];
-				unset($checkedOptions['checkedValue']);
-			}
-			if (array_key_exists('uncheckedValue', $checkedOptions)) {
-				$uncheckedValue = (string) $checkedOptions['uncheckedValue'];
-				unset($checkedOptions['uncheckedValue']);
-			}
+    public function Cf_formCheckbox($name, $value = null, $attribs = null, array $checkedOptions = null)
+    {
+        $info = $this->_getInfo($name, $value, $attribs);
+        extract($info); // name, id, value, attribs, options, listsep, disable
+
+        $checkedOptions = self::determineCheckboxInfo($value, $checked, $checkedOptions);
+
+        $xhtml = $this->view->escape($checkedOptions['checkedValue']);
+
+        return $xhtml;
+    }
+
+    /**
+     * Determine checkbox information
+     *
+     * @param  string     $value
+     * @param  bool       $checked
+     * @param  array|null $checkedOptions
+     * @return array
+     */
+    public static function determineCheckboxInfo($value, $checked, array $checkedOptions = null)
+    {
+        // Checked/unchecked values
+        $checkedValue   = null;
+        $uncheckedValue = null;
+        if (is_array($checkedOptions)) {
+            if (array_key_exists('checkedValue', $checkedOptions)) {
+                $checkedValue = (string) $checkedOptions['checkedValue'];
+                unset($checkedOptions['checkedValue']);
+            }
+            if (array_key_exists('uncheckedValue', $checkedOptions)) {
+                $uncheckedValue = (string) $checkedOptions['uncheckedValue'];
+                unset($checkedOptions['uncheckedValue']);
+            }
             if (null === $checkedValue) {
                 $checkedValue = (string) array_shift($checkedOptions);
             }

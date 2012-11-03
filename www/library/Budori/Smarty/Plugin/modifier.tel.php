@@ -6,6 +6,7 @@
  */
 function smarty_modifier_tel( $string )
 {
-	$tel = mb_ereg_replace('[^0-9]', '', $string);
-	return "<a href=\"tel:$tel\">$string</a>";
+    $tel = mb_ereg_replace('[^0-9]', '', $string);
+
+    return "<a href=\"tel:$tel\">$string</a>";
 }

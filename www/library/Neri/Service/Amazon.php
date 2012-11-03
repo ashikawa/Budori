@@ -1,10 +1,11 @@
 <?php
-class Neri_Service_Amazon 
+class Neri_Service_Amazon
 {
-	
-	public static function getKey()
-	{
-		$config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOptions();
-		return $config['keys']['amazon'];
-	}
+
+    public static function getKey()
+    {
+        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOptions();
+
+        return $config['keys']['amazon'];
+    }
 }

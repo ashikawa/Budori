@@ -1,36 +1,35 @@
-<?php 
+<?php
 class TwitterClowler
 {
-	/**
-	 * @var Zend_Service_Twitter_Search
-	 */
-	protected $_client = null;
-	
-	public function __construct()
-	{
-		$this->_client = new Zend_Service_Twitter_Search();
-	}
-	
-	public function search()
-	{
-		$service	= $this->_client;
-		
-		// get max_id or reflesh
-		
-		$params		= array(
-			"from" 		=> "m_s_modified",
+    /**
+     * @var Zend_Service_Twitter_Search
+     */
+    protected $_client = null;
+
+    public function __construct()
+    {
+        $this->_client = new Zend_Service_Twitter_Search();
+    }
+
+    public function search()
+    {
+        $service	= $this->_client;
+
+        // get max_id or reflesh
+
+        $params		= array(
+            "from" 		=> "m_s_modified",
 //			"since_id"	=> $max_id,
-		);
-		
-		$response	= $service->restGet("/search.json", $params);
-		$result		= Zend_Json::decode($response->getBody());
-		
-		// db insert ... 
-		
-		return $result;
-	}
-	
-//	
+        );
+
+        $response	= $service->restGet("/search.json", $params);
+        $result		= Zend_Json::decode($response->getBody());
+
+        // db insert ...
+        return $result;
+    }
+
+//
 //  ["results"]=>
 //  array(15) {
 //    [0]=>
@@ -68,10 +67,10 @@ class TwitterClowler
 //      string(104) "&lt;a href=&quot;http://twitter.com/tweetbutton&quot; rel=&quot;nofollow&quot;&gt;Tweet Button&lt;/a&gt;"
 //    }
 //
-//	
+//
 //	.....
-//	
-//	
+//
+//
 //  ["max_id"]=>
 //  float(8.877422716715E+16)
 //  ["since_id"]=>

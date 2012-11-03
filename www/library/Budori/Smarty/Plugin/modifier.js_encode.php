@@ -7,10 +7,10 @@
  */
 function smarty_modifier_js_encode($data)
 {
-	return "[" . implode(',',array_map('smarty_modifier_js_array_callback',$data)) . "]";
+    return "[" . implode(',',array_map('smarty_modifier_js_array_callback',$data)) . "]";
 }
 
 function smarty_modifier_js_array_callback( $value )
 {
-	return "'$value'";
+    return "'$value'";
 }

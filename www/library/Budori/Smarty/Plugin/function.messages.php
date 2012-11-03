@@ -12,22 +12,22 @@
  */
 function smarty_function_messages($params, &$smarty)
 {
-    require_once('shared.helper_loader.php');
-	$helper = smarty_helper_loader($params,$smarty);
-	
-	$script	= 'helper/messages.phtml';
-	$args = array();
-	
-	foreach ($params as $_key => $_value) {
-		switch ($_key) {
-			case 'script':
-				$$_key = $_value;
-				break;
-			default:
-				$args[$_key] = $_value;
-				break;
-		}
-	}
-	
-	return $helper->partial($script,$args);
+    require_once 'shared.helper_loader.php';
+    $helper = smarty_helper_loader($params,$smarty);
+
+    $script	= 'helper/messages.phtml';
+    $args = array();
+
+    foreach ($params as $_key => $_value) {
+        switch ($_key) {
+            case 'script':
+                $$_key = $_value;
+                break;
+            default:
+                $args[$_key] = $_value;
+                break;
+        }
+    }
+
+    return $helper->partial($script,$args);
 }
