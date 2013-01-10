@@ -1,31 +1,5 @@
 @charset "utf-8";
-
-/* mix-ins */
-
-.box-shadow(@style) {
-	-webkit-box-shadow: @style;
-	-moz-box-shadow: @style;
-	box-shadow: @style;
-	-o-box-shadow: @style;
-	-ms-box-shadow: @style;
-}
-
-.border-radius(@style) {
-	-webkit-border-radius: @style;
-	-moz-border-radius: @style;	
-	border-radius: @style;
-	-o-border-radius: @style;
-	-ms-border-radius: @style;
-}
-
-.transition(@interval){
-	-webkit-transition: @interval;
-	-moz-transition: @interval;
-	-o-transition: @interval;
-	-ms-transition: @interval;
-	transition: @interval;
-}
-
+@import "mix-in.less";
 
 .h-large(@color) {
 	
@@ -40,8 +14,7 @@
 
 h1 {
 	font-size: 150%;
-	text-align: left ;
-	color: ;
+	text-align: left;
 	clear: both;
 	margin: 0 auto;
 	font-weight: bold;
@@ -60,7 +33,7 @@ h2 {
 
 h3 {
 	margin:10px 0 10px 0;
-	padding:0px 0px 0px 5px;
+	padding:0 0 0 5px;
 	border-left:9px solid #99cccc;
 	text-align: left;
 	
