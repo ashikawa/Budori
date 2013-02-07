@@ -120,17 +120,70 @@ class Budori_Db_Select extends Zend_Db_Select
     }
 
     /**
-     * LIKE
+     * Like
+     * @param  string           $key
+     * @param  string|array     $values $format 内の %s を複数指定する場合は配列
+     * @param  string           $format sprintf 用のフォーマット %s にエスケープされた文字が入る
+     * @param  string           $char エスケープ文字
+     * @return Budori_Db_Select
+     */
+    public function like($key, $values, $format="%%%s%%", $char="@")
+    {
+        $adapter = $this->getAdapter();
+        $key     = $adapter->quoteIdentifier($key);
+
+        if (!is_array($values)) {
+        	$values = array($values);
+        }
+        
+        $args = array($format);
+        
+        foreach ($values as $_v) {
+        	$args[] = $this->_likeEscape($_v, $char);
+        }
+        
+        $statement = call_user_func_array("sprintf", $args);
+        
+        return $this->where("$key LIKE ? ESCAPE '$char'", $statement);
+    }
+
+    /**
+     * Like foward
      * @param  string           $key
      * @param  string           $value
      * @return Budori_Db_Select
      */
-    public function like($key, $value)
+    public function likeFoward($key, $value)
     {
-        $adapter = $this->getAdapter();
-        $key = $adapter->quoteIdentifier($key);
+        return $this->like($key, $value, "%s%%");
+    }
 
-        return $this->where("$key LIKE ?", $value);
+    /**
+     * Like backword
+     * @param  string           $key
+     * @param  string           $value
+     * @return Budori_Db_Select
+     */
+    public function likeBackword($key, $value)
+    {
+        return $this->like($key, $value, "%%%s");
+    }
+
+    /**
+     * @param  string $key
+     * @param  string $char エスケープ文字
+     * @return string
+     */
+    protected function _likeEscape($value, $char)
+    {
+        $search  = array($char, "_", "%");
+        $replace = array();
+
+        foreach ($search as $_v) {
+            $replace[] = $char . $_v;
+        }
+
+        return str_replace($search, $replace, $value);
     }
 
     /**
