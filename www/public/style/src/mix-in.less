@@ -73,6 +73,12 @@
 }
 
 // Transformations
+.transform-origin(@position) {
+  -webkit-transform-origin: @position;
+     -moz-transform-origin: @position;
+       -o-transform-origin: @position;
+          transform-origin: @position;
+}
 .rotate(@degrees) {
   -webkit-transform: rotate(@degrees);
      -moz-transform: rotate(@degrees);
