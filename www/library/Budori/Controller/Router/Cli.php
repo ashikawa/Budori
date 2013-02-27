@@ -13,6 +13,7 @@ class Budori_Controller_Router_Cli extends Zend_Controller_Router_Abstract
                 'action|a=s'		=> 'action',
                 'controller|c=s'	=> 'controller',
                 'module|m=s'		=> 'module',
+    			'params|p=s'		=> 'params',
             );
 
     /**
@@ -73,6 +74,26 @@ class Budori_Controller_Router_Cli extends Zend_Controller_Router_Abstract
                 ->setModuleName($opt->module)
                 ->setParams($opt->getRemainingArgs());
 
+        $params = $this->_parseParams($opt->params);
+		$dispatcher->setParams($params);
+
         return $dispatcher;
+    }
+
+    protected function _parseParams($paramsString)
+    {
+        $params = array();
+
+		foreach (explode(',', $paramsString) as $value) {
+			$split = explode('=', $value, 2);
+
+			if (count($split) == 1) {
+				$params[] = $split[0];
+			}else{
+				$params[$split[0]] = $split[1];
+			}
+		}
+
+		return $params;
     }
 }
