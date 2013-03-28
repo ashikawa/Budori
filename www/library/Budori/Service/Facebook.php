@@ -133,4 +133,15 @@ class Budori_Service_Facebook extends BaseFacebook
     {
         return in_array($key, $this->_kSupportedKeys);
     }
+
+    /**
+     * デフォルトで常に locale ja をセット
+     * @see BaseFacebook::_graph()
+     */
+    protected function _graph($path, $method = 'GET', $params = array())
+    {
+    	$params = array_merge(array('locale' => 'ja_JP'), $params);
+    
+    	return parent::_graph($path, $method, $params);
+    }
 }
