@@ -60,15 +60,15 @@ class MediaController extends Budori_Controller_Action
 
         $params = $this->_getAllParams();
 
-         $db = Budori_Db::factory();
+        $db = Budori_Db::factory();
 
-         $select = new Neri_Db_Select_Media($db);
-         $select->setExt($params['ext'])
+        $select = new Neri_Db_Select_Media($db);
+        $select->setExt($params['ext'])
                  ->setKey($params['key'])
                  ->setOwner($params['owner'])
                  ->setDefault();
 
-         $image = new Media_Image($select);
+        $image = new Media_Image($select);
 
         $content = $image->createImage($this->_getParam('mode',null));
 
