@@ -1,9 +1,6 @@
 <?php
 require_once 'Zend/Controller/Request/Http.php';
 
-/** @see Zend_Uri */
-require_once 'Zend/Uri.php';
-
 /**
  * Budori_Controller_Request_Proxy
  */
