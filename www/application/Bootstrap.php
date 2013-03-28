@@ -164,6 +164,15 @@ class Bootstrap extends Budori_Application_Bootstrap_Bootstrap
     }
 
     /**
+     * RDS 用タイムゾーンの強制上書き
+     */
+//     protected function _initTimezone()
+//     {
+//     	$db = $this->bootstrap('db')->getResource('db');
+//     	$db->query("SET time_zone = '+9:00'");
+//     }
+
+    /**
      * 独自の画像処理を追加する場合
      */
 //	protected function _initMediaLoader()
